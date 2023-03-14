@@ -19,9 +19,16 @@
         <!-- html form to create product will be here -->
 
         <?php
+
+
         if ($_POST) {
             // include database connection
             include 'config/database.php';
+             // check if all fields are filled
+        if (empty($_POST['name']) || empty($_POST['description']) || empty($_POST['price'])) {
+            echo "<div class='alert alert-danger'>Please fill all fields.</div>";
+        } else {
+        
             try {
                 // posted values
                 $name = htmlspecialchars(strip_tags($_POST['name']));
