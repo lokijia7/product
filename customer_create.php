@@ -31,7 +31,7 @@
     <!-- container -->
     <div class="container">
         <div class="page-header">
-            <h1>Create Product</h1>
+            <h1>Create Customer</h1>
         </div>
 
         <!-- html form to create product will be here -->
@@ -40,7 +40,7 @@
 
         if ($_POST) {
             // Check if any field is empty
-            if (empty($_POST['name']) || empty($_POST['description']) || empty($_POST['price'])) {
+            if (empty($_POST['username']) || empty($_POST['password']) || empty($_POST['first_name']) || empty($_POST['last_name']) || empty($_POST['gender']) || empty($_POST['date_of_birth']) || empty($_POST['registration_datetime']) || empty($_POST['account_status'])) {
                 echo "<div class='alert alert-danger'>Please fill out all fields.</div>";
             } else {
                 // include database connection
@@ -62,21 +62,14 @@
             include 'config/database.php';
             try {
                 // posted values
-                $name = htmlspecialchars(strip_tags($_POST['name']));
-                $description = htmlspecialchars(strip_tags($_POST['description']));
-                $price = htmlspecialchars(strip_tags($_POST['price']));
-                $promo_price = htmlspecialchars(strip_tags($_POST['promo_price']));
-                $manufacture_date = htmlspecialchars(strip_tags($_POST['manufacture_date']));
-                $expiry_date = htmlspecialchars(strip_tags($_POST['expiry_date']));
-
-                // check if promotion price is less than original price
-                if ($promo_price >= $price) {
-                    echo "<div class='alert alert-danger'>Promotion price must be cheaper than original price.</div>";
-                }
-                // check if expiry date is later than manufacture date
-                else if ($expiry_date <= $manufacture_date) {
-                    echo "<div class='alert alert-danger'>Expiry date must be later than manufacture date.</div>";
-                } else {
+                $username = htmlspecialchars(strip_tags($_POST['username']));
+                $password = htmlspecialchars(strip_tags($_POST['password']));
+                $first_name = htmlspecialchars(strip_tags($_POST['first_name']));
+                $last_name = htmlspecialchars(strip_tags($_POST['last_name']));
+                $gender = htmlspecialchars(strip_tags($_POST['gender']));
+                $date_of_birth = htmlspecialchars(strip_tags($_POST['date_of_birth']));
+                $registration_datetime = htmlspecialchars(strip_tags($_POST['registration_datetime']));
+                $account_status = htmlspecialchars(strip_tags($_POST['account_status'])); {
                     // insert query
                     $query = "INSERT INTO products SET name=:name, description=:description, price=:price, created=:created";
                     // prepare query for execution
@@ -112,30 +105,37 @@
         <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
             <table class='table table-hover table-responsive table-bordered'>
                 <tr>
-                    <td>Name</td>
+                    <td>Username</td>
                     <td><input type='text' name='name' class='form-control' /></td>
                 </tr>
                 <tr>
-                    <td>Description</td>
-                    <td><textarea name='description' class='form-control'></textarea></td>
+                    <td>Password</td>
+                    <td><textarea name='password' class='form-control'></textarea></td>
                 </tr>
                 <tr>
-                    <td>Price</td>
-                    <td><input type='text' name='price' class='form-control' /></td>
-                </tr>
-                <tr>
-                <tr>
-                    <td>Promotion price</td>
-                    <td><input type='text' name='price' class='form-control' /></td>
+                    <td>First Name</td>
+                    <td><input type='text' name='firstname' class='form-control' /></td>
                 </tr>
                 <tr>
                 <tr>
-                    <td>Manufacture Date</td>
-                    <td><input type='date' name='manufacture_date' class='form-control' /></td>
+                    <td>Last Name</td>
+                    <td><input type='text' name='lastname' class='form-control' /></td>
                 </tr>
                 <tr>
-                    <td>Expiry Date</td>
-                    <td><input type='date' name='expiry_date' class='form-control' /></td>
+                <tr>
+                    <td>Gender</td>
+                    <td><input type='gender' name='gender' class='form-control' /></td>
+                </tr>
+                <tr>
+                    <td>Date Of Birth</td>
+                    <td><input type='date' name='birth_date' class='form-control' /></td>
+                </tr>
+                <tr>
+                    <td>Registration Date & Time</td>
+                    <td><input type='date' name='regis_date' class='form-control' /></td>
+                </tr>
+                <td>Account status</td>
+                <td><input type='status' name='Account_status' class='form-control' /></td>
                 </tr>
 
 
