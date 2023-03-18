@@ -40,7 +40,7 @@
 
         if ($_POST) {
             // Check if any field is empty
-            if (empty($_POST['name']) || empty($_POST['description']) || empty($_POST['price'])) {
+            if (empty($_POST['name']) || empty($_POST['description']) || empty($_POST['price'] || empty($_POST['promo_price']|| empty($_POST['manufacture_date']|| empty($_POST['expiry_date'])) {
                 echo "<div class='alert alert-danger'>Please fill out all fields.</div>";
             } else {
                 // include database connection
