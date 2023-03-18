@@ -75,12 +75,14 @@
                     // prepare query for execution
                     $stmt = $con->prepare($query);
                     // bind the parameters
-                    $stmt->bindParam(':name', $name);
-                    $stmt->bindParam(':description', $description);
-                    $stmt->bindParam(':price', $price);
-                    $stmt->bindParam(':promo_price', $promo_price);
-                    $stmt->bindParam(':manufacture_date', $manufacture_date);
-                    $stmt->bindParam(':expiry_date', $expiry_date);
+                    $stmt->bindParam(':username', $username);
+                    $stmt->bindParam(':password', $password);
+                    $stmt->bindParam(':first_name', $first_name);
+                    $stmt->bindParam(':last_name', $last_name);
+                    $stmt->bindParam(':gender', $gender);
+                    $stmt->bindParam(':date_of_birth', $date_of_birth);
+                    $stmt->bindParam(':registration_datetime', $registration_datetime);
+                    $stmt->bindParam(':account_status', $account_status);
                     // specify when this record was inserted to the database
                     $created = date('Y-m-d H:i:s');
                     $stmt->bindParam(':created', $created);

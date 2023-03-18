@@ -113,7 +113,7 @@
             <table class='table table-hover table-responsive table-bordered'>
                 <tr>
                     <td>Name</td>
-                    <td><input type='text' name='name' class='form-control' /></td>
+                    <td><input type='varchar' name='name' class='form-control' /></td>
                 </tr>
                 <tr>
                     <td>Description</td>
@@ -121,20 +121,20 @@
                 </tr>
                 <tr>
                     <td>Price</td>
-                    <td><input type='text' name='price' class='form-control' /></td>
+                    <td><input type='double' name='price' class='form-control' /></td>
                 </tr>
                 <tr>
                 <tr>
                     <td>Promotion price</td>
-                    <td><input type='text' name='price' class='form-control' /></td>
+                    <td><input type='double' name='promotion_price' class='form-control' /></td>
                 </tr>
                 <tr>
                 <tr>
-                    <td>Manufacture Date</td>
+                    <td>Manufacture date</td>
                     <td><input type='date' name='manufacture_date' class='form-control' /></td>
                 </tr>
                 <tr>
-                    <td>Expiry Date</td>
+                    <td>Expiry date</td>
                     <td><input type='date' name='expiry_date' class='form-control' /></td>
                 </tr>
 
