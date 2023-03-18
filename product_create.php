@@ -40,7 +40,7 @@
 
         if ($_POST) {
             // Check if any field is empty
-            if (empty($_POST['name']) || empty($_POST['description']) || empty($_POST['price'] || empty($_POST['promo_price']|| empty($_POST['manufacture_date']|| empty($_POST['expiry_date'])) {
+            if (empty($_POST['name']) || empty($_POST['description']) || empty($_POST['price']) || empty($_POST['promotion_price']) || empty($_POST['manufacture_date']) || empty($_POST['expiry_date'])) {
                 echo "<div class='alert alert-danger'>Please fill out all fields.</div>";
             } else {
                 // include database connection
@@ -65,12 +65,12 @@
                 $name = htmlspecialchars(strip_tags($_POST['name']));
                 $description = htmlspecialchars(strip_tags($_POST['description']));
                 $price = htmlspecialchars(strip_tags($_POST['price']));
-                $promo_price = htmlspecialchars(strip_tags($_POST['promo_price']));
+                $promotion_price = htmlspecialchars(strip_tags($_POST['promotion_price']));
                 $manufacture_date = htmlspecialchars(strip_tags($_POST['manufacture_date']));
                 $expiry_date = htmlspecialchars(strip_tags($_POST['expiry_date']));
 
                 // check if promotion price is less than original price
-                if ($promo_price >= $price) {
+                if ($promotion_price >= $price) {
                     echo "<div class='alert alert-danger'>Promotion price must be cheaper than original price.</div>";
                 }
                 // check if expiry date is later than manufacture date
@@ -78,14 +78,14 @@
                     echo "<div class='alert alert-danger'>Expiry date must be later than manufacture date.</div>";
                 } else {
                     // insert query
-                    $query = "INSERT INTO products SET name=:name, description=:description, price=:price, created=:created";
+                    $query = "INSERT INTO products SET name=:name, description=:description, price=:price, promotion_price=:promotion_price, manufacture_date=:manufacture_date,expiry_date=:expiry_date,created=:created";
                     // prepare query for execution
                     $stmt = $con->prepare($query);
                     // bind the parameters
                     $stmt->bindParam(':name', $name);
                     $stmt->bindParam(':description', $description);
                     $stmt->bindParam(':price', $price);
-                    $stmt->bindParam(':promo_price', $promo_price);
+                    $stmt->bindParam(':promotion_price', $promotion_price);
                     $stmt->bindParam(':manufacture_date', $manufacture_date);
                     $stmt->bindParam(':expiry_date', $expiry_date);
                     // specify when this record was inserted to the database
