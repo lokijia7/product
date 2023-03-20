@@ -34,7 +34,7 @@
             <h1>Create Customer</h1>
         </div>
 
-        <!-- html form to create product will be here -->
+        <!-- html form to create customer will be here -->
 
         <?php
 
@@ -71,7 +71,7 @@
                 $registration_datetime = htmlspecialchars(strip_tags($_POST['registration_datetime']));
                 $account_status = htmlspecialchars(strip_tags($_POST['account_status'])); {
                     // insert query
-                    $query = "INSERT INTO products SET name=:name, description=:description, price=:price, created=:created";
+                    $query = "INSERT INTO customers SET name=:username, password=:password, first_name=:first_name, last_name=:last_name,gender=:gender,date_of_birth=:date_of_birth,registration_datetime=:registration_datetime,account_status=:account_status,created=:created";
                     // prepare query for execution
                     $stmt = $con->prepare($query);
                     // bind the parameters
@@ -108,25 +108,25 @@
             <table class='table table-hover table-responsive table-bordered'>
                 <tr>
                     <td>Username</td>
-                    <td><input type='text' name='name' class='form-control' /></td>
+                    <td><input type='varchar' name='name' class='form-control' /></td>
                 </tr>
                 <tr>
                     <td>Password</td>
-                    <td><textarea name='password' class='form-control'></textarea></td>
+                    <td><input type='varchar' name='name' class='form-control' /></td>
                 </tr>
                 <tr>
                     <td>First Name</td>
-                    <td><input type='text' name='firstname' class='form-control' /></td>
+                    <td><input type='varchar' name='firstname' class='form-control' /></td>
                 </tr>
                 <tr>
                 <tr>
                     <td>Last Name</td>
-                    <td><input type='text' name='lastname' class='form-control' /></td>
+                    <td><input type='varchar' name='lastname' class='form-control' /></td>
                 </tr>
                 <tr>
                 <tr>
                     <td>Gender</td>
-                    <td><input type='gender' name='gender' class='form-control' /></td>
+                    <td><input type='enum' name='gender' class='form-control' /></td>
                 </tr>
                 <tr>
                     <td>Date Of Birth</td>
@@ -137,14 +137,13 @@
                     <td><input type='date' name='regis_date' class='form-control' /></td>
                 </tr>
                 <td>Account status</td>
-                <td><input type='status' name='Account_status' class='form-control' /></td>
+                <td><input type='tinyint' name='Account_status' class='form-control' /></td>
                 </tr>
 
 
                 <td></td>
                 <td>
                     <input type='submit' value='Save' class='btn btn-primary' />
-                    <a href='index.php' class='btn btn-danger'>Back to read products</a>
                 </td>
                 </tr>
             </table>
