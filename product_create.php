@@ -39,10 +39,7 @@
         <?php
 
         if ($_POST) {
-            // Check if any field is empty
-            if (empty($_POST['name']) || empty($_POST['description']) || empty($_POST['price']) || empty($_POST['manufacture_date'])) {
-                echo "<div class='alert alert-danger'>Please fill out all fields.</div>";
-            }
+
             // include database connection
             include 'config/database.php';
             try {
@@ -53,6 +50,11 @@
                 $promotion_price = htmlspecialchars(strip_tags($_POST['promotion_price']));
                 $manufacture_date = htmlspecialchars(strip_tags($_POST['manufacture_date']));
                 $expiry_date = htmlspecialchars(strip_tags($_POST['expiry_date']));
+
+                // Check if any field is empty
+                if (empty($_POST['name']) || empty($_POST['description']) || empty($_POST['price']) || empty($_POST['manufacture_date'])) {
+                    echo "<div class='alert alert-danger'>Please fill out all fields.</div>";
+                }
 
                 // check if promotion price is less than original price
                 if (!empty($promotion_price)) {
