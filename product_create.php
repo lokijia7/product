@@ -68,6 +68,12 @@
                         echo "<div class='alert alert-danger'>Expiry date must be later than manufacture date.</div>";
                     }
                 }
+                if (empty($promotion_price)) {
+                    $promotion_price = 0;
+                }
+
+
+
                 // insert query
                 $query = "INSERT INTO products SET name=:name, description=:description, price=:price, promotion_price=:promotion_price, manufacture_date=:manufacture_date,expiry_date=:expiry_date,created=:created";
                 // prepare query for execution
