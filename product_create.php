@@ -55,36 +55,38 @@
                 $expiry_date = htmlspecialchars(strip_tags($_POST['expiry_date']));
 
                 // check if promotion price is less than original price
-                if (!empty($promotion_price))
+                if (!empty($promotion_price)) {
                     if ($promotion_price >= $price) {
                         echo "<div class='alert alert-danger'>Promotion price must be cheaper than original price.</div>";
                     }
+                }
                 // check if expiry date is later than manufacture date
-                if (!empty($expiry_date))
+                if (!empty($expiry_date)) {
                     if ($expiry_date <= $manufacture_date) {
                         echo "<div class='alert alert-danger'>Expiry date must be later than manufacture date.</div>";
-                    } else {
-                        // insert query
-                        $query = "INSERT INTO products SET name=:name, description=:description, price=:price, promotion_price=:promotion_price, manufacture_date=:manufacture_date,expiry_date=:expiry_date,created=:created";
-                        // prepare query for execution
-                        $stmt = $con->prepare($query);
-                        // bind the parameters
-                        $stmt->bindParam(':name', $name);
-                        $stmt->bindParam(':description', $description);
-                        $stmt->bindParam(':price', $price);
-                        $stmt->bindParam(':promotion_price', $promotion_price);
-                        $stmt->bindParam(':manufacture_date', $manufacture_date);
-                        $stmt->bindParam(':expiry_date', $expiry_date);
-                        // specify when this record was inserted to the database
-                        $created = date('Y-m-d H:i:s');
-                        $stmt->bindParam(':created', $created);
-                        // Execute the query
-                        if ($stmt->execute()) {
-                            echo "<div class='alert alert-success'>Record was saved.</div>";
-                        } else {
-                            echo "<div class='alert alert-danger'>Unable to save record.</div>";
-                        }
                     }
+                } else {
+                    // insert query
+                    $query = "INSERT INTO products SET name=:name, description=:description, price=:price, promotion_price=:promotion_price, manufacture_date=:manufacture_date,expiry_date=:expiry_date,created=:created";
+                    // prepare query for execution
+                    $stmt = $con->prepare($query);
+                    // bind the parameters
+                    $stmt->bindParam(':name', $name);
+                    $stmt->bindParam(':description', $description);
+                    $stmt->bindParam(':price', $price);
+                    $stmt->bindParam(':promotion_price', $promotion_price);
+                    $stmt->bindParam(':manufacture_date', $manufacture_date);
+                    $stmt->bindParam(':expiry_date', $expiry_date);
+                    // specify when this record was inserted to the database
+                    $created = date('Y-m-d H:i:s');
+                    $stmt->bindParam(':created', $created);
+                    // Execute the query
+                    if ($stmt->execute()) {
+                        echo "<div class='alert alert-success'>Record was saved.</div>";
+                    } else {
+                        echo "<div class='alert alert-danger'>Unable to save record.</div>";
+                    }
+                }
             }
             // show error
             catch (PDOException $exception) {
