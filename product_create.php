@@ -40,26 +40,28 @@
 
         if ($_POST) {
             // Check if any field is empty
-            if (empty($_POST['name']) || empty($_POST['description']) || empty($_POST['price']) || empty($_POST['promotion_price']) || empty($_POST['manufacture_date']) || empty($_POST['expiry_date'])) {
+            if (empty($_POST['name']) || empty($_POST['description']) || empty($_POST['price']) || empty($_POST['manufacture_date'])) {
                 echo "<div class='alert alert-danger'>Please fill out all fields.</div>";
-            } else {
-                // include database connection
-                include 'config/database.php';
-                try {
-                    // posted values
-                    $name = htmlspecialchars(strip_tags($_POST['name']));
-                    $description = htmlspecialchars(strip_tags($_POST['description']));
-                    $price = htmlspecialchars(strip_tags($_POST['price']));
-                    $promotion_price = htmlspecialchars(strip_tags($_POST['promotion_price']));
-                    $manufacture_date = htmlspecialchars(strip_tags($_POST['manufacture_date']));
-                    $expiry_date = htmlspecialchars(strip_tags($_POST['expiry_date']));
+            }
+            // include database connection
+            include 'config/database.php';
+            try {
+                // posted values
+                $name = htmlspecialchars(strip_tags($_POST['name']));
+                $description = htmlspecialchars(strip_tags($_POST['description']));
+                $price = htmlspecialchars(strip_tags($_POST['price']));
+                $promotion_price = htmlspecialchars(strip_tags($_POST['promotion_price']));
+                $manufacture_date = htmlspecialchars(strip_tags($_POST['manufacture_date']));
+                $expiry_date = htmlspecialchars(strip_tags($_POST['expiry_date']));
 
-                    // check if promotion price is less than original price
+                // check if promotion price is less than original price
+                if (!empty($promotion_price))
                     if ($promotion_price >= $price) {
                         echo "<div class='alert alert-danger'>Promotion price must be cheaper than original price.</div>";
                     }
-                    // check if expiry date is later than manufacture date
-                    else if ($expiry_date <= $manufacture_date) {
+                // check if expiry date is later than manufacture date
+                if (!empty($expiry_date))
+                    if ($expiry_date <= $manufacture_date) {
                         echo "<div class='alert alert-danger'>Expiry date must be later than manufacture date.</div>";
                     } else {
                         // insert query
@@ -83,13 +85,17 @@
                             echo "<div class='alert alert-danger'>Unable to save record.</div>";
                         }
                     }
-                }
-                // show error
-                catch (PDOException $exception) {
-                    die('ERROR: ' . $exception->getMessage());
-                }
+            }
+            // show error
+            catch (PDOException $exception) {
+                die('ERROR: ' . $exception->getMessage());
             }
         }
+
+
+
+
+
         ?>
 
 
