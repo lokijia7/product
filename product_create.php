@@ -53,8 +53,20 @@
                 $flag = false;
 
                 // Check if any field is empty
-                if (empty($_POST['name']) || empty($_POST['description']) || empty($_POST['price']) || empty($_POST['manufacture_date'])) {
-                    echo "<div class='alert alert-danger'>Please fill out all fields.</div>";
+                if (empty($name)) {
+                    echo "<div class='alert alert-danger'>Please fill out the Name field.</div>";
+                    $flag = true;
+                }
+                if (empty($description)) {
+                    echo "<div class='alert alert-danger'>Please fill out the Description field.</div>";
+                    $flag = true;
+                }
+                if (empty($price)) {
+                    echo "<div class='alert alert-danger'>Please fill out the Price field.</div>";
+                    $flag = true;
+                }
+                if (empty($manufacture_date)) {
+                    echo "<div class='alert alert-danger'>Please fill out the Manufacture Date field.</div>";
                     $flag = true;
                 }
 
@@ -125,29 +137,29 @@
             <table class='table table-hover table-responsive table-bordered'>
                 <tr>
                     <td>Name</td>
-                    <td><input type='varchar' name='name' class='form-control' /></td>
+                    <td><input type='varchar' name='name' value="<?php echo isset($name) ? htmlspecialchars($name) : ''; ?>" class='form-control' /></td>
                 </tr>
                 <tr>
                     <td>Description</td>
-                    <td><textarea name='description' class='form-control'></textarea></td>
+                    <td><textarea name='description' value="<?php echo isset($description) ? htmlspecialchars($description) : ''; ?>" class='form-control'></textarea></td>
                 </tr>
                 <tr>
                     <td>Price</td>
-                    <td><input type='double' name='price' class='form-control' /></td>
+                    <td><input type='number' name='price' value="<?php echo isset($price) ? htmlspecialchars($price) : ''; ?>" class='form-control' /></td>
                 </tr>
                 <tr>
                 <tr>
                     <td>Promotion price</td>
-                    <td><input type='double' name='promotion_price' class='form-control' /></td>
+                    <td><input type='number' name='promotion_price' value="<?php echo isset($promotion_price) ? htmlspecialchars($promotion_price) : ''; ?>" class='form-control' /></td>
                 </tr>
                 <tr>
                 <tr>
                     <td>Manufacture date</td>
-                    <td><input type='date' name='manufacture_date' class='form-control' /></td>
+                    <td><input type='date' name='manufacture_date' value="<?php echo isset($manufacture_date) ? htmlspecialchars($manufacture_date) : ''; ?>" class='form-control' /></td>
                 </tr>
                 <tr>
                     <td>Expiry date</td>
-                    <td><input type='date' name='expiry_date' class='form-control' /></td>
+                    <td><input type='date' name='expiry_date' value="<?php echo isset($expiry_date) ? htmlspecialchars($expiry_date) : ''; ?>" class='form-control' /></td>
                 </tr>
 
 
