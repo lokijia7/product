@@ -56,12 +56,38 @@
                 $flag = false;
 
                 // Check if any field is empty
-                if (empty($_POST['username']) || empty($_POST['password']) || empty($_POST['confirm_password']) || empty($_POST['first_name']) || empty($_POST['last_name']) || empty($_POST['gender']) || empty($_POST['date_of_birth']) || empty($_POST['registration_datetime']) || empty($_POST['account_status'])) {
-                    echo "<div class='alert alert-danger'>Please fill out all fields.</div>";
+                if (empty($username)) {
+                    echo "<div class='alert alert-danger'>Please fill out the username field.</div>";
                     $flag = true;
                 }
-
-
+                if (empty($password)) {
+                    echo "<div class='alert alert-danger'>Please fill out the password field.</div>";
+                    $flag = true;
+                }
+                if (empty($confirm_password)) {
+                    echo "<div class='alert alert-danger'>Please fill out the confirmed password field.</div>";
+                    $flag = true;
+                }
+                if (empty($first_name)) {
+                    echo "<div class='alert alert-danger'>Please fill out the first name field.</div>";
+                    $flag = true;
+                }
+                if (empty($last_name)) {
+                    echo "<div class='alert alert-danger'>Please fill out the last name field.</div>";
+                    $flag = true;
+                }
+                if (empty($gender)) {
+                    echo "<div class='alert alert-danger'>Please fill out the gender field.</div>";
+                    $flag = true;
+                }
+                if (empty($date_of_birth)) {
+                    echo "<div class='alert alert-danger'>Please fill out the Date of birth field.</div>";
+                    $flag = true;
+                }
+                if (empty($account_status)) {
+                    echo "<div class='alert alert-danger'>Please fill out the account status field.</div>";
+                    $flag = true;
+                }
 
                 if ($flag == false) {
                     // insert query
@@ -153,6 +179,7 @@
                     </div>
                     </td>
                 </tr>
+
 
 
                 <td></td>
