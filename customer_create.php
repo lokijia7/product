@@ -50,8 +50,8 @@
                 $first_name = htmlspecialchars(strip_tags($_POST['first_name']));
                 $last_name = htmlspecialchars(strip_tags($_POST['last_name']));
                 $gender = $_POST['gender'];
+                $stmt->bindParam(':registration_datetime', $registration_datetime);
                 $date_of_birth = htmlspecialchars(strip_tags($_POST['date_of_birth']));
-                $registration_datetime = htmlspecialchars(strip_tags($_POST['registration_datetime']));
                 $account_status = $_POST['account_status'];
                 $flag = false;
 
@@ -104,7 +104,7 @@
                     $stmt->bindParam(':registration_datetime', $created);
                     $stmt->bindParam(':account_status', $account_status);
                     // specify when this record was inserted to the database
-                    $created = date('Y-m-d H:i:s');
+                    $registration_datetime = date('Y-m-d H:i:s');
                     $stmt->bindParam(':created', $created);
                     // Execute the query
                     if ($stmt->execute()) {
