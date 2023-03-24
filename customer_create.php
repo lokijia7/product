@@ -38,24 +38,6 @@
 
         <?php
 
-        if ($_POST) {
-            // Check if any field is empty
-            if (empty($_POST['username']) || empty($_POST['password']) || empty($_POST['first_name']) || empty($_POST['last_name']) || empty($_POST['gender']) || empty($_POST['date_of_birth']) || empty($_POST['registration_datetime']) || empty($_POST['account_status'])) {
-                echo "<div class='alert alert-danger'>Please fill out all fields.</div>";
-            } else {
-                // include database connection
-                include 'config/database.php';
-                try {
-                    // rest of your code
-                }
-                // show error
-                catch (PDOException $exception) {
-                    die('ERROR: ' . $exception->getMessage());
-                }
-            }
-        }
-
-
 
         if ($_POST) {
             // include database connection
@@ -64,12 +46,24 @@
                 // posted values
                 $username = htmlspecialchars(strip_tags($_POST['username']));
                 $password = htmlspecialchars(strip_tags($_POST['password']));
+                $confirm_password = htmlspecialchars(strip_tags($_POST['confirm_password']));
                 $first_name = htmlspecialchars(strip_tags($_POST['first_name']));
                 $last_name = htmlspecialchars(strip_tags($_POST['last_name']));
-                $gender = htmlspecialchars(strip_tags($_POST['gender']));
+                $gender = $_POST['gender'];
                 $date_of_birth = htmlspecialchars(strip_tags($_POST['date_of_birth']));
                 $registration_datetime = htmlspecialchars(strip_tags($_POST['registration_datetime']));
-                $account_status = htmlspecialchars(strip_tags($_POST['account_status'])); {
+                $account_status = $_POST['account_status'];
+                $flag = false;
+
+                // Check if any field is empty
+                if (empty($_POST['username']) || empty($_POST['password']) || empty($_POST['confirm_password']) || empty($_POST['first_name']) || empty($_POST['last_name']) || empty($_POST['gender']) || empty($_POST['date_of_birth']) || empty($_POST['registration_datetime']) || empty($_POST['account_status'])) {
+                    echo "<div class='alert alert-danger'>Please fill out all fields.</div>";
+                    $flag = true;
+                }
+
+
+
+                if ($flag == false) {
                     // insert query
                     $query = "INSERT INTO customers SET name=:username, password=:password, first_name=:first_name, last_name=:last_name,gender=:gender,date_of_birth=:date_of_birth,registration_datetime=:registration_datetime,account_status=:account_status,created=:created";
                     // prepare query for execution
@@ -81,7 +75,7 @@
                     $stmt->bindParam(':last_name', $last_name);
                     $stmt->bindParam(':gender', $gender);
                     $stmt->bindParam(':date_of_birth', $date_of_birth);
-                    $stmt->bindParam(':registration_datetime', $registration_datetime);
+                    $stmt->bindParam(':registration_datetime', $created);
                     $stmt->bindParam(':account_status', $account_status);
                     // specify when this record was inserted to the database
                     $created = date('Y-m-d H:i:s');
@@ -99,6 +93,7 @@
                 die('ERROR: ' . $exception->getMessage());
             }
         }
+
         ?>
 
 
@@ -112,7 +107,11 @@
                 </tr>
                 <tr>
                     <td>Password</td>
-                    <td><input type='varchar' name='name' class='form-control' /></td>
+                    <td><input type='password' name='password' class='form-control' /></td>
+                </tr>
+                <tr>
+                    <td>Confirm Password</td>
+                    <td><input type='password' name='password' class='form-control' /></td>
                 </tr>
                 <tr>
                     <td>First Name</td>
@@ -126,18 +125,33 @@
                 <tr>
                 <tr>
                     <td>Gender</td>
-                    <td><input type='enum' name='gender' class='form-control' /></td>
+                    <td>
+                        <div class='form-check form-check-inline'>
+                            <input type='radio' name='gender' value='male' class='form-check-input' id='gender-male' required />
+                            <label class='form-check-label' for='gender-male'>Male</label>
+                        </div>
+                        <div class='form-check form-check-inline'>
+                            <input type='radio' name='gender' value='female' class='form-check-input' id='gender-female' required />
+                            <label class='form-check-label' for='gender-female'>Female</label>
+                        </div>
+                    </td>
                 </tr>
                 <tr>
                     <td>Date Of Birth</td>
                     <td><input type='date' name='birth_date' class='form-control' /></td>
                 </tr>
                 <tr>
-                    <td>Registration Date & Time</td>
-                    <td><input type='date' name='regis_date' class='form-control' /></td>
-                </tr>
-                <td>Account status</td>
-                <td><input type='tinyint' name='Account_status' class='form-control' /></td>
+                <tr>
+                    <td>Account status</td>
+                    <div class='form-check form-check-inline'>
+                        <input type='radio' name='account_status' value='active' class='form-check-input' id='account_status-active' required />
+                        <label class='form-check-label' for='account_status-active'>Active</label>
+                    </div>
+                    <div class='form-check form-check-inline'>
+                        <input type='radio' name='account_status' value='inactive' class='form-check-input' id='account_status-inactive' required />
+                        <label class='form-check-label' for='account_status-inactive'>Inactive</label>
+                    </div>
+                    </td>
                 </tr>
 
 
