@@ -50,7 +50,7 @@
                 $first_name = htmlspecialchars(strip_tags($_POST['first_name']));
                 $last_name = htmlspecialchars(strip_tags($_POST['last_name']));
                 $gender = $_POST['gender'];
-                $stmt->bindParam(':registration_datetime', $registration_datetime);
+                $registration_datetime = $_POST['created'];
                 $date_of_birth = htmlspecialchars(strip_tags($_POST['date_of_birth']));
                 $account_status = $_POST['account_status'];
                 $flag = false;
@@ -88,10 +88,16 @@
                     echo "<div class='alert alert-danger'>Please fill out the account status field.</div>";
                     $flag = true;
                 }
-
+                if ($flag == false) {
+                    // Check if passwords match
+                    if ($password != $confirm_password) {
+                        echo "<div class='alert alert-danger'>Passwords do not match.</div>";
+                        $flag = true;
+                    }
+                }
                 if ($flag == false) {
                     // insert query
-                    $query = "INSERT INTO customers SET name=:username, password=:password, first_name=:first_name, last_name=:last_name,gender=:gender,date_of_birth=:date_of_birth,registration_datetime=:registration_datetime,account_status=:account_status,created=:created";
+                    $query = "INSERT INTO customers SET name=:username, password=:password, first_name=:first_name, last_name=:last_name,gender=:gender,date_of_birth=:date_of_birth,created=:registration_datetime,account_status=:account_status;";
                     // prepare query for execution
                     $stmt = $con->prepare($query);
                     // bind the parameters
@@ -101,11 +107,11 @@
                     $stmt->bindParam(':last_name', $last_name);
                     $stmt->bindParam(':gender', $gender);
                     $stmt->bindParam(':date_of_birth', $date_of_birth);
-                    $stmt->bindParam(':registration_datetime', $created);
+                    $stmt->bindParam(':created', $registration_datetime);
                     $stmt->bindParam(':account_status', $account_status);
                     // specify when this record was inserted to the database
                     $registration_datetime = date('Y-m-d H:i:s');
-                    $stmt->bindParam(':created', $created);
+                    $stmt->bindParam(':created', $registration_datetime);
                     // Execute the query
                     if ($stmt->execute()) {
                         echo "<div class='alert alert-success'>Record was saved.</div>";
@@ -120,6 +126,7 @@
             }
         }
 
+
         ?>
 
 
@@ -129,7 +136,7 @@
             <table class='table table-hover table-responsive table-bordered'>
                 <tr>
                     <td>Username</td>
-                    <td><input type='varchar' name='name' class='form-control' /></td>
+                    <td><input type='varchar' name='username' class='form-control' /></td>
                 </tr>
                 <tr>
                     <td>Password</td>
@@ -137,16 +144,16 @@
                 </tr>
                 <tr>
                     <td>Confirm Password</td>
-                    <td><input type='password' name='password' class='form-control' /></td>
+                    <td><input type='password' name='confirmed_password' class='form-control' /></td>
                 </tr>
                 <tr>
                     <td>First Name</td>
-                    <td><input type='varchar' name='firstname' class='form-control' /></td>
+                    <td><input type='varchar' name='first_name' class='form-control' /></td>
                 </tr>
                 <tr>
                 <tr>
                     <td>Last Name</td>
-                    <td><input type='varchar' name='lastname' class='form-control' /></td>
+                    <td><input type='varchar' name='last_name' class='form-control' /></td>
                 </tr>
                 <tr>
                 <tr>
@@ -164,21 +171,22 @@
                 </tr>
                 <tr>
                     <td>Date Of Birth</td>
-                    <td><input type='date' name='birth_date' class='form-control' /></td>
+                    <td><input type='date' name='date_of_birth' class='form-control' /></td>
                 </tr>
                 <tr>
-                <tr>
-                    <td>Account status</td>
-                    <div class='form-check form-check-inline'>
-                        <input type='radio' name='account_status' value='active' class='form-check-input' id='account_status-active' required />
-                        <label class='form-check-label' for='account_status-active'>Active</label>
-                    </div>
-                    <div class='form-check form-check-inline'>
-                        <input type='radio' name='account_status' value='inactive' class='form-check-input' id='account_status-inactive' required />
-                        <label class='form-check-label' for='account_status-inactive'>Inactive</label>
-                    </div>
+                    <td>Account Status</td>
+                    <td>
+                        <div class='form-check form-check-inline'>
+                            <input type='radio' name='account_status' value='active' class='form-check-input' id='account_status-active' required />
+                            <label class='form-check-label' for='account_status-active'>Active</label>
+                        </div>
+                        <div class='form-check form-check-inline'>
+                            <input type='radio' name='account_status' value='inactive' class='form-check-input' id='account_status-inactive' required />
+                            <label class='form-check-label' for='account_status-inactive'>Inactive</label>
+                        </div>
                     </td>
                 </tr>
+
 
 
 
