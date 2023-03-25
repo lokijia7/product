@@ -66,6 +66,12 @@
                 if (empty($pass)) {
                     echo "<div class='alert alert-danger'>Please fill out the password field.</div>";
                     $flag = true;
+                } elseif (strlen($pass) < 8) {
+                    echo "<div class='alert alert-danger'>Password must be at least 8 characters long.</div>";
+                    $flag = true;
+                } elseif (!preg_match("#[0-9]+#", $pass) || !preg_match("#[a-zA-Z]+#", $pass)) {
+                    echo "<div class='alert alert-danger'>Password must contain both numbers and alphabets.</div>";
+                    $flag = true;
                 }
                 if (empty($confirmed_password)) {
                     echo "<div class='alert alert-danger'>Please fill out the confirmed password field.</div>";
@@ -128,9 +134,6 @@
                         $gender = "";
                         $date_of_birth = "";
                         $account_status = "";
-                        // Redirect to success page
-                        header("Location: success.php");
-                        exit();
                     } else {
                         echo "<div class='alert alert-danger'>Unable to save record.</div>";
                     }
