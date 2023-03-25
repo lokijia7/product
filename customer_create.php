@@ -45,29 +45,40 @@
             try {
                 // posted values
                 $username = htmlspecialchars(strip_tags($_POST['username']));
-                $password = htmlspecialchars(strip_tags($_POST['password']));
-                $confirm_password = htmlspecialchars(strip_tags($_POST['confirm_password']));
+                $pass = htmlspecialchars(strip_tags($_POST['pass']));
+                $confirmed_password = htmlspecialchars(strip_tags($_POST['confirmed_password']));
                 $first_name = htmlspecialchars(strip_tags($_POST['first_name']));
                 $last_name = htmlspecialchars(strip_tags($_POST['last_name']));
-                $gender = $_POST['gender'];
-                $registration_datetime = $_POST['created'];
+                if (isset($_POST['gender'])) $gender = $_POST['gender'];
                 $date_of_birth = htmlspecialchars(strip_tags($_POST['date_of_birth']));
-                $account_status = $_POST['account_status'];
+                if (isset($_POST['account_status'])) $account_status = $_POST['account_status'];
+
                 $flag = false;
 
                 // Check if any field is empty
                 if (empty($username)) {
                     echo "<div class='alert alert-danger'>Please fill out the username field.</div>";
                     $flag = true;
+                } elseif (strlen($username) < 6) {
+                    echo "<div class='alert alert-danger'>Username must be at least 6 characters long.</div>";
+                    $flag = true;
                 }
-                if (empty($password)) {
+                if (empty($pass)) {
                     echo "<div class='alert alert-danger'>Please fill out the password field.</div>";
                     $flag = true;
                 }
-                if (empty($confirm_password)) {
+                if (empty($confirmed_password)) {
                     echo "<div class='alert alert-danger'>Please fill out the confirmed password field.</div>";
                     $flag = true;
                 }
+                if ($flag == false) {
+                    // Check if passwords match
+                    if ($pass != $confirmed_password) {
+                        echo "<div class='alert alert-danger'>Passwords do not match.</div>";
+                        $flag = true;
+                    }
+                }
+
                 if (empty($first_name)) {
                     echo "<div class='alert alert-danger'>Please fill out the first name field.</div>";
                     $flag = true;
@@ -88,33 +99,38 @@
                     echo "<div class='alert alert-danger'>Please fill out the account status field.</div>";
                     $flag = true;
                 }
-                if ($flag == false) {
-                    // Check if passwords match
-                    if ($password != $confirm_password) {
-                        echo "<div class='alert alert-danger'>Passwords do not match.</div>";
-                        $flag = true;
-                    }
-                }
+
                 if ($flag == false) {
                     // insert query
-                    $query = "INSERT INTO customers SET name=:username, password=:password, first_name=:first_name, last_name=:last_name,gender=:gender,date_of_birth=:date_of_birth,created=:registration_datetime,account_status=:account_status;";
+                    $query = "INSERT INTO customers SET username=:username, pass=:pass, first_name=:first_name, last_name=:last_name, gender=:gender,date_of_birth=:date_of_birth, registration_datetime=:registration_datetime,account_status=:account_status;";
                     // prepare query for execution
                     $stmt = $con->prepare($query);
                     // bind the parameters
                     $stmt->bindParam(':username', $username);
-                    $stmt->bindParam(':password', $password);
+                    $stmt->bindParam(':pass', $pass);
                     $stmt->bindParam(':first_name', $first_name);
                     $stmt->bindParam(':last_name', $last_name);
                     $stmt->bindParam(':gender', $gender);
                     $stmt->bindParam(':date_of_birth', $date_of_birth);
-                    $stmt->bindParam(':created', $registration_datetime);
                     $stmt->bindParam(':account_status', $account_status);
+
                     // specify when this record was inserted to the database
                     $registration_datetime = date('Y-m-d H:i:s');
-                    $stmt->bindParam(':created', $registration_datetime);
-                    // Execute the query
+                    $stmt->bindParam(':registration_datetime', $registration_datetime);
                     if ($stmt->execute()) {
                         echo "<div class='alert alert-success'>Record was saved.</div>";
+                        // Clear form fields
+                        $username = "";
+                        $pass = "";
+                        $confirmed_password = "";
+                        $first_name = "";
+                        $last_name = "";
+                        $gender = "";
+                        $date_of_birth = "";
+                        $account_status = "";
+                        // Redirect to success page
+                        header("Location: success.php");
+                        exit();
                     } else {
                         echo "<div class='alert alert-danger'>Unable to save record.</div>";
                     }
@@ -136,37 +152,30 @@
             <table class='table table-hover table-responsive table-bordered'>
                 <tr>
                     <td>Username</td>
-                    <td><input type='varchar' name='username' class='form-control' /></td>
+                    <td><input type='varchar' name='username' value="<?php echo isset($username) ? htmlspecialchars($username) : ''; ?>" class='form-control' /></td>
+                </tr>
+                <td>First Name</td>
+                <td><input type='text' name='first_name' value="<?php echo isset($first_name) ? htmlspecialchars($first_name) : ''; ?>" class='form-control' /></td>
+                </tr>
+
+                <tr>
+                    <td>Last Name</td>
+                    <td><input type='varchar' name='last_name' value="<?php echo isset($last_name) ? htmlspecialchars($last_name) : ''; ?>" class='form-control' /></td>
                 </tr>
                 <tr>
                     <td>Password</td>
-                    <td><input type='password' name='password' class='form-control' /></td>
+                    <td><input type='password' name='pass' value="<?php echo isset($pass) ? htmlspecialchars($pass) : ''; ?>" class='form-control' /></td>
                 </tr>
                 <tr>
                     <td>Confirm Password</td>
-                    <td><input type='password' name='confirmed_password' class='form-control' /></td>
+                    <td><input type='password' name='confirmed_password' value="<?php echo isset($confirmed_password) ? htmlspecialchars($confirmed_password) : ''; ?>" class='form-control' /></td>
                 </tr>
-                <tr>
-                    <td>First Name</td>
-                    <td><input type='varchar' name='first_name' class='form-control' /></td>
-                </tr>
-                <tr>
-                <tr>
-                    <td>Last Name</td>
-                    <td><input type='varchar' name='last_name' class='form-control' /></td>
-                </tr>
-                <tr>
+
                 <tr>
                     <td>Gender</td>
                     <td>
-                        <div class='form-check form-check-inline'>
-                            <input type='radio' name='gender' value='male' class='form-check-input' id='gender-male' required />
-                            <label class='form-check-label' for='gender-male'>Male</label>
-                        </div>
-                        <div class='form-check form-check-inline'>
-                            <input type='radio' name='gender' value='female' class='form-check-input' id='gender-female' required />
-                            <label class='form-check-label' for='gender-female'>Female</label>
-                        </div>
+                        <input type='radio' name='gender' <?php if (isset($gender) && $gender == "male") echo "checked"; ?> value='male'>Male
+                        <input type='radio' name='gender' <?php if (isset($gender) && $gender == "female") echo "checked"; ?> value='female'>Female
                     </td>
                 </tr>
                 <tr>
@@ -176,14 +185,8 @@
                 <tr>
                     <td>Account Status</td>
                     <td>
-                        <div class='form-check form-check-inline'>
-                            <input type='radio' name='account_status' value='active' class='form-check-input' id='account_status-active' required />
-                            <label class='form-check-label' for='account_status-active'>Active</label>
-                        </div>
-                        <div class='form-check form-check-inline'>
-                            <input type='radio' name='account_status' value='inactive' class='form-check-input' id='account_status-inactive' required />
-                            <label class='form-check-label' for='account_status-inactive'>Inactive</label>
-                        </div>
+                        <input type='radio' name='account_status' <?php if (isset($account_status) && $account_status == "active") echo "checked"; ?> value='active'>Active
+                        <input type='radio' name='account_status' <?php if (isset($account_status) && $account_status == "inactive") echo "checked"; ?> value='inactive'>Inactive
                     </td>
                 </tr>
 
