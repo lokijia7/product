@@ -154,7 +154,7 @@
         <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
             <table class='table table-hover table-responsive table-bordered'>
                 <tr>
-                    <td>Username</td>
+                    <td>Username<br>*Username must at least 6 character</td>
                     <td><input type='varchar' name='username' value="<?php echo isset($username) ? htmlspecialchars($username) : ''; ?>" class='form-control' /></td>
                 </tr>
                 <td>First Name</td>
@@ -166,7 +166,7 @@
                     <td><input type='varchar' name='last_name' value="<?php echo isset($last_name) ? htmlspecialchars($last_name) : ''; ?>" class='form-control' /></td>
                 </tr>
                 <tr>
-                    <td>Password</td>
+                    <td>Password<br>*Password must at least 8 character, contain with numbers and alphabets</td>
                     <td><input type='password' name='pass' value="<?php echo isset($pass) ? htmlspecialchars($pass) : ''; ?>" class='form-control' /></td>
                 </tr>
                 <tr>
