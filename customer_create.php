@@ -53,56 +53,64 @@
                 $date_of_birth = htmlspecialchars(strip_tags($_POST['date_of_birth']));
                 if (isset($_POST['account_status'])) $account_status = $_POST['account_status'];
 
+                $uppercase = preg_match('/[A-Z]/', $pass);
+                $lowercase = preg_match('/[a-z]/', $pass);
+                $number = preg_match('/[0-9]/', $pass);
+
                 $flag = false;
 
                 // Check if any field is empty
                 if (empty($username)) {
-                    echo "<div class='alert alert-danger'>Please fill out the username field.</div>";
+                    $username_err = "Please fill out the username field.";
                     $flag = true;
-                } elseif (strlen($username) < 6) {
-                    echo "<div class='alert alert-danger'>Username must be at least 6 characters long.</div>";
+                }
+                if (strlen($username) < 6) {
+                    $username_err = "Username must be at least 6 characters long";
                     $flag = true;
                 }
                 if (empty($pass)) {
-                    echo "<div class='alert alert-danger'>Please fill out the password field.</div>";
+                    $pass_err = "Please fill out the password field.";
                     $flag = true;
-                } elseif (strlen($pass) < 8) {
-                    echo "<div class='alert alert-danger'>Password must be at least 8 characters long.</div>";
+                }
+                if (strlen($pass) < 8) {
+                    $pass_err = "Password must be at least 8 characters long.";
                     $flag = true;
-                } elseif (!preg_match("#[0-9]+#", $pass) || !preg_match("#[a-zA-Z]+#", $pass)) {
-                    echo "<div class='alert alert-danger'>Password must contain both numbers and alphabets.</div>";
+                }
+                if (!$uppercase || !$lowercase || !$number) {
+                    // Password does not meet the requirements
+                    $pass_err = "Password must be contain numbers, uppercase and lowercase alphabets.";
                     $flag = true;
                 }
                 if (empty($confirmed_password)) {
-                    echo "<div class='alert alert-danger'>Please fill out the confirmed password field.</div>";
+                    $confpass_err = "Please fill out the confirmed password field.";
                     $flag = true;
                 }
-                if ($flag == false) {
-                    // Check if passwords match
-                    if ($pass != $confirmed_password) {
-                        echo "<div class='alert alert-danger'>Passwords do not match.</div>";
-                        $flag = true;
-                    }
+
+                // Check if passwords match
+                if ($pass != $confirmed_password) {
+                    $confpass_err = "Passwords do not match.";
+                    $flag = true;
                 }
 
+
                 if (empty($first_name)) {
-                    echo "<div class='alert alert-danger'>Please fill out the first name field.</div>";
+                    $fname_err = "Please fill out the first name field.";
                     $flag = true;
                 }
                 if (empty($last_name)) {
-                    echo "<div class='alert alert-danger'>Please fill out the last name field.</div>";
+                    $lname_err = "Please fill out the last name field.";
                     $flag = true;
                 }
                 if (empty($gender)) {
-                    echo "<div class='alert alert-danger'>Please fill out the gender field.</div>";
+                    $gender_err = "Please fill out the gender field.";
                     $flag = true;
                 }
                 if (empty($date_of_birth)) {
-                    echo "<div class='alert alert-danger'>Please fill out the Date of birth field.</div>";
+                    $dob_err = "Please fill out the Date of birth field.";
                     $flag = true;
                 }
                 if (empty($account_status)) {
-                    echo "<div class='alert alert-danger'>Please fill out the account status field.</div>";
+                    $status_err = "Please fill out the account status field.";
                     $flag = true;
                 }
 
@@ -154,24 +162,40 @@
         <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
             <table class='table table-hover table-responsive table-bordered'>
                 <tr>
-                    <td>Username<br>*Username must at least 6 character</td>
-                    <td><input type='varchar' name='username' value="<?php echo isset($username) ? htmlspecialchars($username) : ''; ?>" class='form-control' /></td>
+                    <td>Username</td>
+                    <td>
+                        <input type='name' name='username' value="<?php echo isset($username) ? htmlspecialchars($username) : ''; ?>" class='form-control' required />
+                        <small>**Username must be at least 6 characters long.</small>
+                        <?php if (isset($username_err)) { ?><span class="text-danger">
+                                <br><?php echo $username_err; ?></span><?php } ?>
+                    </td>
                 </tr>
-                <td>First Name</td>
-                <td><input type='text' name='first_name' value="<?php echo isset($first_name) ? htmlspecialchars($first_name) : ''; ?>" class='form-control' /></td>
+
+                <tr>
+                    <td>First Name</td>
+                    <td>
+                        <input type='text' name='first_name' value="<?php echo isset($first_name) ? htmlspecialchars($first_name) : ''; ?>" class='form-control' />
+                        <?php if (isset($fname_err)) { ?><span class="text-danger"><?php echo $fname_err; ?></span><?php } ?>
+                    </td>
                 </tr>
 
                 <tr>
                     <td>Last Name</td>
-                    <td><input type='varchar' name='last_name' value="<?php echo isset($last_name) ? htmlspecialchars($last_name) : ''; ?>" class='form-control' /></td>
+                    <td><input type='varchar' name='last_name' value="<?php echo isset($last_name) ? htmlspecialchars($last_name) : ''; ?>" class='form-control' /> <?php if (isset($lname_err)) { ?><span class="text-danger"><?php echo $lname_err; ?></span><?php } ?></td>
                 </tr>
                 <tr>
-                    <td>Password<br>*Password must at least 8 character, contain with numbers and alphabets</td>
-                    <td><input type='password' name='pass' value="<?php echo isset($pass) ? htmlspecialchars($pass) : ''; ?>" class='form-control' /></td>
+                    <td>Password</td>
+                    <td>
+                        <input type='password' name='pass' value="<?php echo isset($pass) ? htmlspecialchars($pass) : ''; ?>" class='form-control' required />
+                        <small>**Password must be at least 8 character, contain numbers, uppercase and lowercase alphabets."</small>
+                        <?php if (isset($pass_err)) { ?><span class="text-danger">
+                                <br><?php echo $pass_err; ?></span><?php } ?>
+                    </td>
                 </tr>
+
                 <tr>
                     <td>Confirm Password</td>
-                    <td><input type='password' name='confirmed_password' value="<?php echo isset($confirmed_password) ? htmlspecialchars($confirmed_password) : ''; ?>" class='form-control' /></td>
+                    <td><input type='password' name='confirmed_password' value="<?php echo isset($confirmed_password) ? htmlspecialchars($confirmed_password) : ''; ?>" class='form-control' /><?php if (isset($confpass_err)) { ?><span class="text-danger"><?php echo $confpass_err; ?></span><?php } ?></td>
                 </tr>
 
                 <tr>
@@ -179,17 +203,19 @@
                     <td>
                         <input type='radio' name='gender' <?php if (isset($gender) && $gender == "male") echo "checked"; ?> value='male'>Male
                         <input type='radio' name='gender' <?php if (isset($gender) && $gender == "female") echo "checked"; ?> value='female'>Female
+                        <?php if (isset($gender_err)) { ?><span class="text-danger"><?php echo $gender_err; ?></span><?php } ?>
                     </td>
                 </tr>
                 <tr>
                     <td>Date Of Birth</td>
-                    <td><input type='date' name='date_of_birth' class='form-control' /></td>
+                    <td><input type='date' name='date_of_birth' class='form-control' /><?php if (isset($dob_err)) { ?><span class="text-danger"><?php echo $dob_err; ?></span><?php } ?></td>
                 </tr>
                 <tr>
                     <td>Account Status</td>
                     <td>
                         <input type='radio' name='account_status' <?php if (isset($account_status) && $account_status == "active") echo "checked"; ?> value='active'>Active
                         <input type='radio' name='account_status' <?php if (isset($account_status) && $account_status == "inactive") echo "checked"; ?> value='inactive'>Inactive
+                        <?php if (isset($status_err)) { ?><span class="text-danger"><?php echo $gender_err; ?></span><?php } ?>
                     </td>
                 </tr>
 

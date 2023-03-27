@@ -54,42 +54,42 @@
 
                 // Check if any field is empty
                 if (empty($name)) {
-                    echo "<div class='alert alert-danger'>Please fill out the Name field.</div>";
-                    $flag = true;
-                }
-                if (empty($description)) {
-                    echo "<div class='alert alert-danger'>Please fill out the Description field.</div>";
+                    $name_err = "Please fill out the Name field.";
                     $flag = true;
                 }
                 if (empty($price)) {
-                    echo "<div class='alert alert-danger'>Please fill out the Price field.</div>";
+                    $price_err = "Please fill out the Price field.";
                     $flag = true;
                 }
                 if (empty($manufacture_date)) {
-                    echo "<div class='alert alert-danger'>Please fill out the Manufacture Date field.</div>";
+                    $manu_err = "Please fill out the Manufacture Date field.</div>";
                     $flag = true;
                 }
 
                 // check if promotion price is less than original price
                 if (!empty($promotion_price)) {
                     if ($promotion_price >= $price) {
-                        echo "<div class='alert alert-danger'>Promotion price must be cheaper than original price.</div>";
+                        $promo_err = "Promotion price must be cheaper than original price.";
                         $flag = true;
                     }
                 }
                 // check if expiry date is later than manufacture date
                 if (!empty($expiry_date)) {
                     if ($expiry_date <= $manufacture_date) {
-                        echo "<div class='alert alert-danger'>Expiry date must be later than manufacture date.</div>";
+                        $exp_err = "Expiry date must be later than manufacture date.";
                         $flag = true;
                     }
                 }
+                // Set default values for non-required fields
                 if (empty($promotion_price)) {
                     $promotion_price = 0;
+                    $flag = false;
                 }
                 if (empty($expiry_date)) {
-                    $expiry_date  = 0;
+                    $expiry_date  = null;
+                    $flag = false;
                 }
+
 
 
 
@@ -112,6 +112,13 @@
                     // Execute the query
                     if ($stmt->execute()) {
                         echo "<div class='alert alert-success'>Record was saved.</div>";
+                        // Clear form fields
+                        $name = "";
+                        $description = "";
+                        $price = "";
+                        $promotion_price = "";
+                        $manufacture_date = "";
+                        $expiry_date = "";
                     } else {
                         echo "<div class='alert alert-danger'>Unable to save record.</div>";
                     }
@@ -137,29 +144,34 @@
             <table class='table table-hover table-responsive table-bordered'>
                 <tr>
                     <td>Name</td>
-                    <td><input type='varchar' name='name' value="<?php echo isset($name) ? htmlspecialchars($name) : ''; ?>" class='form-control' /></td>
+                    <td><input type='text' name='name' class="form-control" value="<?php echo isset($name) ? htmlspecialchars($name) : ''; ?>" />
+                        <?php if (isset($name_err)) { ?><span class="text-danger"><?php echo $name_err; ?></span><?php } ?></td>
                 </tr>
                 <tr>
                     <td>Description</td>
-                    <td><textarea name='description' value="<?php echo isset($description) ? htmlspecialchars($description) : ''; ?>" class='form-control'></textarea></td>
+                    <td><textarea name='description' class="form-control" value="<?php echo isset($description) ? htmlspecialchars($description) : ''; ?>"></textarea>
+                        <?php if (isset($description_err)) { ?><span class="text-danger"><?php echo $description_err; ?></span><?php } ?></td>
                 </tr>
                 <tr>
                     <td>Price</td>
-                    <td><input type='number' name='price' value="<?php echo isset($price) ? htmlspecialchars($price) : ''; ?>" class='form-control' /></td>
+                    <td><input type='number' name='price' class='form-control' value="<?php echo isset($price) ? htmlspecialchars($price) : ''; ?>" />
+                        <?php if (isset($price_err)) { ?><span class="text-danger"><?php echo $price_err; ?></span><?php } ?></td>
                 </tr>
                 <tr>
                 <tr>
                     <td>Promotion price</td>
-                    <td><input type='number' name='promotion_price' value="<?php echo isset($promotion_price) ? htmlspecialchars($promotion_price) : ''; ?>" class='form-control' /></td>
+                    <td><input type='number' name='promotion_price' class='form-control' value="<?php echo isset($promotion_price) ? htmlspecialchars($promotion_price) : ''; ?>" /><?php if (isset($pro_err)) { ?><span class="text-danger"><?php echo $pro_err; ?></span><?php } ?></td>
                 </tr>
                 <tr>
                 <tr>
                     <td>Manufacture date</td>
-                    <td><input type='date' name='manufacture_date' value="<?php echo isset($manufacture_date) ? htmlspecialchars($manufacture_date) : ''; ?>" class='form-control' /></td>
+                    <td><input type='date' name='manufacture_date' class='form-control' value="<?php echo isset($manufacture_date) ? htmlspecialchars($manufacture_date) : ''; ?>" />
+                        <?php if (isset($manu_err)) { ?><span class="text-danger"><?php echo $manu_err; ?></span><?php } ?></td>
                 </tr>
                 <tr>
                     <td>Expiry date</td>
-                    <td><input type='date' name='expiry_date' value="<?php echo isset($expiry_date) ? htmlspecialchars($expiry_date) : ''; ?>" class='form-control' /></td>
+                    <td><input type='date' name='expiry_date' class='form-control' value="<?php echo isset($expiry_date) ? htmlspecialchars($expiry_date) : ''; ?>" />
+                        <?php if (isset($exp_err)) { ?><span class="text-danger"><?php echo $manu_err; ?></span><?php } ?></td>
                 </tr>
 
 
