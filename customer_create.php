@@ -56,6 +56,7 @@
                 $uppercase = preg_match('/[A-Z]/', $pass);
                 $lowercase = preg_match('/[a-z]/', $pass);
                 $number = preg_match('/[0-9]/', $pass);
+                $numuser = preg_match('/[0-9]/', $username);
 
                 $flag = false;
 
@@ -68,6 +69,11 @@
                     $username_err = "Username must be at least 6 characters long";
                     $flag = true;
                 }
+                if ($numuser) {
+                    $username_err = "Username must not have number";
+                    $flag = true;
+                }
+
                 if (empty($pass)) {
                     $pass_err = "Please fill out the password field.";
                     $flag = true;
