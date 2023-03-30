@@ -44,8 +44,8 @@
 
             // values to fill up our form
             $username = $row['username'];
-            $fname = $row['fname'];
-            $lname = $row['lname'];
+            $first_name = $row['first_name'];
+            $last_name = $row['last_name'];
             $pass = $row['pass'];
             $gender = $row['gender'];
             $date_of_birth = $row['date_of_birth'];
@@ -68,11 +68,11 @@
             </tr>
             <tr>
                 <td>First name</td>
-                <td><?php echo htmlspecialchars($fname, ENT_QUOTES);  ?></td>
+                <td><?php echo htmlspecialchars($first_name, ENT_QUOTES);  ?></td>
             </tr>
             <tr>
                 <td>Last name</td>
-                <td><?php echo htmlspecialchars($lname, ENT_QUOTES);  ?></td>
+                <td><?php echo htmlspecialchars($last_name, ENT_QUOTES);  ?></td>
             </tr>
             <tr>
                 <td>Password</td>
