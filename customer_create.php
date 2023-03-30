@@ -62,10 +62,9 @@
                 $numuser = preg_match('/[0-9]/', $username);
 
                 $flag = false;
-
-                // Check if any field is empty
-                if (empty($username)) {
-                    $username_err = "Please fill out the username field.";
+                // Check if any field is empty or just whitespace
+                if (empty(trim($name))) {
+                    $name_err = "Please fill out the Name field.";
                     $flag = true;
                 } else if (strlen($username) < 6) {
                     $username_err = "Username must be at least 6 characters long";
