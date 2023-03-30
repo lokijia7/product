@@ -60,11 +60,13 @@
                 $lowercase = preg_match('/[a-z]/', $pass);
                 $number = preg_match('/[0-9]/', $pass);
                 $numuser = preg_match('/[0-9]/', $username);
+                $username = trim($_POST['username']);
 
                 $flag = false;
-                // Check if any field is empty or just whitespace
-                if (empty(trim($username))) {
-                    $name_err = "Please fill out the Name field.";
+
+                // Check if any field is empty
+                if (empty($username)) {
+                    $username_err = "Please fill out the username field.";
                     $flag = true;
                 } else if (strlen($username) < 6) {
                     $username_err = "Username must be at least 6 characters long";
