@@ -64,12 +64,10 @@
                 if (empty($username)) {
                     $username_err = "Please fill out the username field.";
                     $flag = true;
-                }
-                if (strlen($username) < 6) {
+                } else if (strlen($username) < 6) {
                     $username_err = "Username must be at least 6 characters long";
                     $flag = true;
-                }
-                if ($numuser) {
+                } else if ($numuser) {
                     $username_err = "Username must not have number";
                     $flag = true;
                 }
@@ -77,17 +75,14 @@
                 if (empty($pass)) {
                     $pass_err = "Please fill out the password field.";
                     $flag = true;
-                }
-                if (strlen($pass) < 8) {
+                } else if (strlen($pass) < 8) {
                     $pass_err = "Password must be at least 8 characters long.";
                     $flag = true;
-                }
-                if (!$uppercase || !$lowercase || !$number) {
+                } else if (!$uppercase || !$lowercase || !$number) {
                     // Password does not meet the requirements
                     $pass_err = "Password must be contain numbers, uppercase and lowercase alphabets.";
                     $flag = true;
-                }
-                if (empty($confirmed_password)) {
+                } else if (empty($confirmed_password)) {
                     $confpass_err = "Please fill out the confirmed password field.";
                     $flag = true;
                 }
