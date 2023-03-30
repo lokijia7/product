@@ -149,7 +149,7 @@
             <table class='table table-hover table-responsive table-bordered'>
                 <tr>
                     <td>Name</td>
-                    <td><input type='text' name='name' class="form-control" value="<?php echo isset($name) ? htmlspecialchars($name) : ''; ?>" />
+                    <td><input type='text' name='name' class="form-control" required value="<?php echo isset($name) ? htmlspecialchars($name) : ''; ?>" />
                         <?php if (isset($name_err)) { ?><span class="text-danger"><?php echo $name_err; ?></span><?php } ?></td>
                 </tr>
                 <tr>
