@@ -63,7 +63,7 @@
 
                 $flag = false;
                 // Check if any field is empty or just whitespace
-                if (empty(trim($name))) {
+                if (empty(trim($username))) {
                     $name_err = "Please fill out the Name field.";
                     $flag = true;
                 } else if (strlen($username) < 6) {
