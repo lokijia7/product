@@ -64,7 +64,11 @@
                 if (empty($name)) {
                     $name_err = "Please fill out the Name field.";
                     $flag = true;
+                } elseif (strlen(trim($name)) == 0) {
+                    $name_err = "Please enter a valid Name.";
+                    $flag = true;
                 }
+
                 if (empty($price)) {
                     $price_err = "Please fill out the Price field.";
                     $flag = true;
