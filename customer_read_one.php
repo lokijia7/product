@@ -43,9 +43,13 @@
             $row = $stmt->fetch(PDO::FETCH_ASSOC);
 
             // values to fill up our form
-            $name = $row['name'];
-            $description = $row['description'];
-            $price = $row['price'];
+            $username = $row['username'];
+            $fname = $row['fname'];
+            $lname = $row['lname'];
+            $pass = $row['pass'];
+            $gender = $row['gender'];
+            $date_of_birth = $row['date_of_birth'];
+            $account_status = $row['account_status'];
         }
 
         // show error
