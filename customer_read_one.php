@@ -87,7 +87,7 @@
                 <td><?php echo htmlspecialchars($date_of_birth, ENT_QUOTES);  ?></td>
             </tr>
             <tr>
-                <td>Account Stutus</td>
+                <td>Account Status</td>
                 <td><?php echo htmlspecialchars($account_status, ENT_QUOTES);  ?></td>
             </tr>
             <tr>
