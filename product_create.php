@@ -55,6 +55,8 @@
                 $expiry_date = htmlspecialchars(strip_tags($_POST['expiry_date']));
                 $flag = false;
 
+                $name = trim($_POST['name']);
+
                 // Check if any field is empty
                 if (empty($name)) {
                     $name_err = "Please fill out the Name field.";
