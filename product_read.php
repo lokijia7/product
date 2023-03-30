@@ -64,6 +64,9 @@
             echo "<th>Name</th>";
             echo "<th>Description</th>";
             echo "<th>Price</th>";
+            echo "<th>Promotion Price</th>";
+            echo "<th>Manufacture Date</th>";
+            echo "<th>Expiry Date</th>";
             echo "<th>Action</th>";
             echo "</tr>";
 
@@ -78,6 +81,9 @@
                 echo "<td>{$name}</td>";
                 echo "<td>{$description}</td>";
                 echo "<td>{$price}</td>";
+                echo "<td>{$promotion_price}</td>";
+                echo "<td>{$manufacture_date}</td>";
+                echo "<td>{$expiry_date}</td>";
                 echo "<td>";
                 // read one record
                 echo "<a href='product_read_one.php?id={$id}' class='btn btn-info m-r-1em'>Read</a>";
