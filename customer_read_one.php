@@ -63,16 +63,32 @@
         <!--we have our html table here where the record will be displayed-->
         <table class='table table-hover table-responsive table-bordered'>
             <tr>
-                <td>Name</td>
-                <td><?php echo htmlspecialchars($name, ENT_QUOTES);  ?></td>
+                <td>Username</td>
+                <td><?php echo htmlspecialchars($username, ENT_QUOTES);  ?></td>
             </tr>
             <tr>
-                <td>Description</td>
-                <td><?php echo htmlspecialchars($description, ENT_QUOTES);  ?></td>
+                <td>First name</td>
+                <td><?php echo htmlspecialchars($fname, ENT_QUOTES);  ?></td>
             </tr>
             <tr>
-                <td>Price</td>
-                <td><?php echo htmlspecialchars($price, ENT_QUOTES);  ?></td>
+                <td>Last name</td>
+                <td><?php echo htmlspecialchars($lname, ENT_QUOTES);  ?></td>
+            </tr>
+            <tr>
+                <td>Password</td>
+                <td><?php echo htmlspecialchars($pass, ENT_QUOTES);  ?></td>
+            </tr>
+            <tr>
+                <td>Gender</td>
+                <td><?php echo htmlspecialchars($gender, ENT_QUOTES);  ?></td>
+            </tr>
+            <tr>
+                <td>Date Of Birth</td>
+                <td><?php echo htmlspecialchars($date_of_birth, ENT_QUOTES);  ?></td>
+            </tr>
+            <tr>
+                <td>Account Stutus</td>
+                <td><?php echo htmlspecialchars($account_status, ENT_QUOTES);  ?></td>
             </tr>
             <tr>
                 <td></td>
