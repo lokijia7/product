@@ -30,7 +30,7 @@
         // read current record's data
         try {
             // prepare select query
-            $query = "SELECT id, username, fname, lname, pass, gender, date_of_birth, account_status FROM customers WHERE id = ? LIMIT 0,1";
+            $query = "SELECT id, username, first_name, last_name, pass, gender, date_of_birth, account_status FROM customers WHERE id = ? LIMIT 0,1";
             $stmt = $con->prepare($query);
 
             // this is the first question mark
