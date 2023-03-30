@@ -74,6 +74,18 @@
                 <td><?php echo htmlspecialchars($price, ENT_QUOTES);  ?></td>
             </tr>
             <tr>
+                <td>Promotion Price</td>
+                <td><?php echo htmlspecialchars($promotion_price, ENT_QUOTES);  ?></td>
+            </tr>
+            <tr>
+                <td>Manufacture Date</td>
+                <td><?php echo htmlspecialchars($manufacture_date, ENT_QUOTES);  ?></td>
+            </tr>
+            <tr>
+                <td>Expiry Date</td>
+                <td><?php echo htmlspecialchars($expiry_date, ENT_QUOTES);  ?></td>
+            </tr>
+            <tr>
                 <td></td>
                 <td>
                     <a href='index.php' class='btn btn-danger'>Back to read products</a>
