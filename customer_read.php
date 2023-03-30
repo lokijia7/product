@@ -80,8 +80,8 @@
                 echo "<tr>";
                 echo "<td>{$id}</td>";
                 echo "<td>{$username}</td>";
-                echo "<td>{$fname}</td>";
-                echo "<td>{$lname}</td>";
+                echo "<td>{$first_name}</td>";
+                echo "<td>{$last_name}</td>";
                 echo "<td>{$pass}</td>";
                 echo "<td>{$gender}</td>";
                 echo "<td>{$date_of_birth}</td>";
