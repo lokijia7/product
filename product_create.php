@@ -53,9 +53,12 @@
                 $promotion_price = htmlspecialchars(strip_tags($_POST['promotion_price']));
                 $manufacture_date = htmlspecialchars(strip_tags($_POST['manufacture_date']));
                 $expiry_date = htmlspecialchars(strip_tags($_POST['expiry_date']));
-                $flag = false;
 
                 $name = trim($_POST['name']);
+
+                $flag = false;
+
+
 
                 // Check if any field is empty
                 if (empty($name)) {
