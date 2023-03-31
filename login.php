@@ -25,7 +25,7 @@
         // check if the username/email and password are not empty
         if (!empty($username_email) && !empty($password)) {
             // create a SQL query to check if the user exists and the password is correct
-            $query = "SELECT * FROM users WHERE (username = '$username_email' OR email = '$username_email') AND password = '$password'";
+            $query = "SELECT * FROM customers WHERE (username = '$username' OR email = '$username') AND password = '$pass'";
             $result = mysqli_query($conn, $query);
 
             // check if the query returned a result
