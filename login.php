@@ -26,12 +26,15 @@
         if (!empty($username_email) && !empty($password)) {
             // create a SQL query to check if the user exists and the password is correct
             $query = "SELECT * FROM users WHERE (username = '$username_email' OR email = '$username_email') AND password = '$password'";
-            $result = mysqli_query($conn, $query);
+            $stmt = $conn->prepare($query);
+            $stmt->bindParam(':username_email', $username_email);
+            $stmt->bindParam(':password', $password);
+            $stmt->execute();
 
             // check if the query returned a result
-            if (mysqli_num_rows($result) == 1) {
+            if ($stmt->rowCount() == 1) {
                 // get the user data from the database
-                $user = mysqli_fetch_assoc($result);
+                $user = $stmt->fetch();
 
                 // check if the user account is active
                 if ($user['status'] == 'active') {
