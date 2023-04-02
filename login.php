@@ -58,6 +58,7 @@
             } else {
                 $error_msg = 'Please enter your password.';
             }
+        }
     }
     ?>
 
