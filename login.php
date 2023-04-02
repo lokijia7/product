@@ -25,7 +25,7 @@
         // check if the username/email and password are not empty
         if (!empty($username_email) && !empty($password)) {
             // create a SQL query to check if the user exists and the password is correct
-            $query = "SELECT * FROM customers WHERE (username = '$username' OR email = '$username') AND password = '$pass'";
+            $query = "SELECT * FROM users WHERE (username = '$username_email' OR email = '$username_email') AND password = '$password'";
             $result = mysqli_query($conn, $query);
 
             // check if the query returned a result
@@ -36,9 +36,9 @@
                 // check if the user account is active
                 if ($user['status'] == 'active') {
                     // set the user session variables
-                    $_SESSION['user_id'] = $user['id'];
+                    $_SESSION['id'] = $user['id'];
                     $_SESSION['username'] = $user['username'];
-                    $_SESSION['email'] = $user['email'];
+                    $_SESSION['email'] = $user['username'];
 
                     // redirect the user to the home page
                     header('Location: home.php');
@@ -53,8 +53,11 @@
             }
         } else {
             // show an error message if the username/email or password is empty
-            $error_msg = 'Please enter your username/email and password.';
-        }
+            if (empty($username_email)) {
+                $error_msg = 'Please enter your username/email.';
+            } else {
+                $error_msg = 'Please enter your password.';
+            }
     }
     ?>
 
@@ -68,16 +71,18 @@
                         <form id="login-form" class="form" action="" method="post">
                             <h3 class="text-center text-info">Login</h3>
                             <div class="form-group">
-                                <label for="username" class="text-info">Username:</label><br>
+                                <label for="username or email" class="text-info">Username / Email:</label><br>
                                 <input type="text" name="username" id="username" class="form-control">
+                                <?php if (isset($error_msg)) { ?><span class="text-danger"><?php echo $error_msg; ?></span><?php } ?>
                             </div>
                             <div class="form-group">
                                 <label for="password" class="text-info">Password:</label><br>
-                                <input type="text" name="password" id="password" class="form-control">
+                                <input type="password" name="password" id="password" class="form-control">
+                                <?php if (isset($error_msg)) { ?><span class="text-danger"><?php echo $error_msg; ?></span><?php } ?>
                             </div>
                             <div class="form-group">
                                 <label for="remember-me" class="text-info"><span>Remember me</span> <span><input id="remember-me" name="remember-me" type="checkbox"></span></label><br>
-                                <input type="submit" name="submit" class="btn btn-info btn-md" value="submit">
+                                <input type="submit" name="login" class="btn btn-info btn-md" value="login">
                             </div>
                             <div id="register-link" class="text-right">
                                 <a href="#" class="text-info">Register here</a>
