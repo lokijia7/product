@@ -55,7 +55,8 @@
             // show an error message if the username/email or password is empty
             if (empty($username_email)) {
                 $error_msg = 'Please enter your username/email.';
-            } else {
+            }
+            if (empty($password)) {
                 $error_msg = 'Please enter your password.';
             }
         }
