@@ -54,10 +54,10 @@
         } else {
             // show an error message if the username/email or password is empty
             if (empty($username_email)) {
-                $error_msg = 'Please enter your username/email.';
+                $error_msg_ue = 'Please enter your username/email.';
             }
             if (empty($password)) {
-                $error_msg = 'Please enter your password.';
+                $error_msg_p = 'Please enter your password.';
             }
         }
     }
@@ -74,13 +74,13 @@
                             <h3 class="text-center text-info">Login</h3>
                             <div class="form-group">
                                 <label for="username or email" class="text-info">Username / Email:</label><br>
-                                <input type="text" name="username" id="username" class="form-control">
-                                <?php if (isset($error_msg)) { ?><span class="text-danger"><?php echo $error_msg; ?></span><?php } ?>
+                                <input type="text" name="username_email" id="username" class="form-control">
+                                <?php if (isset($error_msg_ue)) { ?><span class="text-danger"><?php echo $error_msg_ue; ?></span><?php } ?>
                             </div>
                             <div class="form-group">
                                 <label for="password" class="text-info">Password:</label><br>
                                 <input type="password" name="password" id="password" class="form-control">
-                                <?php if (isset($error_msg)) { ?><span class="text-danger"><?php echo $error_msg; ?></span><?php } ?>
+                                <?php if (isset($error_msg_p)) { ?><span class="text-danger"><?php echo $error_msg_p; ?></span><?php } ?>
                             </div>
                             <div class="form-group">
                                 <label for="remember-me" class="text-info"><span>Remember me</span> <span><input id="remember-me" name="remember-me" type="checkbox"></span></label><br>
