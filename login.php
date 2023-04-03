@@ -15,6 +15,8 @@
     error_reporting(E_ALL);
 
     include('config/database.php'); // include database connection file  
+    // start session
+    session_start();
 
     // check if the login form is submitted
     if (isset($_POST['login'])) {
