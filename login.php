@@ -10,7 +10,6 @@
 </head>
 
 <body>
-
     <?php
     ini_set('display_errors', 1);
     error_reporting(E_ALL);
@@ -27,11 +26,10 @@
 
         // check if the username/email and password are not empty
         if (!empty($username) && !empty($pass)) {
-            // create a SQL query to check if the user exists and the password is correct
-            $query = "SELECT * FROM customers WHERE username=:username AND pass=:pass";
+            // create a SQL query to check if the user exists
+            $query = "SELECT * FROM customers WHERE username=:username";
             $stmt = $con->prepare($query);
             $stmt->bindParam(':username', $username);
-            $stmt->bindParam(':pass', $pass);
             $stmt->execute();
 
             // check if the query returned a result
@@ -39,21 +37,27 @@
                 // get the user data from the database
                 $user = $stmt->fetch();
 
-                // check if the user account is active
-                if ($user['account_status'] == 'active') {
-                    // set the user session variables
-                    $_SESSION['username'] = $username;
+                // check if the entered password matches the password in the database
+                if ($user['pass'] == $pass) {
+                    // check if the user account is active
+                    if ($user['account_status'] == 'active') {
+                        // set the user session variables
+                        $_SESSION['username'] = $username;
 
-                    // redirect the user to the home page
-                    header('Location: home.php');
-                    exit;
+                        // redirect the user to the home page
+                        header('Location: home.php');
+                        exit;
+                    } else {
+                        // show an error message if the user account is inactive
+                        echo "<div class='alert alert-danger'>Your account is inactive. Please contact the administrator.</div>";
+                    }
                 } else {
-                    // show an error message if the user account is inactive
-                    echo "<div class='alert alert-danger'>Your account is inactive. Please contact the administrator.</div>";
+                    // show an error message if the password is incorrect
+                    echo "<div class='alert alert-danger'>Incorrect password.</div>";
                 }
             } else {
-                // show an error message if the username/email or password is incorrect
-                echo "<div class='alert alert-danger'>Invalid username/email or password.</div>";
+                // show an error message if the username/email is invalid
+                echo "<div class='alert alert-danger'>Invalid username/email.</div>";
             }
         } else {
             // show an error message if the username/email or password is empty
@@ -66,6 +70,7 @@
         }
     }
     ?>
+
 
 
     <div id="login">
