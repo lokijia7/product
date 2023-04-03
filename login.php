@@ -49,11 +49,11 @@
                     exit;
                 } else {
                     // show an error message if the user account is inactive
-                    $error_msg = 'Your account is inactive. Please contact the administrator.';
+                    echo "<div class='alert alert-danger'>Your account is inactive. Please contact the administrator.</div>";
                 }
             } else {
                 // show an error message if the username/email or password is incorrect
-                $error_msg = 'Invalid username/email or password.';
+                echo "<div class='alert alert-danger'>Invalid username/email or password.</div>";
             }
         } else {
             // show an error message if the username/email or password is empty
