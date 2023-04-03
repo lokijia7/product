@@ -71,11 +71,11 @@
             </tr>
             <tr>
                 <td>Price</td>
-                <td><?php echo htmlspecialchars($price, ENT_QUOTES);  ?></td>
+                <td>RM <?php echo number_format($price, 2); ?></td>
             </tr>
             <tr>
                 <td>Promotion Price</td>
-                <td><?php echo htmlspecialchars($promotion_price, ENT_QUOTES);  ?></td>
+                <td>RM <?php echo number_format($price, 2); ?></td>
             </tr>
             <tr>
                 <td>Manufacture Date</td>
