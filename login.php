@@ -12,23 +12,26 @@
 <body>
 
     <?php
-    include("database.php"); // include database connection file  
+    ini_set('display_errors', 1);
+    error_reporting(E_ALL);
+
+    include('config/database.php'); // include database connection file  
     // start session
     session_start();
 
     // check if the login form is submitted
     if (isset($_POST['login'])) {
         // get the username/email and password from the form
-        $username_email = $_POST['username_email'];
-        $password = $_POST['password'];
+        $username = $_POST['username'];
+        $pass = $_POST['pass'];
 
         // check if the username/email and password are not empty
-        if (!empty($username_email) && !empty($password)) {
+        if (!empty($username) && !empty($pass)) {
             // create a SQL query to check if the user exists and the password is correct
-            $query = "SELECT * FROM users WHERE (username = '$username_email' OR email = '$username_email') AND password = '$password'";
-            $stmt = $conn->prepare($query);
-            $stmt->bindParam(':username_email', $username_email);
-            $stmt->bindParam(':password', $password);
+            $query = "SELECT * FROM customers WHERE username=:username AND pass=:pass";
+            $stmt = $con->prepare($query);
+            $stmt->bindParam(':username', $username);
+            $stmt->bindParam(':pass', $pass);
             $stmt->execute();
 
             // check if the query returned a result
@@ -37,11 +40,9 @@
                 $user = $stmt->fetch();
 
                 // check if the user account is active
-                if ($user['status'] == 'active') {
+                if ($user['account_status'] == 'active') {
                     // set the user session variables
-                    $_SESSION['id'] = $user['id'];
-                    $_SESSION['username'] = $user['username'];
-                    $_SESSION['email'] = $user['username'];
+                    $_SESSION['username'] = $username;
 
                     // redirect the user to the home page
                     header('Location: home.php');
@@ -56,10 +57,10 @@
             }
         } else {
             // show an error message if the username/email or password is empty
-            if (empty($username_email)) {
+            if (empty($username)) {
                 $error_msg_ue = 'Please enter your username/email.';
             }
-            if (empty($password)) {
+            if (empty($pass)) {
                 $error_msg_p = 'Please enter your password.';
             }
         }
@@ -77,12 +78,12 @@
                             <h3 class="text-center text-info">Login</h3>
                             <div class="form-group">
                                 <label for="username or email" class="text-info">Username / Email:</label><br>
-                                <input type="text" name="username_email" id="username" class="form-control">
+                                <input type="text" name="username" id="username" class="form-control">
                                 <?php if (isset($error_msg_ue)) { ?><span class="text-danger"><?php echo $error_msg_ue; ?></span><?php } ?>
                             </div>
                             <div class="form-group">
                                 <label for="password" class="text-info">Password:</label><br>
-                                <input type="password" name="password" id="password" class="form-control">
+                                <input type="password" name="pass" id="password" class="form-control">
                                 <?php if (isset($error_msg_p)) { ?><span class="text-danger"><?php echo $error_msg_p; ?></span><?php } ?>
                             </div>
                             <div class="form-group">
