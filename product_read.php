@@ -41,8 +41,6 @@
         // include database connection
         include 'config/database.php';
 
-        // delete message prompt will be here
-
         // select all data
         $query = "SELECT * FROM products";
         $stmt = $con->prepare($query);
@@ -81,8 +79,8 @@
                 echo "<td>{$id}</td>";
                 echo "<td>{$name}</td>";
                 echo "<td>{$description}</td>";
-                echo "<td>{$price}</td>";
-                echo "<td>{$promotion_price}</td>";
+                echo "<td>" . 'RM' . number_format($price, 2) . "</td>";
+                echo "<td>" . 'RM' . number_format($promotion_price, 2) . "</td>";
                 echo "<td>{$manufacture_date}</td>";
                 echo "<td>{$expiry_date}</td>";
                 echo "<td>";
