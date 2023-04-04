@@ -38,7 +38,7 @@
                 $user = $stmt->fetch();
 
                 // check if the entered password matches the password in the database
-                if ($user['pass'] == $pass) {
+                if ($user['pass'] == md5($pass)) {
                     // check if the user account is active
                     if ($user['account_status'] == 'active') {
                         // set the user session variables

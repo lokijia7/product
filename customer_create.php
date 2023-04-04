@@ -49,8 +49,8 @@
             try {
                 // posted values
                 $username = htmlspecialchars(strip_tags($_POST['username']));
-                $pass = htmlspecialchars(strip_tags($_POST['pass']));
-                $confirmed_password = htmlspecialchars(strip_tags($_POST['confirmed_password']));
+                $pass = $_POST['pass'];
+                $confirmed_password = $_POST['confirmed_password'];
                 $first_name = htmlspecialchars(strip_tags($_POST['first_name']));
                 $last_name = htmlspecialchars(strip_tags($_POST['last_name']));
                 if (isset($_POST['gender'])) $gender = $_POST['gender'];
@@ -96,6 +96,8 @@
                 if ($pass != $confirmed_password) {
                     $confpass_err = "Passwords do not match.";
                     $flag = true;
+                } else {
+                    $pass = md5($pass);
                 }
 
 
