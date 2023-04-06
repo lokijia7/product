@@ -32,7 +32,6 @@
                 $category_description = htmlspecialchars(strip_tags($_POST['category_description']));
                 if (isset($_POST['category_status'])) $category_status = $_POST['category_status'];
 
-                $category_name = trim($_POST['category_name']);
 
                 $flag = false;
 
