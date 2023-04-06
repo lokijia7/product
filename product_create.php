@@ -144,8 +144,26 @@
                         <?php if (isset($description_err)) { ?><span class="text-danger"><?php echo $description_err; ?></span><?php } ?></td>
                 </tr>
                 <tr>
-                    <td>Category Name</td>
-                    <td><input type='text' name='category_name' class="form-control" value="<?php echo isset($category_name) ? htmlspecialchars($category_name) : ''; ?>" /></td>
+                    <td>Category</td>
+                    <td>
+                        <?php
+                        // include database connection
+                        include 'config/database.php';
+
+                        // select all categories
+                        $query = "SELECT category_name FROM product_category";
+                        $stmt = $con->prepare($query);
+                        $stmt->execute();
+
+                        // fetch the category list
+                        $product_category = $stmt->fetchAll(PDO::FETCH_COLUMN);
+                        ?>
+                        <select name='category_name' class="form-control">
+                            <?php foreach ($product_category as $product_category) { ?>
+                                <option value="<?php echo $product_category; ?>"><?php echo $product_category; ?></option>
+                            <?php } ?>
+                        </select>
+                    </td>
                 </tr>
 
                 <tr>
