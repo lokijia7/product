@@ -42,6 +42,7 @@
             echo "<th>ID</th>";
             echo "<th>Name</th>";
             echo "<th>Description</th>";
+            echo "<th>Category Name</th>";
             echo "<th>Price</th>";
             echo "<th>Promotion Price</th>";
             echo "<th>Manufacture Date</th>";
@@ -59,6 +60,7 @@
                 echo "<td>{$id}</td>";
                 echo "<td>{$name}</td>";
                 echo "<td>{$description}</td>";
+                echo "<td>{$category_name}</td>";
                 echo "<td>" . 'RM' . number_format($price, 2) . "</td>";
                 echo "<td>" . 'RM' . number_format($promotion_price, 2) . "</td>";
                 echo "<td>{$manufacture_date}</td>";
