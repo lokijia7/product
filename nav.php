@@ -18,8 +18,8 @@
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                         <li><a class="dropdown-item" href="#">Food and Beverages</a></li>
-                        <li><a class="dropdown-item" href="#">Beauty</a></li>
-                        <li><a class="dropdown-item" href="#">Books and Media</a></li>
+                        <li><a class="dropdown-item" href="#">Beauty and lifestyle</a></li>
+                        <li><a class="dropdown-item" href="#">Home and Furniture</a></li>
                         <li><a class="dropdown-item" href="#">Electronics</a></li>
                     </ul>
                 </li>
