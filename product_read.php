@@ -57,7 +57,7 @@
                 extract($row);
                 // creating new table row per record
                 echo "<tr>";
-                echo "<td>{$id}</td>";
+                echo "<td>{$product_id}</td>";
                 echo "<td>{$name}</td>";
                 echo "<td>{$description}</td>";
                 echo "<td>{$category_name}</td>";
@@ -67,7 +67,7 @@
                 echo "<td>{$expiry_date}</td>";
                 echo "<td>";
                 // read one record
-                echo "<a href='product_read_one.php?id={$id}' class='btn btn-info m-r-1em'>Read</a>";
+                echo "<a href='product_read_one.php?product_id={$product_id}' class='btn btn-info m-r-1em'>Read</a>";
 
                 // we will use this links on next part of this post
                 echo "<a href='update.php?id={$id}' class='btn btn-primary m-r-1em'>Edit</a>";
