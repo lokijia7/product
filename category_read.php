@@ -52,13 +52,14 @@
                 extract($row);
                 // creating new table row per record
                 echo "<tr>";
-                echo "<td>{$category_id}</td>";
+                echo "<td>{$id}</td>";
                 echo "<td>{$category_name}</td>";
                 echo "<td>{$category_description}</td>";
                 echo "<td>{$category_status}</td>";
                 echo "<td>";
                 // read one record
                 echo "<a href='category_read_one.php?id={$id}' class='btn btn-info m-r-1em'>Read</a>";
+
 
                 // we will use this links on next part of this post
                 echo "<a href='update.php?id={$id}' class='btn btn-primary m-r-1em'>Edit</a>";
