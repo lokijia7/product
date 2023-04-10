@@ -26,60 +26,56 @@
 
             // include database connection
             include 'config/database.php';
-            try {
-                // posted values
-                $category_name = htmlspecialchars(strip_tags($_POST['category_name']));
-                $category_description = htmlspecialchars(strip_tags($_POST['category_description']));
-                if (isset($_POST['category_status'])) $category_status = $_POST['category_status'];
+
+            // posted values
+            $category_name = htmlspecialchars(strip_tags($_POST['category_name']));
+            $category_description = htmlspecialchars(strip_tags($_POST['category_description']));
+            if (isset($_POST['category_status'])) $category_status = $_POST['category_status'];
 
 
-                $flag = false;
+            $flag = false;
 
 
 
-                // Check if any field is empty
-                if (empty($category_name)) {
-                    $cname_err = "Please fill out the category name field.";
-                    $flag = true;
-                }
-                if (empty($category_status)) {
-                    $cstatus_err = "Please fill out the category status field.";
-                    $flag = true;
-                }
-
-
-                if ($flag == false) {
-
-                    // insert query
-                    $query = "INSERT INTO product_category SET category_name=:category_name, category_description=:category_description, category_status=:category_status,created=:created";
-                    // prepare query for execution
-                    $stmt = $con->prepare($query);
-                    // bind the parameters
-                    $stmt->bindParam(':category_name', $category_name);
-                    $stmt->bindParam(':category_description', $category_description);
-                    $stmt->bindParam(':category_status', $category_status);
-
-                    // specify when this record was inserted to the database
-                    $created = date('Y-m-d H:i:s');
-                    $stmt->bindParam(':created', $created);
-                    // Execute the query
-                    if ($stmt->execute()) {
-                        echo "<div class='alert alert-success'>Record was saved.</div>";
-                        // Clear form fields
-                        $category_name = "";
-                        $category_description = "";
-                        $category_status = "";
-                    } else {
-                        echo "<div class='alert alert-danger'>Unable to save record.</div>";
-                    }
-                }
+            // Check if any field is empty
+            if (empty($category_name)) {
+                $cname_err = "Please fill out the category name field.";
+                $flag = true;
+            }
+            if (empty($category_status)) {
+                $cstatus_err = "Please fill out the category status field.";
+                $flag = true;
             }
 
-            // show error
-            catch (PDOException $exception) {
-                die('ERROR: ' . $exception->getMessage());
+
+            if ($flag == false) {
+
+                // insert query
+                $query = "INSERT INTO product_category SET category_name=:category_name, category_description=:category_description, category_status=:category_status,created=:created";
+                // prepare query for execution
+                $stmt = $con->prepare($query);
+                // bind the parameters
+                $stmt->bindParam(':category_name', $category_name);
+                $stmt->bindParam(':category_description', $category_description);
+                $stmt->bindParam(':category_status', $category_status);
+
+                // specify when this record was inserted to the database
+                $created = date('Y-m-d H:i:s');
+                $stmt->bindParam(':created', $created);
+                // Execute the query
+                if ($stmt->execute()) {
+                    echo "<div class='alert alert-success'>Record was saved.</div>";
+                    // Clear form fields
+                    $category_name = "";
+                    $category_description = "";
+                    $category_status = "";
+                } else {
+                    echo "<div class='alert alert-danger'>Unable to save record.</div>";
+                }
             }
         }
+
+
 
 
 
