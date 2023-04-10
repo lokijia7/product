@@ -19,19 +19,12 @@
     // include database connection
     include 'config/database.php';
 
-    // retrieve category ID from URL parameter or set default value
-    $id = isset($_GET['id']) ? $_GET['id'] : 1;
-
-
-    // validate category ID
-    if (!is_numeric($id)) {
-        // redirect to error page or display error message
-        header("Location: error.php");
-        exit();
-    }
+    // get passed parameter value, in this case, the record ID
+    // isset() is a PHP function used to verify if a value is there or not
+    $id = isset($_GET['category_id']) ? $_GET['category_id'] : die('ERROR: Record ID not found.');
 
     // query to select the category name
-    $category_query = "SELECT category_name FROM product_category WHERE id = ?";
+    $category_query = "SELECT category_name FROM product_category WHERE category_id = ?";
     $category_stmt = $con->prepare($category_query);
     $category_stmt->bindParam(1, $id);
     $category_stmt->execute();
@@ -45,7 +38,7 @@
     echo "</div>";
 
     // query to select all products that belong to the category name
-    $product_query = "SELECT * FROM products JOIN product_category ON products.category_name = product_category.category_name WHERE product_category.id = ?";
+    $product_query = "SELECT * FROM products JOIN product_category ON products.category_name = product_category.category_name WHERE product_category.category_id = ?";
     $product_stmt = $con->prepare($product_query);
     $product_stmt->bindParam(1, $id);
     $product_stmt->execute();
