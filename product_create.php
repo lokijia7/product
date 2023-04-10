@@ -30,7 +30,7 @@
                 // posted values
                 $name = htmlspecialchars(strip_tags($_POST['name']));
                 $description = htmlspecialchars(strip_tags($_POST['description']));
-                $category_name = htmlspecialchars(strip_tags($_POST['category_name']));
+                if (isset($_POST['category_name'])) $category_name = $_POST['category_name'];
                 $price = htmlspecialchars(strip_tags($_POST['price']));
                 $promotion_price = htmlspecialchars(strip_tags($_POST['promotion_price']));
                 $manufacture_date = htmlspecialchars(strip_tags($_POST['manufacture_date']));
@@ -52,7 +52,11 @@
                     $flag = true;
                 }
                 if (empty($manufacture_date)) {
-                    $manu_err = "Please fill out the Manufacture Date field.</div>";
+                    $manu_err = "Please fill out the Manufacture Date field.";
+                    $flag = true;
+                }
+                if (empty($category_name)) {
+                    $category_err = "Please choose a category.";
                     $flag = true;
                 }
 
@@ -159,12 +163,15 @@
                         $product_category = $stmt->fetchAll(PDO::FETCH_COLUMN);
                         ?>
                         <select name='category_name' class="form-control">
-                            <?php foreach ($product_category as $product_category) { ?>
-                                <option value="<?php echo $product_category; ?>"><?php echo $product_category; ?></option>
+                            <option value=''>--Select Category--</option>
+                            <?php foreach ($product_category as $category) { ?>
+                                <option value="<?php echo $category; ?>"><?php echo $category; ?></option>
                             <?php } ?>
                         </select>
+                        <?php if (isset($category_err)) { ?><span class="text-danger"><?php echo $category_err; ?></span><?php } ?>
                     </td>
                 </tr>
+
 
                 <tr>
                     <td>Price</td>
