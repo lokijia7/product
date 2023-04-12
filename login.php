@@ -11,16 +11,21 @@
 
 <body>
     <?php
+
     ini_set('display_errors', 1);
     error_reporting(E_ALL);
 
-    include('config/database.php'); // include database connection file  
-    // start session
-    session_start();
+    include('config/database.php');
+    session_start(); // Start the session
 
-    // check if the login form is submitted
+    if (isset($_POST['logout'])) { // If the user clicked the logout button
+        session_unset(); // Unset all session variables
+        session_destroy(); // Destroy the session
+        header('Location: login.php'); // Redirect to the login page
+        exit;
+    }
+
     if (isset($_POST['login'])) {
-        // get the username/email and password from the form
         $username = $_POST['username'];
         $pass = $_POST['pass'];
 

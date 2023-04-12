@@ -35,7 +35,7 @@
                     </ul>
                 </li>
                 <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="contact.php">Contact Us</a></li>
-                <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="login.php">Log out</a></li>
+                <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="logout.php" name="logout">Log out</a></li>
             </ul>
         </div>
     </div>
