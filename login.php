@@ -18,11 +18,12 @@
     include('config/database.php');
     session_start(); // Start the session
 
-    if (isset($_POST['logout'])) { // If the user clicked the logout button
-        session_unset(); // Unset all session variables
-        session_destroy(); // Destroy the session
-        header('Location: login.php'); // Redirect to the login page
-        exit;
+    // Check if there is a warning message
+    if (isset($_SESSION["warning"])) {
+        echo "<div class='alert alert-warning'>" . $_SESSION["warning"] . "</div>";
+
+        // Unset the warning message so that it doesn't show again
+        unset($_SESSION["warning"]);
     }
 
     if (isset($_POST['login'])) {
