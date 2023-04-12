@@ -3,7 +3,12 @@
 <?php
 session_start();
 if (!isset($_SESSION["username"])) {
+    // Set the warning message
+    $_SESSION["warning"] = "You need to log in to access this page.";
+
+    // Redirect the user to the login page
     header("Location: login.php");
+    exit();
 }
 ?>
 
