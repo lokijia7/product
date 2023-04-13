@@ -1,0 +1,75 @@
+/* Set background color and padding for nav bar */
+#mainNav {
+    font-family: Futura, sans-serif;
+    background-color: #fff;
+    padding: 10px 0;
+}
+
+/* Set font color for nav links */
+.navbar-nav .nav-link {
+    color: #333;
+}
+
+/* Set hover color for nav links */
+.navbar-nav .nav-link:hover {
+    color: #ff69b4;
+}
+
+/* Set color and hover color for active nav links */
+.navbar-nav .active>.nav-link,
+.navbar-nav .active>.nav-link:hover,
+.navbar-nav .nav-link.active,
+.navbar-nav .nav-link.active:hover {
+    color: #ff69b4;
+    background-color: transparent;
+    border-bottom: 2px solid #ff69b4;
+}
+
+/* Set color and hover color for dropdown links */
+.dropdown-item {
+    color: #333;
+}
+
+.dropdown-item:hover {
+    color: #ff69b4;
+    background-color: transparent;
+}
+
+/* Set color for dropdown menu background */
+.dropdown-menu {
+    background-color: #fff;
+}
+
+/* Set color for hamburger icon */
+.navbar-toggler {
+    border-color: #ff69b4;
+}
+
+/* Set color for hover state of hamburger icon */
+.navbar-toggler:hover,
+.navbar-toggler:focus {
+    border-color: #ff69b4;
+}
+
+/* Set color for hamburger icon when menu is open */
+.navbar-toggler:not(.collapsed) {
+    border-color: #ff69b4;
+}
+
+/* Set color for dropdown menu arrow icon */
+.dropdown-toggle::after {
+    border-top-color: #333;
+    border-right-color: #333;
+}
+
+/* Set color for hover state of dropdown menu arrow icon */
+.dropdown-toggle:hover::after {
+    border-top-color: #ff69b4;
+    border-right-color: #ff69b4;
+}
+
+/* Set pink color for active state of dropdown menu arrow icon */
+.dropdown-toggle.active::after {
+    border-top-color: #ff69b4;
+    border-right-color: #ff69b4;
+}
