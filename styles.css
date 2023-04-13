@@ -73,3 +73,51 @@
     border-top-color: #ff69b4;
     border-right-color: #ff69b4;
 }
+
+
+
+/* Header styles */
+header {
+    background-color: #f2f2f2;
+    padding: 20px;
+    text-align: center;
+}
+
+h1 {
+    font-size: 48px;
+    font-weight: bold;
+    margin: 0;
+}
+
+/* Section styles */
+section {
+    background-color: #fff;
+    padding: 50px;
+}
+
+h2 {
+    font-size: 36px;
+    font-weight: bold;
+    margin: 0 0 20px;
+}
+
+p {
+    font-size: 18px;
+    line-height: 1.5;
+    margin: 0 0 20px;
+}
+
+button {
+    background-color: #007bff;
+    border: none;
+    color: #fff;
+    cursor: pointer;
+    font-size: 18px;
+    font-weight: bold;
+    padding: 10px 20px;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #0069d9;
+}
