@@ -76,7 +76,7 @@ if (!isset($_SESSION["username"])) {
                 echo "<td>{$description}</td>";
                 echo "<td>{$category_name}</td>";
                 echo "<td>" . 'RM' . number_format($price, 2) . "</td>";
-                echo "<td>" . ($promotion_price ? number_format($promotion_price, 2) : '-') . "</td>";
+                echo "<td>" . ($promotion_price ? 'RM' . number_format($promotion_price, 2) : '-') . "</td>";
                 echo "<td>{$manufacture_date}</td>";
                 echo "<td>{$expiry_date}</td>";
                 echo "<td>";

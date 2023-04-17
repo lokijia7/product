@@ -55,7 +55,6 @@ if (!isset($_SESSION["username"])) {
             echo "<th>Category ID</th>";
             echo "<th>Category Name</th>";
             echo "<th>Description</th>";
-            echo "<th>Status</th>";
             echo "</tr>";
 
             // retrieve our table contents
@@ -68,7 +67,6 @@ if (!isset($_SESSION["username"])) {
                 echo "<td>{$category_id}</td>";
                 echo "<td>{$category_name}</td>";
                 echo "<td>{$category_description}</td>";
-                echo "<td>{$category_status}</td>";
                 echo "<td>";
                 // read one record
                 echo "<a href='category_read_one.php?category_id={$category_id}' class='btn btn-info m-r-1em'>Read</a>";
