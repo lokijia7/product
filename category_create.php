@@ -43,7 +43,6 @@ if (!isset($_SESSION["username"])) {
             // posted values
             $category_name = htmlspecialchars(strip_tags($_POST['category_name']));
             $category_description = htmlspecialchars(strip_tags($_POST['category_description']));
-            if (isset($_POST['category_status'])) $category_status = $_POST['category_status'];
 
 
             $flag = false;
@@ -55,22 +54,16 @@ if (!isset($_SESSION["username"])) {
                 $cname_err = "Please fill out the category name field.";
                 $flag = true;
             }
-            if (empty($category_status)) {
-                $cstatus_err = "Please fill out the category status field.";
-                $flag = true;
-            }
-
 
             if ($flag == false) {
 
                 // insert query
-                $query = "INSERT INTO product_category SET category_name=:category_name, category_description=:category_description, category_status=:category_status,created=:created";
+                $query = "INSERT INTO product_category SET category_name=:category_name, category_description=:category_description,created=:created";
                 // prepare query for execution
                 $stmt = $con->prepare($query);
                 // bind the parameters
                 $stmt->bindParam(':category_name', $category_name);
                 $stmt->bindParam(':category_description', $category_description);
-                $stmt->bindParam(':category_status', $category_status);
 
                 // specify when this record was inserted to the database
                 $created = date('Y-m-d H:i:s');
@@ -81,7 +74,6 @@ if (!isset($_SESSION["username"])) {
                     // Clear form fields
                     $category_name = "";
                     $category_description = "";
-                    $category_status = "";
                 } else {
                     echo "<div class='alert alert-danger'>Unable to save record.</div>";
                 }
@@ -111,16 +103,6 @@ if (!isset($_SESSION["username"])) {
                     <td><textarea name='category_description' class="form-control" value="<?php echo isset($category_description) ? htmlspecialchars($category_description) : ''; ?>"></textarea>
                         <?php if (isset($cdescription_err)) { ?><span class="text-danger"><?php echo $cdescription_err; ?></span><?php } ?></td>
                 </tr>
-                <tr>
-                    <td>Category Status</td>
-                    <td>
-                        <input type='radio' name='category_status' <?php if (isset($category_status) && $category_status == "active") echo "checked"; ?> value='active'>Active
-                        <input type='radio' name='category_status' <?php if (isset($category_status) && $category_status == "inactive") echo "checked"; ?> value='inactive'>Inactive
-                        <?php if (isset($cstatus_err)) { ?><span class="text-danger"><?php echo $cstatus_err; ?></span><?php } ?>
-                    </td>
-                </tr>
-
-
 
                 <td></td>
                 <td>
