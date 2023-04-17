@@ -87,8 +87,17 @@ if (!isset($_SESSION["username"])) {
                 <td>RM <?php echo number_format($price, 2); ?></td>
             </tr>
             <tr>
-                <td>Promotion Price</td>
-                <td>RM <?php echo number_format($price, 2); ?></td>
+                <td>Promotional Price</td>
+                <td>
+                    <?php
+                    if (!empty($promotion_price)) {
+                        echo htmlspecialchars($promotion_price, ENT_QUOTES);
+                    } else {
+                        echo "-";
+                    }
+                    ?>
+                </td>
+                </td>
             </tr>
             <tr>
                 <td>Manufacture Date</td>
