@@ -28,14 +28,14 @@ if (!isset($_SESSION["username"])) {
     <!-- container -->
     <div class="container">
         <div class="page-header">
-            <h1>Read Customer</h1>
+            <h1>Read Order</h1>
         </div>
 
         <!-- PHP read one record will be here -->
         <?php
         // get passed parameter value, in this case, the record ID
         // isset() is a PHP function used to verify if a value is there or not
-        $id = isset($_GET['id']) ? $_GET['id'] : die('ERROR: Record ID not found.');
+        $id = isset($_GET['order_id']) ? $_GET['order_id'] : die('ERROR: Record ID not found.');
 
         //include database connection
         include 'config/database.php';
@@ -43,7 +43,7 @@ if (!isset($_SESSION["username"])) {
         // read current record's data
         try {
             // prepare select query
-            $query = "SELECT id, username, first_name, last_name, pass, gender, date_of_birth, account_status FROM customers WHERE id = ? LIMIT 0,1";
+            $query = "SELECT order_id, username, product_id, quantity FROM orders WHERE order_id = ? LIMIT 0,1";
             $stmt = $con->prepare($query);
 
             // this is the first question mark
@@ -57,12 +57,11 @@ if (!isset($_SESSION["username"])) {
 
             // values to fill up our form
             $username = $row['username'];
-            $first_name = $row['first_name'];
-            $last_name = $row['last_name'];
-            $pass = $row['pass'];
-            $gender = $row['gender'];
-            $date_of_birth = $row['date_of_birth'];
-            $account_status = $row['account_status'];
+            $product_id = $_SESSION['product_id'];
+            $quantity = $_SESSION['quantity'];
+
+            // Use the data to display the order details
+
         }
 
         // show error
@@ -76,37 +75,21 @@ if (!isset($_SESSION["username"])) {
         <!--we have our html table here where the record will be displayed-->
         <table class='table table-hover table-responsive table-bordered'>
             <tr>
-                <td>Username</td>
+                <td>Customer Name</td>
                 <td><?php echo htmlspecialchars($username, ENT_QUOTES);  ?></td>
             </tr>
             <tr>
-                <td>First name</td>
-                <td><?php echo htmlspecialchars($first_name, ENT_QUOTES);  ?></td>
+                <td>Product_id</td>
+                <td><?php echo htmlspecialchars($product_id, ENT_QUOTES);  ?></td>
             </tr>
             <tr>
-                <td>Last name</td>
-                <td><?php echo htmlspecialchars($last_name, ENT_QUOTES);  ?></td>
-            </tr>
-            <tr>
-                <td>Password</td>
-                <td><?php echo htmlspecialchars($pass, ENT_QUOTES);  ?></td>
-            </tr>
-            <tr>
-                <td>Gender</td>
-                <td><?php echo htmlspecialchars($gender, ENT_QUOTES);  ?></td>
-            </tr>
-            <tr>
-                <td>Date Of Birth</td>
-                <td><?php echo htmlspecialchars($date_of_birth, ENT_QUOTES);  ?></td>
-            </tr>
-            <tr>
-                <td>Account Status</td>
-                <td><?php echo htmlspecialchars($account_status, ENT_QUOTES);  ?></td>
-            </tr>
+                <td>Quantity</td>
+                <td><?php echo htmlspecialchars($quantity, ENT_QUOTES);  ?>
+                </td>
             <tr>
                 <td></td>
                 <td>
-                    <a href='customer_read.php' class='btn btn-danger'>Back to read customers</a>
+                    <a href='product_read.php' class='btn btn-danger'>Back to read products</a>
                 </td>
             </tr>
         </table>

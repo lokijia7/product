@@ -91,7 +91,7 @@ if (!isset($_SESSION["username"])) {
                 <td>
                     <?php
                     if (!empty($promotion_price)) {
-                        echo htmlspecialchars($promotion_price, ENT_QUOTES);
+                        echo "<td>" . ($promotion_price ? 'RM' . number_format($promotion_price, 2) : '-') . "</td>";
                     } else {
                         echo "-";
                     }

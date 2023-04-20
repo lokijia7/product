@@ -121,3 +121,15 @@ button {
 button:hover {
     background-color: #0069d9;
 }
+
+#login-box {
+    position: relative;
+}
+
+#login-box img {
+    position: absolute;
+    top: -50px;
+    left: calc(50% - 50px);
+    width: 100px;
+    height: auto;
+}

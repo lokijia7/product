@@ -14,6 +14,7 @@ if (!isset($_SESSION["username"])) {
 
 <html>
 
+
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -27,25 +28,45 @@ if (!isset($_SESSION["username"])) {
     <!-- container -->
     <div class="container">
         <div class="page-header">
-            <h1>Read Customers</h1>
+            <h1>Read Orders</h1>
         </div>
+
+        <nav class="navbar bg-body-tertiary">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-6">
+                        <?php echo "<a href='order_create.php' class='btn btn-primary m-b-1em'>Create New Order</a>"; ?>
+                    </div>
+                    <div class="col-md-6 d-flex justify-content-end">
+                        <form class="d-flex" role="search" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
+                            <input class="form-control me-2" name="search" type="search" placeholder="Search" aria-label="Search">
+                            <button class="btn btn-outline-success" type="submit">Search</button>
+
+
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </nav>
+
 
         <?php
         // include database connection
         include 'config/database.php';
 
-        // delete message prompt will be here
-
         // select all data
-        $query = "SELECT * FROM customers";
+        $query = "SELECT * FROM orders";
+        if ($_POST) {
+            $search = htmlspecialchars(strip_tags($_POST['search']));
+            $query = "SELECT * FROM `orders` WHERE name LIKE  '%" . $search . "%'";
+        }
+
         $stmt = $con->prepare($query);
         $stmt->execute();
 
         // this is how to get number of rows returned
         $num = $stmt->rowCount();
 
-        // link to create record form
-        echo "<a href='customer_create.php' class='btn btn-primary m-b-1em'>Create New Customer</a>";
 
         //check if more than 0 record found
         if ($num > 0) {
@@ -54,13 +75,9 @@ if (!isset($_SESSION["username"])) {
 
             //creating our table heading
             echo "<tr>";
-            echo "<th>ID</th>";
-            echo "<th>Username</th>";
-            echo "<th>First Name</th>";
-            echo "<th>Last Name</th>";
-            echo "<th>Gender</th>";
-            echo "<th>Date Of Birth</th>";
-            echo "<th>Account Status</th>";
+            echo "<th>Order ID</th>";
+            echo "<th>Customer Name</th>";
+            echo "<th>Created</th>";
             echo "<th>Action</th>";
             echo "</tr>";
 
@@ -71,16 +88,13 @@ if (!isset($_SESSION["username"])) {
                 extract($row);
                 // creating new table row per record
                 echo "<tr>";
-                echo "<td>{$id}</td>";
+                echo "<td>{$order_id}</td>";
                 echo "<td>{$username}</td>";
-                echo "<td>{$first_name}</td>";
-                echo "<td>{$last_name}</td>";
-                echo "<td>{$gender}</td>";
-                echo "<td>{$date_of_birth}</td>";
-                echo "<td>{$account_status}</td>";
+                echo "<td>{$description}</td>";
+                echo "<td>{$created}</td>";
                 echo "<td>";
                 // read one record
-                echo "<a href='customer_read_one.php?id={$id}' class='btn btn-info m-r-1em'>Read</a>";
+                echo "<a href='order_read_one.php?order_id={$order_id}' class='btn btn-info m-r-1em'>Read</a>";
 
                 // we will use this links on next part of this post
                 echo "<a href='update.php?id={$id}' class='btn btn-primary m-r-1em'>Edit</a>";
@@ -99,6 +113,7 @@ if (!isset($_SESSION["username"])) {
         else {
             echo "<div class='alert alert-danger'>No records found.</div>";
         }
+
         ?>
 
 

@@ -31,20 +31,42 @@ if (!isset($_SESSION["username"])) {
             <h1>Read Products</h1>
         </div>
 
+        <nav class="navbar bg-body-tertiary">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-6">
+                        <?php echo "<a href='product_create.php' class='btn btn-primary m-b-1em'>Create New Product</a>"; ?>
+                    </div>
+                    <div class="col-md-6 d-flex justify-content-end">
+                        <form class="d-flex" role="search" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
+                            <input class="form-control me-2" name="search" type="search" placeholder="Search" aria-label="Search">
+                            <button class="btn btn-outline-success" type="submit">Search</button>
+
+
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </nav>
+
+
         <?php
         // include database connection
         include 'config/database.php';
 
         // select all data
         $query = "SELECT * FROM products";
+        if ($_POST) {
+            $search = htmlspecialchars(strip_tags($_POST['search']));
+            $query = "SELECT * FROM `products` WHERE name LIKE  '%" . $search . "%'";
+        }
+
         $stmt = $con->prepare($query);
         $stmt->execute();
 
         // this is how to get number of rows returned
         $num = $stmt->rowCount();
 
-        // link to create record form
-        echo "<a href='product_create.php' class='btn btn-primary m-b-1em'>Create New Product</a>";
 
         //check if more than 0 record found
         if ($num > 0) {
@@ -100,6 +122,7 @@ if (!isset($_SESSION["username"])) {
         else {
             echo "<div class='alert alert-danger'>No records found.</div>";
         }
+
         ?>
 
 
