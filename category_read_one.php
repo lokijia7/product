@@ -23,6 +23,7 @@ if (!isset($_SESSION["username"])) {
 </head>
 
 <body>
+    <?php include 'nav.php' ?>
 
 
     <!-- PHP read one record will be here -->

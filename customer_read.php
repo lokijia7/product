@@ -30,22 +30,46 @@ if (!isset($_SESSION["username"])) {
             <h1>Read Customers</h1>
         </div>
 
+        <nav class="navbar bg-body-tertiary">
+            <div class="container-fluid">
+
+                <div class="col-md-6">
+                    <?php echo "<a href='customer_create.php' class='btn btn-primary m-b-1em'>Create New Customer</a>"; ?>
+                </div>
+                <div class="col-md-6 d-flex justify-content-end">
+                    <form class="d-flex" role="search" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
+                        <input class="form-control me-2 pastel-color" name="search" type="search" placeholder="Search" aria-label="Search">
+                        <button class="btn btn-outline-success" btn-sm type="submit">Search</button>
+                    </form>
+                </div>
+
+            </div>
+        </nav>
+
         <?php
         // include database connection
         include 'config/database.php';
 
         // delete message prompt will be here
 
+
         // select all data
         $query = "SELECT * FROM customers";
+        if ($_POST) {
+            $search = htmlspecialchars(strip_tags($_POST['search']));
+            $query = "SELECT * FROM `customers` WHERE 
+                    id LIKE '%" . $search . "%' OR 
+                    username LIKE '%" . $search . "%' OR 
+                    first_name LIKE '%" . $search . "%' OR 
+                    account_status LIKE '%" . $search . "%' OR 
+                    last_name LIKE '%" . $search . "%'";
+        }
         $stmt = $con->prepare($query);
         $stmt->execute();
 
         // this is how to get number of rows returned
         $num = $stmt->rowCount();
 
-        // link to create record form
-        echo "<a href='customer_create.php' class='btn btn-primary m-b-1em'>Create New Customer</a>";
 
         //check if more than 0 record found
         if ($num > 0) {
@@ -58,8 +82,6 @@ if (!isset($_SESSION["username"])) {
             echo "<th>Username</th>";
             echo "<th>First Name</th>";
             echo "<th>Last Name</th>";
-            echo "<th>Gender</th>";
-            echo "<th>Date Of Birth</th>";
             echo "<th>Account Status</th>";
             echo "<th>Action</th>";
             echo "</tr>";
@@ -75,8 +97,6 @@ if (!isset($_SESSION["username"])) {
                 echo "<td>{$username}</td>";
                 echo "<td>{$first_name}</td>";
                 echo "<td>{$last_name}</td>";
-                echo "<td>{$gender}</td>";
-                echo "<td>{$date_of_birth}</td>";
                 echo "<td>{$account_status}</td>";
                 echo "<td>";
                 // read one record
