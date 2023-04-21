@@ -55,11 +55,13 @@ if (!isset($_SESSION["username"])) {
         include 'config/database.php';
 
         // select all data
-        $query = "SELECT * FROM orders";
+        $query = "SELECT * FROM `orders`";
+
         if ($_POST) {
             $search = htmlspecialchars(strip_tags($_POST['search']));
-            $query = "SELECT * FROM `orders` WHERE name LIKE  '%" . $search . "%'";
+            $query .= " WHERE o.order LIKE '%" . $search . "%'";
         }
+
 
         $stmt = $con->prepare($query);
         $stmt->execute();
@@ -90,7 +92,6 @@ if (!isset($_SESSION["username"])) {
                 echo "<tr>";
                 echo "<td>{$order_id}</td>";
                 echo "<td>{$username}</td>";
-                echo "<td>{$description}</td>";
                 echo "<td>{$created}</td>";
                 echo "<td>";
                 // read one record
