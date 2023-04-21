@@ -59,7 +59,7 @@ if (!isset($_SESSION["username"])) {
         $id = isset($_GET['order_id']) ? $_GET['order_id'] : die('ERROR: Record ID not found.');
 
         // select all data
-        $query = "SELECT o.order_id, od.product_id, p.name, od.quantity, od.order_detail_id, od.created
+        $query = "SELECT o.order_id, od.product_id, p.name, p.price, p.promotion_price, od.quantity, od.order_detail_id, od.created
         FROM orders o
         JOIN order_detail od ON o.order_id = od.order_id
         JOIN products p ON od.product_id = p.product_id
@@ -94,6 +94,9 @@ if (!isset($_SESSION["username"])) {
             echo "<th>Product Name</th>";
             echo "<th>Quantity</th>";
             echo "<th>Created</th>";
+            echo "<th>Price</th>";
+            echo "<th>Promotion Price</th>";
+            echo "<th>Total</th>";
             echo "<th>Action</th>";
             echo "</tr>";
 
@@ -103,12 +106,16 @@ if (!isset($_SESSION["username"])) {
                 // this will make $row['firstname'] to just $firstname only
                 extract($row);
                 // creating new table row per record
+                // creating new table row per record
                 echo "<tr>";
                 echo "<td>{$order_detail_id}</td>";
                 echo "<td>{$product_id}</td>";
                 echo "<td>{$name}</td>";
                 echo "<td>{$quantity}</td>";
                 echo "<td>{$created}</td>";
+                echo "<td>" . 'RM' . number_format($price, 2) . "</td>";
+                echo "<td>" . ($promotion_price ? 'RM' . number_format($promotion_price, 2) : '') . "</td>";
+                echo "<td>" . 'RM' . number_format(($promotion_price ? $promotion_price : $price) * $quantity, 2) . "</td>"; // new column data
                 echo "<td>";
                 // read one record
                 echo "<a href='order_read_one.php?order_detail_id={$order_detail_id}' class='btn btn-info m-r-1em'>Read</a>";

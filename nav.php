@@ -25,7 +25,7 @@ $currentPage = basename($_SERVER['PHP_SELF']);
                     <li class="nav-item <?php if ($currentPage == 'home.php') {
                                             echo 'active';
                                         } ?>"><a class="nav-link px-lg-3 py-3 py-lg-4" href="home.php">Home</a></li>
-                    <li class="nav-item <?php if ($currentPage == 'product_create.php' || $currentPage == 'product_read.php') {
+                    <li class="nav-item <?php if ($currentPage == 'product_create.php' || $currentPage == 'product_read.php' || $currentPage == 'product_read_one.php') {
                                             echo 'active';
                                         } ?> dropdown">
                         <a class="nav-link px-lg-3 py-3 py-lg-4 dropdown-toggle" href="#" id="navbarDropdownProduct" role="button" data-bs-toggle="dropdown" aria-expanded="false">

@@ -33,19 +33,17 @@ if (!isset($_SESSION["username"])) {
 
         <nav class="navbar bg-body-tertiary">
             <div class="container-fluid">
-                <div class="row">
-                    <div class="col-md-6">
-                        <?php echo "<a href='product_create.php' class='btn btn-primary m-b-1em'>Create New Product</a>"; ?>
-                    </div>
-                    <div class="col-md-6 d-flex justify-content-end">
-                        <form class="d-flex" role="search" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
-                            <input class="form-control me-2" name="search" type="search" placeholder="Search" aria-label="Search">
-                            <button class="btn btn-outline-success" type="submit">Search</button>
 
-
-                        </form>
-                    </div>
+                <div class="col-md-6">
+                    <?php echo "<a href='product_create.php' class='btn btn-primary m-b-1em'>Create New Product</a>"; ?>
                 </div>
+                <div class="col-md-6 d-flex justify-content-end">
+                    <form class="d-flex" role="search" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
+                        <input class="form-control me-2 pastel-color" name="search" type="search" placeholder="Search" aria-label="Search">
+                        <button class="btn btn-outline-success" btn-sm type="submit">Search</button>
+                    </form>
+                </div>
+
             </div>
         </nav>
 
@@ -58,7 +56,11 @@ if (!isset($_SESSION["username"])) {
         $query = "SELECT * FROM products";
         if ($_POST) {
             $search = htmlspecialchars(strip_tags($_POST['search']));
-            $query = "SELECT * FROM `products` WHERE name LIKE  '%" . $search . "%'";
+            $query = "SELECT * FROM `products` WHERE 
+            product_id LIKE '%" . $search . "%' OR 
+            name LIKE '%" . $search . "%' OR 
+            description LIKE '%" . $search . "%' OR 
+            category_name LIKE '%" . $search . "%'";
         }
 
         $stmt = $con->prepare($query);
@@ -78,11 +80,8 @@ if (!isset($_SESSION["username"])) {
             echo "<th>ID</th>";
             echo "<th>Name</th>";
             echo "<th>Description</th>";
-            echo "<th>Category Name</th>";
             echo "<th>Price</th>";
             echo "<th>Promotion Price</th>";
-            echo "<th>Manufacture Date</th>";
-            echo "<th>Expiry Date</th>";
             echo "<th>Action</th>";
             echo "</tr>";
 
@@ -96,24 +95,22 @@ if (!isset($_SESSION["username"])) {
                 echo "<td>{$product_id}</td>";
                 echo "<td>{$name}</td>";
                 echo "<td>{$description}</td>";
-                echo "<td>{$category_name}</td>";
                 echo "<td>" . 'RM' . number_format($price, 2) . "</td>";
-                echo "<td>" . ($promotion_price ? 'RM' . number_format($promotion_price, 2) : '-') . "</td>";
-                echo "<td>{$manufacture_date}</td>";
-                echo "<td>{$expiry_date}</td>";
+                echo "<td>" . ($promotion_price ? 'RM' . number_format($promotion_price, 2) : '') . "</td>";
                 echo "<td>";
                 // read one record
-                echo "<a href='product_read_one.php?product_id={$product_id}' class='btn btn-info m-r-1em'>Read</a>";
-
-                // we will use this links on next part of this post
-                echo "<a href='update.php?id={$id}' class='btn btn-primary m-r-1em'>Edit</a>";
-
-                // we will use this links on next part of this post
-                echo "<a href='#' onclick='delete_user({$id});'  class='btn btn-danger'>Delete</a>";
+                echo "<div class='button-group'>";
+                echo "<a href='product_read_one.php?product_id={$product_id}' class='btn btn-info '>Read</a>";
+                echo "</div>";
+                echo "<div class='button-group'>";
+                echo "<a href='update.php?id={$id}' class='btn btn-primary '>Edit</a>";
+                echo "</div>";
+                echo "<div class='button-group'>";
+                echo "<a href='#' onclick='delete_user({$id});'  class='btn btn-danger '>Delete</a>";
+                echo "</div>";
                 echo "</td>";
                 echo "</tr>";
             }
-
 
             // end table
             echo "</table>";
@@ -124,6 +121,7 @@ if (!isset($_SESSION["username"])) {
         }
 
         ?>
+
 
 
     </div> <!-- end .container -->

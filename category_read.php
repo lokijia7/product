@@ -35,7 +35,15 @@ if (!isset($_SESSION["username"])) {
         include 'config/database.php';
 
         // select all data
+
         $query = "SELECT * FROM product_category";
+        if ($_POST) {
+            $search = htmlspecialchars(strip_tags($_POST['search']));
+            $query = "SELECT * FROM `product_category` WHERE 
+                   category_id LIKE '%" . $search . "%' OR 
+                   category_name LIKE '%" . $search . "%' OR 
+                   description LIKE '%" . $search . "%'";
+        }
         $stmt = $con->prepare($query);
         $stmt->execute();
 

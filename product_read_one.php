@@ -18,12 +18,14 @@ if (!isset($_SESSION["username"])) {
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>PDO - Create a Record - PHP CRUD Tutorial</title>
+    <link rel="stylesheet" href="styles.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
     <!-- Latest compiled and minified Bootstrap CSS (Apply your Bootstrap here -->
 </head>
 
 
 <body>
+    <?php include 'nav.php' ?>
 
     <!-- container -->
     <div class="container">
@@ -43,7 +45,7 @@ if (!isset($_SESSION["username"])) {
         // read current record's data
         try {
             // prepare select query
-            $query = "SELECT product_id, name, description, price, promotion_price, manufacture_date, expiry_date FROM products WHERE product_id = ? LIMIT 0,1";
+            $query = "SELECT product_id, name, description, price, promotion_price,category_name, manufacture_date, expiry_date FROM products WHERE product_id = ? LIMIT 0,1";
             $stmt = $con->prepare($query);
 
             // this is the first question mark
@@ -62,6 +64,7 @@ if (!isset($_SESSION["username"])) {
             $promotion_price = $row['promotion_price'];
             $manufacture_date = $row['manufacture_date'];
             $expiry_date = $row['expiry_date'];
+            $category_name = $row['category_name'];
         }
 
         // show error
@@ -83,21 +86,24 @@ if (!isset($_SESSION["username"])) {
                 <td><?php echo htmlspecialchars($description, ENT_QUOTES);  ?></td>
             </tr>
             <tr>
+                <td>Category Name</td>
+                <td><?php echo htmlspecialchars($category_name, ENT_QUOTES);  ?></td>
+            </tr>
+            <tr>
                 <td>Price</td>
                 <td>RM <?php echo number_format($price, 2); ?></td>
             </tr>
             <tr>
-                <td>Promotional Price</td>
-                <td>
-                    <?php
-                    if (!empty($promotion_price)) {
-                        echo "<td>" . ($promotion_price ? 'RM' . number_format($promotion_price, 2) : '-') . "</td>";
-                    } else {
-                        echo "-";
-                    }
-                    ?>
-                </td>
-                </td>
+                <td>Promotion Price</td>
+
+                <?php
+                if (!empty($promotion_price)) {
+                    echo "<td>" . ($promotion_price ? 'RM' . number_format($promotion_price, 2) : '') . "</td>";
+                } else {
+                    echo "";
+                }
+                ?>
+
             </tr>
             <tr>
                 <td>Manufacture Date</td>
