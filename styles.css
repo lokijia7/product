@@ -1,3 +1,15 @@
+.border {
+    border: 1px solid #ddd;
+    padding: 10px;
+    margin-bottom: 20px;
+}
+
+.border.pastel {
+    background-color: #F5DEB3;
+    border: 1px solid #F5DEB3;
+}
+
+
 /* Set background color and padding for nav bar */
 #mainNav {
     font-family: Futura, sans-serif;
@@ -132,15 +144,4 @@ button:hover {
     left: calc(50% - 50px);
     width: 100px;
     height: auto;
-}
-
-.border {
-    border: 1px solid #ddd;
-    padding: 10px;
-    margin-bottom: 20px;
-}
-
-.border.pastel {
-    background-color: #F5DEB3;
-    border: 1px solid #F5DEB3;
 }

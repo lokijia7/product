@@ -41,9 +41,7 @@ if (!isset($_SESSION["username"])) {
                 <div class="border">
                     <h2>Worst Seller</h2>
                     <ul>
-                        <li>Product D</li>
-                        <li>Product E</li>
-                        <li>Product F</li>
+                        <li><?php include 'worst_seller.php' ?></li>
                     </ul>
                 </div>
             </div>
