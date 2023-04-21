@@ -129,71 +129,71 @@ if (!isset($_SESSION["username"])) {
                         $created = date('Y-m-d H:i:s');
 
                         // Get the product ID from the products table for each product separately
-                        $product1_query = "SELECT id FROM products WHERE name = :name1";
+                        $product1_query = "SELECT product_id FROM products WHERE name = :name1";
                         $product1_stmt = $con->prepare($product1_query);
                         $product1_stmt->bindParam(':name1', $product_name1);
                         $product1_stmt->execute();
-                        $product1 = $product1_stmt->fetch(PDO::FETCH_ASSOC);
+                        $product1_id = $product1_stmt->fetch(PDO::FETCH_ASSOC)['product_id'];
 
-                        $product2_query = "SELECT id FROM products WHERE name = :name2";
+                        $product2_query = "SELECT product_id FROM products WHERE name = :name2";
                         $product2_stmt = $con->prepare($product2_query);
                         $product2_stmt->bindParam(':name2', $product_name2);
                         $product2_stmt->execute();
-                        $product2 = $product2_stmt->fetch(PDO::FETCH_ASSOC);
+                        $product2_id = $product2_stmt->fetch(PDO::FETCH_ASSOC)['product_id'];
 
-                        $product3_query = "SELECT id FROM products WHERE name = :name3";
+                        $product3_query = "SELECT product_id FROM products WHERE name = :name3";
                         $product3_stmt = $con->prepare($product3_query);
                         $product3_stmt->bindParam(':name3', $product_name3);
                         $product3_stmt->execute();
-                        $product3 = $product3_stmt->fetch(PDO::FETCH_ASSOC);
-
+                        $product3_id = $product3_stmt->fetch(PDO::FETCH_ASSOC)['product_id'];
 
                         // insert into order_details table
                         $success = true;
-                        $od_query = "INSERT INTO order_detail SET order_id=:order_id, product_id=:product_id, quantity=:quantity, created=:created";
+                        $od_query = "INSERT INTO order_detail (order_id, product_id, quantity, created) VALUES (?, ?, ?, ?)";
                         // prepare query for execution
                         $od_stmt = $con->prepare($od_query);
-                        // bind the parameters for product 1
+
+                        // insert order details for product 1
                         if (!empty($product_name1)) {
-                            $od_stmt->bindParam(':order_id', $lastInsertId);
-                            $od_stmt->bindParam(':product_id', $product['id']);
-                            $od_stmt->bindParam(':quantity', $quantity1);
-                            $od_stmt->bindParam(':created', $created);
-                        }
-
-                        // bind the parameters for product 2
-                        if (!empty($product_name2)) {
-                            $od_stmt->bindParam(':order_id', $lastInsertId);
-                            $od_stmt->bindParam(':product_id', $product['id']);
-                            $od_stmt->bindParam(':quantity', $quantity2);
-                            $od_stmt->bindParam(':created', $created);
-                        }
-
-                        // bind the parameters for product 3
-                        if (!empty($product_name3)) {
-                            $od_stmt->bindParam(':order_id', $lastInsertId);
-                            $od_stmt->bindParam(':product_id', $product['id']);
-                            $od_stmt->bindParam(':quantity', $quantity3);
-                            $od_stmt->bindParam(':created', $created);
-                        }
-
-                        $od_stmt->execute();
-                        $product = $od_stmt->fetch(PDO::FETCH_ASSOC);
-
-
-                        $error = $od_stmt->errorInfo();
-                        if (!$od_stmt->execute()) {
-                            $success = false;
-                            $error = $od_stmt->errorInfo();
-                            if ($error[0] != "00000") {
-                                echo "<div class='alert alert-danger'>Error: " . $error[2] . "</div>";
+                            $detail_id1 = uniqid(); // generate a unique detail ID
+                            $od_stmt->bindParam(1, $lastInsertId);
+                            $od_stmt->bindParam(2, $product1_id);
+                            $od_stmt->bindParam(3, $quantity1);
+                            $od_stmt->bindParam(4, $created);
+                            if (!$od_stmt->execute()) {
+                                $success = false;
                             }
                         }
-                    } else {
-                        echo "<div class='alert alert-danger'>Unable to save record.</div>";
-                    }
-                    if ($success) {
-                        echo "<div class='alert alert-success'>Record was saved.</div>";
+
+                        // insert order details for product 2
+                        if (!empty($product_name2)) {
+                            $detail_id2 = uniqid(); // generate a unique detail ID
+                            $od_stmt->bindParam(1, $lastInsertId);
+                            $od_stmt->bindParam(2, $product2_id);
+                            $od_stmt->bindParam(3, $quantity2);
+                            $od_stmt->bindParam(4, $created);
+                            if (!$od_stmt->execute()) {
+                                $success = false;
+                            }
+                        }
+
+                        // insert order details for product 3
+                        if (!empty($product_name3)) {
+                            $detail_id3 = uniqid(); // generate a unique detail ID
+                            $od_stmt->bindParam(1, $lastInsertId);
+                            $od_stmt->bindParam(2, $product3_id);
+                            $od_stmt->bindParam(3, $quantity3);
+                            $od_stmt->bindParam(4, $created);
+                            if (!$od_stmt->execute()) {
+                                $success = false;
+                            }
+                        }
+
+                        if ($success) {
+                            echo "<div class='alert alert-success'>Record was saved.</div>";
+                        } else {
+                            echo "<div class='alert alert-danger'>Unable to save record.</div>";
+                        }
                     }
                 }
             }
