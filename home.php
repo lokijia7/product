@@ -61,9 +61,7 @@ if (!isset($_SESSION["username"])) {
                 <div class="border">
                     <h2>Latest Product</h2>
                     <ul>
-                        <li>Product G</li>
-                        <li>Product H</li>
-                        <li>Product I</li>
+                        <li><?php include 'latest_product.php' ?></li>
                     </ul>
                 </div>
             </div>

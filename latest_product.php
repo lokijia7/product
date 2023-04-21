@@ -2,31 +2,28 @@
 // include database connection
 include 'config/database.php';
 
-// select bottom 3 worst sellers
+// select top 3 latest products
 $query = "SELECT name FROM products ORDER BY created DESC LIMIT 3";
 
-
+// prepare and execute the query
 $stmt = $con->prepare($query);
-$stmt->execute();
+if (!$stmt->execute()) {
+    // handle query execution error
+    echo "<div class='alert alert-danger'>Error executing query.</div>";
+    exit();
+}
 
-// this is how to get number of rows returned
-$num = $stmt->rowCount();
+// fetch the results
+$latest_products = array();
+while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+    $latest_products[] = $row['name'];
+}
 
-// check if more than 0 record found
-if ($num > 0) {
-    $latest_product = array();
-
-    // retrieve our table contents
-    while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-        extract($row);
-
-        $latest_product[] = $name;
-    }
-
-    // output the results
+// output the results
+if (count($latest_products) > 0) {
     echo "<ul>";
-    foreach ($latest_product as $product) {
-        echo "<li>" . $product . "</li>";
+    foreach ($latest_products as $product) {
+        echo "<li>" . htmlspecialchars($product) . "</li>";
     }
     echo "</ul>";
 } else {
