@@ -5,10 +5,24 @@
 }
 
 .border.pastel {
-    background-color: #F5DEB3;
-    border: 1px solid #F5DEB3;
+    background-color: #f9b0a5;
+    border: 1px solid #f9b0a5;
 }
 
+.border.pastel2 {
+    background-color: #ffc884;
+    border: 1px solid #ffc884;
+}
+
+.border.pastel3 {
+    background-color: #ffcbf3;
+    border: 1px solid #ffcbf3;
+}
+
+.border.pastel4 {
+    background-color: #bde4e9;
+    border: 1px solid #bde4e9;
+}
 
 /* Set background color and padding for nav bar */
 #mainNav {
