@@ -51,9 +51,7 @@ if (!isset($_SESSION["username"])) {
                 <div class="border">
                     <h2>Most Bought Customer</h2>
                     <ol>
-                        <li>John Doe</li>
-                        <li>Jane Smith</li>
-                        <li>Mike Johnson</li>
+                        <li><?php include 'best_customer.php' ?></li>
                     </ol>
                 </div>
             </div>
