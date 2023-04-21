@@ -133,3 +133,14 @@ button:hover {
     width: 100px;
     height: auto;
 }
+
+.border {
+    border: 1px solid #ddd;
+    padding: 10px;
+    margin-bottom: 20px;
+}
+
+.border.pastel {
+    background-color: #F5DEB3;
+    border: 1px solid #F5DEB3;
+}

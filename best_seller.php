@@ -1,16 +1,16 @@
 <?php
-// select all data
-$query = "SELECT 
-    p.name,
-    SUM(od.quantity) as total_sold
-FROM 
-    orders o 
-    JOIN order_detail od ON o.order_id = od.order_id
-    JOIN products p ON od.product_id = p.product_id
-GROUP BY 
-    p.name
-ORDER BY 
-    total_sold DESC";
+// include database connection
+include 'config/database.php';
+
+// select top 3 best sellers
+$query = "SELECT p.name,SUM(od.quantity) as total_sold 
+                            FROM orders o 
+                            JOIN order_detail od ON o.order_id = od.order_id
+                            JOIN products p ON od.product_id = p.product_id
+                            GROUP BY 
+                                p.name
+                            ORDER BY 
+                                total_sold DESC LIMIT 3";
 
 $stmt = $con->prepare($query);
 $stmt->execute();
@@ -26,22 +26,13 @@ if ($num > 0) {
     while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
         extract($row);
 
-        $best_sellers[$product_name] = $total_sold;
+        $best_sellers[] = $name;
     }
 
-    // sort the array in descending order of total sales
-    arsort($best_sellers);
-
-    // output the top 3 products
-    $count = 0;
+    // output the results
     echo "<ul>";
-    foreach ($best_sellers as $product => $total_sold) {
-        if ($count < 3) {
-            echo "<li>" . $product . " (" . $total_sold . " sold)</li>";
-            $count++;
-        } else {
-            break;
-        }
+    foreach ($best_sellers as $product) {
+        echo "<li>" . $product . "</li>";
     }
     echo "</ul>";
 } else {
