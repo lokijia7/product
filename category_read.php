@@ -30,6 +30,22 @@ if (!isset($_SESSION["username"])) {
             <h1>Read Categories</h1>
         </div>
 
+        <nav class="navbar bg-body-tertiary">
+            <div class="container-fluid">
+
+                <div class="col-md-6">
+                    <?php echo "<a href='category_create.php' class='btn btn-primary m-b-1em'>Create New Category</a>"; ?>
+                </div>
+                <div class="col-md-6 d-flex justify-content-end">
+                    <form class="d-flex" role="search" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
+                        <input class="form-control me-2 pastel-color" name="search" type="search" placeholder="Search" aria-label="Search">
+                        <button class="btn btn-outline-success" btn-sm type="submit">Search</button>
+                    </form>
+                </div>
+
+            </div>
+        </nav>
+
         <?php
         // include database connection
         include 'config/database.php';
@@ -42,16 +58,13 @@ if (!isset($_SESSION["username"])) {
             $query = "SELECT * FROM `product_category` WHERE 
                    category_id LIKE '%" . $search . "%' OR 
                    category_name LIKE '%" . $search . "%' OR 
-                   description LIKE '%" . $search . "%'";
+                   category_description LIKE '%" . $search . "%'";
         }
         $stmt = $con->prepare($query);
         $stmt->execute();
 
         // this is how to get number of rows returned
         $num = $stmt->rowCount();
-
-        // link to create record form
-        echo "<a href='category_create.php' class='btn btn-primary m-b-1em'>Create New Category</a>";
 
         //check if more than 0 record found
         if ($num > 0) {
