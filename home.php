@@ -39,7 +39,7 @@ if (!isset($_SESSION["username"])) {
 
             <div class="col-md-6">
                 <div class="border pastel2">
-                    <h2>Worst SellerS</h2>
+                    <h2>Worst Sellers</h2>
                     <ul>
                         <li><?php include 'worst_seller.php' ?></li>
                     </ul>
@@ -49,7 +49,7 @@ if (!isset($_SESSION["username"])) {
         <div class="row">
             <div class="col-md-6">
                 <div class="border pastel3">
-                    <h2>Most Bought Customer</h2>
+                    <h2>Best Customer</h2>
                     <ol>
                         <li><?php include 'best_customer.php' ?></li>
                     </ol>
