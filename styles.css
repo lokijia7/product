@@ -1,27 +1,40 @@
-.border {
+.grid-container {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+    grid-gap: 20px;
+}
+
+.box {
     border: 1px solid #ddd;
-    padding: 10px;
-    margin-bottom: 20px;
+    padding: 20px;
+    border-radius: 10px;
+    background-color: #fff;
 }
 
-.border.pastel {
-    background-color: #f9b0a5;
-    border: 1px solid #f9b0a5;
+
+.best-sellers {
+    background-color: #c6eac8;
+    background-position: center;
+    background-size: cover;
 }
 
-.border.pastel2 {
-    background-color: #ffc884;
-    border: 1px solid #ffc884;
+.worst-sellers {
+    background-color: #fffdbbc7;
+    background-position: center;
+    background-size: cover;
 }
 
-.border.pastel3 {
-    background-color: #ffcbf3;
-    border: 1px solid #ffcbf3;
+.best-customer {
+    background-color: #ace6ff;
+    background-position: center;
+    background-size: cover;
 }
 
-.border.pastel4 {
-    background-color: #bde4e9;
-    border: 1px solid #bde4e9;
+.latest-product {
+    background-color: #e8c7f3c7;
+    background-position: center;
+    background-size: cover;
 }
 
 /* Set background color and padding for nav bar */
@@ -166,8 +179,19 @@ button:hover {
     color: #777777;
 }
 
-.button-group {
+.button-group1 {
     margin-bottom: 8px;
+    margin-right: 5px;
+}
+
+.button-group2 {
+    margin-bottom: 8px;
+    margin-right: 5px;
+}
+
+.button-group3 {
+    margin-bottom: 8px;
+    margin-right: 5px;
 }
 
 table {
@@ -223,14 +247,6 @@ tbody tr:nth-of-type(even) {
     margin-bottom: 20px;
 }
 
-/* Style the login button */
-.btn-info {
-    background-color: #008CBA;
-    border-color: #008CBA;
-    border-radius: 5px;
-    color: #fff;
-    padding: 10px 20px;
-}
 
 /* Style the register link */
 #register-link a {
@@ -252,10 +268,20 @@ tbody tr:nth-of-type(even) {
     background-image: url('images/Green\ Watercolor\ Landscape\ Computer\ Desktop\ Wallpaper\ Background.jpeg');
 }
 
-/* adjust search button size */
-.btn-outline-success.btn-sm {
-    height: calc(1.5em + .25rem - 2px);
-    width: 5em;
-    font-size: 0.8rem;
-    padding: 0.25rem 0.5rem;
+
+.home-list {
+    list-style-type: none;
+}
+
+.my-btn {
+    padding: 10px 20px;
+}
+
+h2 {
+    font-family: Arial, sans-serif;
+    font-weight: bold;
+}
+
+ul.no-marker {
+    list-style: none;
 }

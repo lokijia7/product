@@ -33,19 +33,17 @@ if (!isset($_SESSION["username"])) {
 
         <nav class="navbar bg-body-tertiary">
             <div class="container-fluid">
-                <div class="row">
-                    <div class="col-md-6">
-                        <?php echo "<a href='order_create.php' class='btn btn-primary m-b-1em'>Create New Order</a>"; ?>
-                    </div>
-                    <div class="col-md-6 d-flex justify-content-end">
-                        <form class="d-flex" role="search" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
-                            <input class="form-control me-2" name="search" type="search" placeholder="Search" aria-label="Search">
-                            <button class="btn btn-outline-success" type="submit">Search</button>
 
-
-                        </form>
-                    </div>
+                <div class="col-md-6">
+                    <?php echo "<a href='order_create.php' class='btn btn-primary m-b-1em'>Create New Order</a>"; ?>
                 </div>
+                <div class="col-md-6 d-flex justify-content-end">
+                    <form class="d-flex" role="search" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
+                        <input class="form-control me-2 pastel-color" name="search" type="search" placeholder="Search" aria-label="Search">
+                        <button class="btn btn-outline-success" btn-sm type="submit">Search</button>
+                    </form>
+                </div>
+
             </div>
         </nav>
 
@@ -55,11 +53,12 @@ if (!isset($_SESSION["username"])) {
         include 'config/database.php';
 
         // select all data
-        $query = "SELECT * FROM `orders`";
-
+        $query = "SELECT * FROM orders";
         if ($_POST) {
             $search = htmlspecialchars(strip_tags($_POST['search']));
-            $query .= " WHERE o.order LIKE '%" . $search . "%'";
+            $query = "SELECT * FROM `orders` WHERE 
+            order_id LIKE '%" . $search . "%' OR 
+            username LIKE '%" . $search . "%'";
         }
 
 
@@ -94,14 +93,18 @@ if (!isset($_SESSION["username"])) {
                 echo "<td>{$username}</td>";
                 echo "<td>{$created}</td>";
                 echo "<td>";
+
                 // read one record
-                echo "<a href='order_read_one.php?order_id={$order_id}' class='btn btn-info m-r-1em'>Read</a>";
-
-                // we will use this links on next part of this post
-                echo "<a href='update.php?id={$id}' class='btn btn-primary m-r-1em'>Edit</a>";
-
-                // we will use this links on next part of this post
-                echo "<a href='#' onclick='delete_user({$id});'  class='btn btn-danger'>Delete</a>";
+                echo "<td>";
+                echo "<div class='button-group1'>";
+                echo "<a href='order_read_one.php?order_id={$order_id}' class='btn btn-info btn-sm d-inline'>Read</a>";
+                echo "</div>";
+                echo "<div class='button-group2'>";
+                echo "<a href='update.php?id={$id}' class='btn btn-primary btn-sm d-inline'>Edit</a>";
+                echo "</div>";
+                echo "<div class='button-group3'>";
+                echo "<a href='#' onclick='delete_user({$id});'  class='btn btn-danger btn-sm d-inline'>Delete</a>";
+                echo "</div>";
                 echo "</td>";
                 echo "</tr>";
             }

@@ -90,13 +90,17 @@ if (!isset($_SESSION["username"])) {
             echo "<td>{$expiry_date}</td>";
             echo "<td>";
             // read one record
-            echo "<a href='product_read_one.php?product_id={$product_id}' class='btn btn-info m-r-1em'>Read</a>";
-
-            // we will use this links on next part of this post
-            echo "<a href='update.php?id={$id}' class='btn btn-primary m-r-1em'>Edit</a>";
-
-            // we will use this links on next part of this post
-            echo "<a href='#' onclick='delete_user({$id});'  class='btn btn-danger'>Delete</a>";
+            // read one record
+            echo "<td>";
+            echo "<div class='button-group1'>";
+            echo "<a href='product_read_one.php?product_id={$product_id}' class='btn btn-info btn-sm d-inline'>Read</a>";
+            echo "</div>";
+            echo "<div class='button-group2'>";
+            echo "<a href='update.php?id={$id}' class='btn btn-primary btn-sm d-inline'>Edit</a>";
+            echo "</div>";
+            echo "<div class='button-group3'>";
+            echo "<a href='#' onclick='delete_user({$id});'  class='btn btn-danger btn-sm d-inline'>Delete</a>";
+            echo "</div>";
             echo "</td>";
             echo "</tr>";
         }

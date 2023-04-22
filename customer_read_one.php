@@ -24,6 +24,7 @@ if (!isset($_SESSION["username"])) {
 
 
 <body>
+    <?php include 'nav.php' ?>
 
     <!-- container -->
     <div class="container">

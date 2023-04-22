@@ -98,15 +98,19 @@ if (!isset($_SESSION["username"])) {
                 echo "<td>{$first_name}</td>";
                 echo "<td>{$last_name}</td>";
                 echo "<td>{$account_status}</td>";
-                echo "<td>";
+
+
                 // read one record
+                echo "<td>";
+                echo "<div class='button-group1'>";
                 echo "<a href='customer_read_one.php?id={$id}' class='btn btn-info m-r-1em'>Read</a>";
-
-                // we will use this links on next part of this post
-                echo "<a href='update.php?id={$id}' class='btn btn-primary m-r-1em'>Edit</a>";
-
-                // we will use this links on next part of this post
-                echo "<a href='#' onclick='delete_user({$id});'  class='btn btn-danger'>Delete</a>";
+                echo "</div>";
+                echo "<div class='button-group2'>";
+                echo "<a href='update.php?id={$id}' class='btn btn-primary btn-sm d-inline'>Edit</a>";
+                echo "</div>";
+                echo "<div class='button-group3'>";
+                echo "<a href='#' onclick='delete_user({$id});'  class='btn btn-danger btn-sm d-inline'>Delete</a>";
+                echo "</div>";
                 echo "</td>";
                 echo "</tr>";
             }

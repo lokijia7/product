@@ -99,14 +99,15 @@ if (!isset($_SESSION["username"])) {
                 echo "<td>" . ($promotion_price ? 'RM' . number_format($promotion_price, 2) : '') . "</td>";
                 echo "<td>";
                 // read one record
-                echo "<div class='button-group'>";
-                echo "<a href='product_read_one.php?product_id={$product_id}' class='btn btn-info '>Read</a>";
+                echo "<td>";
+                echo "<div class='button-group1'>";
+                echo "<a href='product_read_one.php?product_id={$product_id}' class='btn btn-info btn-sm d-inline'>Read</a>";
                 echo "</div>";
-                echo "<div class='button-group'>";
-                echo "<a href='update.php?id={$id}' class='btn btn-primary '>Edit</a>";
+                echo "<div class='button-group2'>";
+                echo "<a href='update.php?id={$id}' class='btn btn-primary btn-sm d-inline'>Edit</a>";
                 echo "</div>";
-                echo "<div class='button-group'>";
-                echo "<a href='#' onclick='delete_user({$id});'  class='btn btn-danger '>Delete</a>";
+                echo "<div class='button-group3'>";
+                echo "<a href='#' onclick='delete_user({$id});'  class='btn btn-danger btn-sm d-inline'>Delete</a>";
                 echo "</div>";
                 echo "</td>";
                 echo "</tr>";

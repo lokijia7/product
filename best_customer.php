@@ -23,8 +23,9 @@ $row = $stmt->fetch(PDO::FETCH_ASSOC);
 
 // output the result
 if ($row) {
-    echo "<p>The customer who has placed the most orders is: " . htmlspecialchars($row['username']) 
-         . " with a total of " . htmlspecialchars($row['total_orders']) . " orders</p>";
+    echo "<p>The customer who has placed the most orders is: " . htmlspecialchars($row['username'])
+        . " with a total of " . htmlspecialchars($row['total_orders']) . " orders</p>";
+    echo "<tr>";
 } else {
     echo "<div class='alert alert-danger'>No records found.</div>";
 }
