@@ -39,7 +39,7 @@ if (!isset($_SESSION["username"])) {
                 <div class="col-md-6 d-flex justify-content-end">
                     <form class="d-flex" role="search" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
                         <input class="form-control me-2 pastel-color" name="search" type="search" placeholder="Search" aria-label="Search">
-                        <button class="btn btn-outline-success" btn-sm type="submit">Search</button>
+                        <button class="btn btn-outline-success btn-btn-sm" type="submit">Search</button>
                     </form>
                 </div>
 
@@ -83,6 +83,7 @@ if (!isset($_SESSION["username"])) {
             echo "<th>First Name</th>";
             echo "<th>Last Name</th>";
             echo "<th>Account Status</th>";
+            echo "<th>Register Date</th>";
             echo "<th>Action</th>";
             echo "</tr>";
 
@@ -98,12 +99,12 @@ if (!isset($_SESSION["username"])) {
                 echo "<td>{$first_name}</td>";
                 echo "<td>{$last_name}</td>";
                 echo "<td>{$account_status}</td>";
-
+                echo "<td>" . date("Y-m-d", strtotime($registration_datetime)) . "</td>";
+                echo "<td>";
 
                 // read one record
-                echo "<td>";
                 echo "<div class='button-group1'>";
-                echo "<a href='customer_read_one.php?id={$id}' class='btn btn-info m-r-1em'>Read</a>";
+                echo "<a href='customer_read_one.php?id={$id}' class='btn btn-info btn-sm d-inline'>Read</a>";
                 echo "</div>";
                 echo "<div class='button-group2'>";
                 echo "<a href='update.php?id={$id}' class='btn btn-primary btn-sm d-inline'>Edit</a>";

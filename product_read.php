@@ -33,19 +33,18 @@ if (!isset($_SESSION["username"])) {
 
         <nav class="navbar bg-body-tertiary">
             <div class="container-fluid">
-
                 <div class="col-md-6">
                     <?php echo "<a href='product_create.php' class='btn btn-primary m-b-1em'>Create New Product</a>"; ?>
                 </div>
                 <div class="col-md-6 d-flex justify-content-end">
                     <form class="d-flex" role="search" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
                         <input class="form-control me-2 pastel-color" name="search" type="search" placeholder="Search" aria-label="Search">
-                        <button class="btn btn-outline-success" btn-sm type="submit">Search</button>
+                        <button class="btn btn-outline-success m-b-1em btn-btn-sm" type="submit">Search</button>
                     </form>
                 </div>
-
             </div>
         </nav>
+
 
 
         <?php
@@ -99,7 +98,6 @@ if (!isset($_SESSION["username"])) {
                 echo "<td>" . ($promotion_price ? 'RM' . number_format($promotion_price, 2) : '') . "</td>";
                 echo "<td>";
                 // read one record
-                echo "<td>";
                 echo "<div class='button-group1'>";
                 echo "<a href='product_read_one.php?product_id={$product_id}' class='btn btn-info btn-sm d-inline'>Read</a>";
                 echo "</div>";

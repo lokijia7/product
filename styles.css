@@ -285,3 +285,11 @@ h2 {
 ul.no-marker {
     list-style: none;
 }
+
+.btn-btn-sm {
+    margin-bottom: 18px;
+}
+
+.d-flex {
+    margin-top: 10px;
+}

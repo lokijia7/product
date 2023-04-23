@@ -44,7 +44,7 @@ if (!isset($_SESSION["username"])) {
         // read current record's data
         try {
             // prepare select query
-            $query = "SELECT id, username, first_name, last_name, pass, gender, date_of_birth, account_status FROM customers WHERE id = ? LIMIT 0,1";
+            $query = "SELECT id, username, first_name, last_name, gender, date_of_birth, account_status FROM customers WHERE id = ? LIMIT 0,1";
             $stmt = $con->prepare($query);
 
             // this is the first question mark
@@ -60,7 +60,6 @@ if (!isset($_SESSION["username"])) {
             $username = $row['username'];
             $first_name = $row['first_name'];
             $last_name = $row['last_name'];
-            $pass = $row['pass'];
             $gender = $row['gender'];
             $date_of_birth = $row['date_of_birth'];
             $account_status = $row['account_status'];
@@ -87,10 +86,6 @@ if (!isset($_SESSION["username"])) {
             <tr>
                 <td>Last name</td>
                 <td><?php echo htmlspecialchars($last_name, ENT_QUOTES);  ?></td>
-            </tr>
-            <tr>
-                <td>Password</td>
-                <td><?php echo htmlspecialchars($pass, ENT_QUOTES);  ?></td>
             </tr>
             <tr>
                 <td>Gender</td>

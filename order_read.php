@@ -40,7 +40,7 @@ if (!isset($_SESSION["username"])) {
                 <div class="col-md-6 d-flex justify-content-end">
                     <form class="d-flex" role="search" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
                         <input class="form-control me-2 pastel-color" name="search" type="search" placeholder="Search" aria-label="Search">
-                        <button class="btn btn-outline-success" btn-sm type="submit">Search</button>
+                        <button class="btn btn-outline-success btn-btn-sm" type="submit">Search</button>
                     </form>
                 </div>
 
@@ -78,7 +78,7 @@ if (!isset($_SESSION["username"])) {
             echo "<tr>";
             echo "<th>Order ID</th>";
             echo "<th>Customer Name</th>";
-            echo "<th>Created</th>";
+            echo "<th>Order Date</th>";
             echo "<th>Action</th>";
             echo "</tr>";
 
@@ -91,11 +91,10 @@ if (!isset($_SESSION["username"])) {
                 echo "<tr>";
                 echo "<td>{$order_id}</td>";
                 echo "<td>{$username}</td>";
-                echo "<td>{$created}</td>";
+                echo "<td>" . date("Y-m-d", strtotime($created)) . "</td>";
                 echo "<td>";
 
                 // read one record
-                echo "<td>";
                 echo "<div class='button-group1'>";
                 echo "<a href='order_read_one.php?order_id={$order_id}' class='btn btn-info btn-sm d-inline'>Read</a>";
                 echo "</div>";

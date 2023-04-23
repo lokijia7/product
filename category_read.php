@@ -39,7 +39,7 @@ if (!isset($_SESSION["username"])) {
                 <div class="col-md-6 d-flex justify-content-end">
                     <form class="d-flex" role="search" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
                         <input class="form-control me-2 pastel-color" name="search" type="search" placeholder="Search" aria-label="Search">
-                        <button class="btn btn-outline-success" btn-sm type="submit">Search</button>
+                        <button class="btn btn-outline-success btn-btn-sm" type="submit">Search</button>
                     </form>
                 </div>
 
@@ -76,6 +76,7 @@ if (!isset($_SESSION["username"])) {
             echo "<th>Category ID</th>";
             echo "<th>Category Name</th>";
             echo "<th>Description</th>";
+            echo "<th>Action</th>";
             echo "</tr>";
 
             // retrieve our table contents
@@ -91,7 +92,6 @@ if (!isset($_SESSION["username"])) {
                 echo "<td>";
 
                 // read one record
-                echo "<td>";
                 echo "<div class='button-group1'>";
                 echo "<a href='category_read_one.php?category_id={$category_id}' class='btn btn-info btn-sm d-inline'>Read</a>";
                 echo "</div>";

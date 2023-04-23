@@ -42,7 +42,6 @@ if (!isset($_SESSION["username"])) {
             include 'config/database.php';
 
             // get passed parameter value, in this case, the record ID
-            // isset() is a PHP function used to verify if a value is there or not
             $id = isset($_GET['order_id']) ? $_GET['order_id'] : die('ERROR: Record ID not found.');
 
             // select all data
@@ -75,7 +74,6 @@ if (!isset($_SESSION["username"])) {
                 echo "<th>Product ID</th>";
                 echo "<th>Product Name</th>";
                 echo "<th>Quantity</th>";
-                echo "<th>Created</th>";
                 echo "<th>Price</th>";
                 echo "<th>Promotion Price</th>";
                 echo "<th>Total</th>";
@@ -93,7 +91,6 @@ if (!isset($_SESSION["username"])) {
                     echo "<td>{$product_id}</td>";
                     echo "<td>{$name}</td>";
                     echo "<td>{$quantity}</td>";
-                    echo "<td>{$created}</td>";
                     echo "<td>" . 'RM' . number_format($price, 2) . "</td>";
                     echo "<td>" . ($promotion_price ? 'RM' . number_format($promotion_price, 2) : '') . "</td>";
                     echo "<td>" . 'RM' . number_format(($promotion_price ? $promotion_price : $price) * $quantity, 2) . "</td>"; // new column data
