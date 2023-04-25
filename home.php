@@ -29,13 +29,13 @@ if (!isset($_SESSION["username"])) {
     <main class="container">
         <div class="grid-container">
             <div class="box best-sellers">
-                <h2>Best Sellers</h2>
+                <h2>Best Selling Product</h2>
                 <ul class="no-marker">
                     <li><?php include 'best_seller.php' ?></li>
                 </ul>
             </div>
             <div class="box worst-sellers">
-                <h2>Worst Sellers</h2>
+                <h2>Worst Selling Product</h2>
                 <ul class="no-marker">
                     <li><?php include 'worst_seller.php' ?></li>
                 </ul>
