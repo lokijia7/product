@@ -149,17 +149,17 @@ if (!isset($_SESSION["username"])) {
 
                         // insert into order_details table
                         $success = true;
-                        $od_query = "INSERT INTO order_detail (order_id, product_id, quantity, created) VALUES (?, ?, ?, ?)";
+                        $od_query = "INSERT INTO order_detail (order_id, product_id, quantity) VALUES (?, ?, ?)";
                         // prepare query for execution
                         $od_stmt = $con->prepare($od_query);
 
                         // insert order details for product 1
                         if (!empty($product_name1)) {
-                            $detail_id1 = uniqid(); // generate a unique detail ID
+
                             $od_stmt->bindParam(1, $lastInsertId);
                             $od_stmt->bindParam(2, $product1_id);
                             $od_stmt->bindParam(3, $quantity1);
-                            $od_stmt->bindParam(4, $created);
+
                             if (!$od_stmt->execute()) {
                                 $success = false;
                             }
@@ -167,11 +167,11 @@ if (!isset($_SESSION["username"])) {
 
                         // insert order details for product 2
                         if (!empty($product_name2)) {
-                            $detail_id2 = uniqid(); // generate a unique detail ID
+
                             $od_stmt->bindParam(1, $lastInsertId);
                             $od_stmt->bindParam(2, $product2_id);
                             $od_stmt->bindParam(3, $quantity2);
-                            $od_stmt->bindParam(4, $created);
+
                             if (!$od_stmt->execute()) {
                                 $success = false;
                             }
@@ -179,11 +179,11 @@ if (!isset($_SESSION["username"])) {
 
                         // insert order details for product 3
                         if (!empty($product_name3)) {
-                            $detail_id3 = uniqid(); // generate a unique detail ID
+
                             $od_stmt->bindParam(1, $lastInsertId);
                             $od_stmt->bindParam(2, $product3_id);
                             $od_stmt->bindParam(3, $quantity3);
-                            $od_stmt->bindParam(4, $created);
+
                             if (!$od_stmt->execute()) {
                                 $success = false;
                             }
