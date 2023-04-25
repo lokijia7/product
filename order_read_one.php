@@ -70,13 +70,13 @@ if (!isset($_SESSION["username"])) {
 
                 //creating our table heading
                 echo "<tr>";
-                echo "<th>Order Detail ID</th>";
-                echo "<th>Product ID</th>";
-                echo "<th>Product Name</th>";
-                echo "<th>Quantity</th>";
-                echo "<th>Price</th>";
-                echo "<th>Promotion Price</th>";
-                echo "<th>Total</th>";
+                echo "<th class='col-2'>Order Detail ID</th>";
+                echo "<th class='col-1'>Product ID</th>";
+                echo "<th class='col-2'>Product Name</th>";
+                echo "<th class='col-1'>Quantity</th>";
+                echo "<th class='col-2'>Price</th>";
+                echo "<th class='col-2'>Promotion Price</th>";
+                echo "<th class='col-2'>Total</th>";
                 echo "</tr>";
 
                 // retrieve our table contents
@@ -87,13 +87,13 @@ if (!isset($_SESSION["username"])) {
                     // creating new table row per record
                     // creating new table row per record
                     echo "<tr>";
-                    echo "<td>{$order_detail_id}</td>";
-                    echo "<td>{$product_id}</td>";
-                    echo "<td>{$name}</td>";
-                    echo "<td>{$quantity}</td>";
-                    echo "<td style='text-align: right'>" . 'RM' . number_format($price, 2) . "</td>";
-                    echo "<td style='text-align: right'>" . ($promotion_price ? 'RM' . number_format($promotion_price, 2) : '') . "</td>";
-                    echo "<td style='text-align: right'>" . 'RM' . number_format(($promotion_price ? $promotion_price : $price) * $quantity, 2) . "</td>"; // new column data
+                    echo "<td class='col-2'>{$order_detail_id}</td>";
+                    echo "<td class='col-1'>{$product_id}</td>";
+                    echo "<td class='col-2'>{$name}</td>";
+                    echo "<td class='col-1'>{$quantity}</td>";
+                    echo "<td class='col-2' style='text-align: right'>" . 'RM' . number_format($price, 2) . "</td>";
+                    echo "<td class='col-2' style='text-align: right'>" . ($promotion_price ? 'RM' . number_format($promotion_price, 2) : '') . "</td>";
+                    echo "<td class='col-2' style='text-align: right'>" . 'RM' . number_format(($promotion_price ? $promotion_price : $price) * $quantity, 2) . "</td>"; // new column data
 
                 }
 
