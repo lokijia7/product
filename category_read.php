@@ -73,10 +73,10 @@ if (!isset($_SESSION["username"])) {
 
             //creating our table heading
             echo "<tr>";
-            echo "<th>Category ID</th>";
-            echo "<th>Category Name</th>";
-            echo "<th>Description</th>";
-            echo "<th>Action</th>";
+            echo "<th class='col-1'>Category ID</th>";
+            echo "<th class='col-2'>Category Name</th>";
+            echo "<th class='col-5'>Description</th>";
+            echo "<th class='col-4'>Action</th>";
             echo "</tr>";
 
             // retrieve our table contents
@@ -86,19 +86,15 @@ if (!isset($_SESSION["username"])) {
                 extract($row);
                 // creating new table row per record
                 echo "<tr>";
-                echo "<td>{$category_id}</td>";
-                echo "<td>{$category_name}</td>";
-                echo "<td>{$category_description}</td>";
-                echo "<td>";
+                echo "<td class='col-1'>{$category_id}</td>";
+                echo "<td class='col-2'>{$category_name}</td>";
+                echo "<td class='col-5'>{$category_description}</td>";
+                echo "<td class='col-4'>";
 
                 // read one record
                 echo "<div class='button-group1'>";
-                echo "<a href='category_read_one.php?category_id={$category_id}' class='btn btn-info btn-sm d-inline'>Read</a>";
-                echo "</div>";
-                echo "<div class='button-group2'>";
-                echo "<a href='update.php?id={$id}' class='btn btn-primary btn-sm d-inline'>Edit</a>";
-                echo "</div>";
-                echo "<div class='button-group3'>";
+                echo "<a href='category_read_one.php?category_id={$category_id}' class='btn btn-info btn-sm d-inline'>Read</a>&nbsp;";
+                echo "<a href='update.php?id={$id}' class='btn btn-primary btn-sm d-inline'>Edit</a>&nbsp;";
                 echo "<a href='#' onclick='delete_user({$id});'  class='btn btn-danger btn-sm d-inline'>Delete</a>";
                 echo "</div>";
                 echo "</td>";

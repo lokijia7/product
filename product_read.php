@@ -94,12 +94,12 @@ if (!isset($_SESSION["username"])) {
                 echo "<td class='col-1'>{$product_id}</td>";
                 echo "<td class='col-2'>{$name}</td>";
                 echo "<td class='col-3'>{$description}</td>";
-                echo "<td class='col-1'>" . 'RM' . number_format($price, 2) . "</td>";
-                echo "<td class='col-1'>" . ($promotion_price ? 'RM' . number_format($promotion_price, 2) : '') . "</td>";
+                echo "<td class='col-1' style='text-align: right'>" . 'RM' . number_format($price, 2) . "</td>";
+                echo "<td class='col-1' style='text-align: right'>" . ($promotion_price ? 'RM' . number_format($promotion_price, 2) : '') . "</td>";
                 echo "<td class='col-4'>";
                 // read one record
                 echo "<div class='button-group1'>";
-                echo "<a href='product_read_one.php?product_id={$product_id}' class='btn btn-info btn-sm d-inline'>Read</a>&nbsp;&nbsp;";
+                echo "<a href='product_read_one.php?product_id={$product_id}' class='btn btn-info btn-sm d-inline'>Read</a>&nbsp;";
                 echo "<a href='update.php?id={$id}' class='btn btn-primary btn-sm d-inline'>Edit</a>&nbsp;";
                 echo "<a href='#' onclick='delete_user({$id});'  class='btn btn-danger btn-sm d-inline'>Delete</a>";
                 echo "</div>";

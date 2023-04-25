@@ -78,13 +78,13 @@ if (!isset($_SESSION["username"])) {
 
             //creating our table heading
             echo "<tr>";
-            echo "<th>ID</th>";
-            echo "<th>Username</th>";
-            echo "<th>First Name</th>";
-            echo "<th>Last Name</th>";
-            echo "<th>Account Status</th>";
-            echo "<th>Register Date</th>";
-            echo "<th>Action</th>";
+            echo "<th class='col-1'>ID</th>";
+            echo "<th class='col-2'>Username</th>";
+            echo "<th class='col-1'>First Name</th>";
+            echo "<th class='col-1'>Last Name</th>";
+            echo "<th class='col-1'>Account Status</th>";
+            echo "<th class='col-2'>Register Date</th>";
+            echo "<th class='col-4'>Action</th>";
             echo "</tr>";
 
             // retrieve our table contents
@@ -94,22 +94,18 @@ if (!isset($_SESSION["username"])) {
                 extract($row);
                 // creating new table row per record
                 echo "<tr>";
-                echo "<td>{$id}</td>";
-                echo "<td>{$username}</td>";
-                echo "<td>{$first_name}</td>";
-                echo "<td>{$last_name}</td>";
-                echo "<td>{$account_status}</td>";
-                echo "<td>" . date("Y-m-d", strtotime($registration_datetime)) . "</td>";
-                echo "<td>";
+                echo "<td class='col-1'>{$id}</td>";
+                echo "<td class='col-2'>{$username}</td>";
+                echo "<td class='col-1'>{$first_name}</td>";
+                echo "<td class='col-1'>{$last_name}</td>";
+                echo "<td class='col-1'>{$account_status}</td>";
+                echo "<td class='col-2'>" . date("Y-m-d", strtotime($registration_datetime)) . "</td>";
+                echo "<td class='col-4'>";
 
                 // read one record
                 echo "<div class='button-group1'>";
-                echo "<a href='customer_read_one.php?id={$id}' class='btn btn-info btn-sm d-inline'>Read</a>";
-                echo "</div>";
-                echo "<div class='button-group2'>";
-                echo "<a href='update.php?id={$id}' class='btn btn-primary btn-sm d-inline'>Edit</a>";
-                echo "</div>";
-                echo "<div class='button-group3'>";
+                echo "<a href='customer_read_one.php?id={$id}' class='btn btn-info btn-sm d-inline'>Read</a>&nbsp;";
+                echo "<a href='update.php?id={$id}' class='btn btn-primary btn-sm d-inline'>Edit</a>&nbsp;";
                 echo "<a href='#' onclick='delete_user({$id});'  class='btn btn-danger btn-sm d-inline'>Delete</a>";
                 echo "</div>";
                 echo "</td>";

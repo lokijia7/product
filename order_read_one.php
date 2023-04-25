@@ -45,7 +45,7 @@ if (!isset($_SESSION["username"])) {
             $id = isset($_GET['order_id']) ? $_GET['order_id'] : die('ERROR: Record ID not found.');
 
             // select all data
-            $query = "SELECT o.order_id, od.product_id, p.name, p.price, p.promotion_price, od.quantity, od.order_detail_id, od.created
+            $query = "SELECT o.order_id, od.product_id, p.name, p.price, p.promotion_price, od.quantity, od.order_detail_id
         FROM orders o
         JOIN order_detail od ON o.order_id = od.order_id
         JOIN products p ON od.product_id = p.product_id
@@ -91,9 +91,9 @@ if (!isset($_SESSION["username"])) {
                     echo "<td>{$product_id}</td>";
                     echo "<td>{$name}</td>";
                     echo "<td>{$quantity}</td>";
-                    echo "<td>" . 'RM' . number_format($price, 2) . "</td>";
-                    echo "<td>" . ($promotion_price ? 'RM' . number_format($promotion_price, 2) : '') . "</td>";
-                    echo "<td>" . 'RM' . number_format(($promotion_price ? $promotion_price : $price) * $quantity, 2) . "</td>"; // new column data
+                    echo "<td style='text-align: right'>" . 'RM' . number_format($price, 2) . "</td>";
+                    echo "<td style='text-align: right'>" . ($promotion_price ? 'RM' . number_format($promotion_price, 2) : '') . "</td>";
+                    echo "<td style='text-align: right'>" . 'RM' . number_format(($promotion_price ? $promotion_price : $price) * $quantity, 2) . "</td>"; // new column data
 
                 }
 
