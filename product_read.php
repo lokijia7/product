@@ -76,12 +76,12 @@ if (!isset($_SESSION["username"])) {
 
             //creating our table heading
             echo "<tr>";
-            echo "<th>ID</th>";
-            echo "<th>Name</th>";
-            echo "<th>Description</th>";
-            echo "<th>Price</th>";
-            echo "<th>Promotion Price</th>";
-            echo "<th>Action</th>";
+            echo "<th class='col-1'>ID</th>";
+            echo "<th class='col-2'>Name</th>";
+            echo "<th class='col-3'>Description</th>";
+            echo "<th class='col-1'>Price</th>";
+            echo "<th class='col-1'>Promotion Price</th>";
+            echo "<th class='col-4'>Action</th>";
             echo "</tr>";
 
             // retrieve our table contents
@@ -91,20 +91,16 @@ if (!isset($_SESSION["username"])) {
                 extract($row);
                 // creating new table row per record
                 echo "<tr>";
-                echo "<td>{$product_id}</td>";
-                echo "<td>{$name}</td>";
-                echo "<td>{$description}</td>";
-                echo "<td>" . 'RM' . number_format($price, 2) . "</td>";
-                echo "<td>" . ($promotion_price ? 'RM' . number_format($promotion_price, 2) : '') . "</td>";
-                echo "<td>";
+                echo "<td class='col-1'>{$product_id}</td>";
+                echo "<td class='col-2'>{$name}</td>";
+                echo "<td class='col-3'>{$description}</td>";
+                echo "<td class='col-1'>" . 'RM' . number_format($price, 2) . "</td>";
+                echo "<td class='col-1'>" . ($promotion_price ? 'RM' . number_format($promotion_price, 2) : '') . "</td>";
+                echo "<td class='col-4'>";
                 // read one record
                 echo "<div class='button-group1'>";
-                echo "<a href='product_read_one.php?product_id={$product_id}' class='btn btn-info btn-sm d-inline'>Read</a>";
-                echo "</div>";
-                echo "<div class='button-group2'>";
-                echo "<a href='update.php?id={$id}' class='btn btn-primary btn-sm d-inline'>Edit</a>";
-                echo "</div>";
-                echo "<div class='button-group3'>";
+                echo "<a href='product_read_one.php?product_id={$product_id}' class='btn btn-info btn-sm d-inline'>Read</a>&nbsp;&nbsp;";
+                echo "<a href='update.php?id={$id}' class='btn btn-primary btn-sm d-inline'>Edit</a>&nbsp;";
                 echo "<a href='#' onclick='delete_user({$id});'  class='btn btn-danger btn-sm d-inline'>Delete</a>";
                 echo "</div>";
                 echo "</td>";

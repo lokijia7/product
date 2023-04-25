@@ -57,7 +57,7 @@ if (!isset($_SESSION["username"])) {
         if ($_POST) {
             $search = htmlspecialchars(strip_tags($_POST['search']));
             $query = "SELECT * FROM `orders` WHERE 
-            order_id LIKE '%" . $search . "%' OR 
+            order_id = $search OR 
             username LIKE '%" . $search . "%'";
         }
 
