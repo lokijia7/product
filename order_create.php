@@ -183,6 +183,7 @@ if (!isset($_SESSION["username"])) {
                         </select>
                         <?php if (isset($product_name_err)) { ?><span class="text-danger"><?php echo $product_name_err; ?></span><?php } ?>
                     </td>
+                    <td class='col-2'>Quantity</td>
                     <td>
                         <input type='number' name='quantity[]' class='form-control'>
                     </td>
@@ -198,6 +199,7 @@ if (!isset($_SESSION["username"])) {
                         </select>
                         <?php if (isset($product_name_err)) { ?><span class="text-danger"><?php echo $product_name_err; ?></span><?php } ?>
                     </td>
+                    <td class='col-2'>Quantity</td>
                     <td>
                         <input type='number' name='quantity[]' class='form-control'>
                     </td>
@@ -222,6 +224,7 @@ if (!isset($_SESSION["username"])) {
                         </select>
                         <?php if (isset($product_name_err)) { ?><span class="text-danger"><?php echo $product_name_err; ?></span><?php } ?>
                     </td>
+                    <td class='col-2'>Quantity</td>
                     <td>
                         <input type='number' name='quantity[]' class='form-control'>
                     </td>
