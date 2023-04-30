@@ -52,15 +52,19 @@ if (!isset($_SESSION["username"])) {
                     $username_err = "Please fill out the name field.";
                     $flag = true;
                 }
+
+                $product_name_err = array();
+                $quantity_err = array();
+
                 // define $i here
                 for ($i = 0; $i < count($product_names); $i++) {
                     $product_name = $product_names[$i];
                     if (empty($product_name)) {
-                        $product_name_err[$i] = "Please fill out the Product field.";
+                        $product_name_err = "Please fill out the Product field.";
                         $flag = true;
                     }
                     if (empty($quantities[$i])) {
-                        $quantity_err[$i] = "Please fill out the Quantity field.";
+                        $quantity_err = "Please fill out the Quantity field.";
                         $flag = true;
                     }
                 }
@@ -107,17 +111,6 @@ if (!isset($_SESSION["username"])) {
                             }
                         }
 
-                        // insert order details for product 3
-                        if (!empty($product_name3)) {
-
-                            $od_stmt->bindParam(1, $lastInsertId);
-                            $od_stmt->bindParam(2, $product3_id);
-                            $od_stmt->bindParam(3, $quantity3);
-
-                            if (!$od_stmt->execute()) {
-                                $success = false;
-                            }
-                        }
 
                         if ($success) {
                             echo "<div class='alert alert-success'>Record was saved.</div>";
@@ -186,6 +179,7 @@ if (!isset($_SESSION["username"])) {
                     <td class='col-2'>Quantity</td>
                     <td>
                         <input type='number' name='quantity[]' class='form-control'>
+                        <?php if (isset($quantity_err)) { ?><span class="text-danger"><?php echo $quantity_err; ?></span><?php } ?>
                     </td>
                 </tr>
                 <tr>
@@ -193,8 +187,8 @@ if (!isset($_SESSION["username"])) {
                     <td>
                         <select name='product_name[]' class="form-control">
                             <option value=''>--Select product--</option>
-                            <?php foreach ($products as $product_name2) : ?>
-                                <option value='<?php echo $product_name2; ?>'><?php echo $product_name2; ?></option>
+                            <?php foreach ($products as $product_names) : ?>
+                                <option value='<?php echo $product_names; ?>'><?php echo $product_names; ?></option>
                             <?php endforeach; ?>
                         </select>
                         <?php if (isset($product_name_err)) { ?><span class="text-danger"><?php echo $product_name_err; ?></span><?php } ?>
@@ -202,56 +196,7 @@ if (!isset($_SESSION["username"])) {
                     <td class='col-2'>Quantity</td>
                     <td>
                         <input type='number' name='quantity[]' class='form-control'>
-                    </td>
-                </tr>
-                <tr>
-                    <td>Product 3</td>
-                    <td>
-                        <?php
-                        // select all products
-                        $query = "SELECT name FROM products";
-                        $stmt = $con->prepare($query);
-                        $stmt->execute();
-
-                        // fetch the product list
-                        $products = $stmt->fetchAll(PDO::FETCH_COLUMN);
-                        ?>
-                        <select name='product_name[]' class="form-control">
-                            <option value=''>--Select product--</option>
-                            <?php foreach ($products as $product_name3) : ?>
-                                <option value='<?php echo $product_name3; ?>'><?php echo $product_name3; ?></option>
-                            <?php endforeach; ?>
-                        </select>
-                        <?php if (isset($product_name_err)) { ?><span class="text-danger"><?php echo $product_name_err; ?></span><?php } ?>
-                    </td>
-                    <td class='col-2'>Quantity</td>
-                    <td>
-                        <input type='number' name='quantity[]' class='form-control'>
-                    </td>
-                </tr>
-                <tr>
-                    <td>Product 4</td>
-                    <td>
-                        <?php
-                        // select all products
-                        $query = "SELECT name FROM products";
-                        $stmt = $con->prepare($query);
-                        $stmt->execute();
-
-                        // fetch the product list
-                        $products = $stmt->fetchAll(PDO::FETCH_COLUMN);
-                        ?>
-                        <select name='product_name[]' class="form-control">
-                            <option value=''>--Select product--</option>
-                            <?php foreach ($products as $product_name3) : ?>
-                                <option value='<?php echo $product_name3; ?>'><?php echo $product_name3; ?></option>
-                            <?php endforeach; ?>
-                        </select>
-                        <?php if (isset($product_name_err)) { ?><span class="text-danger"><?php echo $product_name_err; ?></span><?php } ?>
-                    </td>
-                    <td class='col-2'>Quantity</td>
-                    <td>
-                        <input type='number' name='quantity[]' class='form-control'>
+                        <?php if (isset($quantity_err)) { ?><span class="text-danger"><?php echo $quantity_err; ?></span><?php } ?>
                     </td>
                 </tr>
             </table>
