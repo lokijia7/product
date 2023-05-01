@@ -53,9 +53,6 @@ if (!isset($_SESSION["username"])) {
                     $flag = true;
                 }
 
-                $product_name_err = array();
-                $quantity_err = array();
-
                 // define $i here
                 for ($i = 0; $i < count($product_names); $i++) {
                     $product_name = $product_names[$i];
