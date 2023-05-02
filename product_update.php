@@ -51,6 +51,10 @@ if (!isset($_SESSION["username"])) {
             $name = $row['name'];
             $description = $row['description'];
             $price = $row['price'];
+            $promotion_price = $row['promotion_price'];
+            $manufacture_date = $row['manufacture_date'];
+            $expiry_date = $row['expiry_date'];
+            $category_name = $row['category_name'];
         }
 
         // show error
@@ -68,7 +72,7 @@ if (!isset($_SESSION["username"])) {
                 // it is better to label them and not use question marks
                 $query = "UPDATE products
                   SET name=:name, description=:description,
-   price=:price WHERE id = :id";
+   price=:price WHERE product_id = :product_id";
                 // prepare query for excecution
                 $stmt = $con->prepare($query);
                 // posted values
@@ -108,6 +112,26 @@ if (!isset($_SESSION["username"])) {
                 <tr>
                     <td>Price</td>
                     <td><input type='text' name='price' value="<?php echo htmlspecialchars($price, ENT_QUOTES);  ?>" class='form-control' /></td>
+                </tr>
+                <tr>
+                    <td>Promotion Price</td>
+
+                    <?php
+                    if (!empty($promotion_price)) {
+                        echo "<td>" . ($promotion_price ? 'RM' . number_format($promotion_price, 2) : '') . "</td>";
+                    } else {
+                        echo "";
+                    }
+                    ?>
+
+                </tr>
+                <tr>
+                    <td>Manufacture Date</td>
+                    <td><?php echo htmlspecialchars($manufacture_date, ENT_QUOTES);  ?></td>
+                </tr>
+                <tr>
+                    <td>Expiry Date</td>
+                    <td><?php echo htmlspecialchars($expiry_date, ENT_QUOTES);  ?></td>
                 </tr>
                 <tr>
                     <td></td>
