@@ -45,7 +45,7 @@ if (!isset($_SESSION["username"])) {
             $id = isset($_GET['order_id']) ? $_GET['order_id'] : die('ERROR: Record ID not found.');
 
             // select all data
-            $query = "SELECT o.order_id, od.product_id, p.name, p.price, p.promotion_price, od.quantity, od.order_detail_id
+            $query = "SELECT o.order_id,o.username, od.product_id, p.name, p.price, p.promotion_price, od.quantity, od.order_detail_id
         FROM orders o
         JOIN order_detail od ON o.order_id = od.order_id
         JOIN products p ON od.product_id = p.product_id
@@ -60,6 +60,13 @@ if (!isset($_SESSION["username"])) {
 
             // this is how to get number of rows returned
             $num = $stmt->rowCount();
+            $row = $stmt->fetch(PDO::FETCH_ASSOC);
+
+
+            echo "<div class='container'>";
+            echo "<div class='page-header'>";
+            echo "<h1>" . $row['username'] . "</h1>";
+            echo "</div>";
 
 
 
@@ -70,7 +77,7 @@ if (!isset($_SESSION["username"])) {
 
                 //creating our table heading
                 echo "<tr>";
-                echo "<th class='col-2'>Order Detail ID</th>";
+                echo "<th class='col-1'>Order Detail ID</th>";
                 echo "<th class='col-1'>Product ID</th>";
                 echo "<th class='col-2'>Product Name</th>";
                 echo "<th class='col-1'>Quantity</th>";
@@ -87,7 +94,7 @@ if (!isset($_SESSION["username"])) {
                     // creating new table row per record
                     // creating new table row per record
                     echo "<tr>";
-                    echo "<td class='col-2'>{$order_detail_id}</td>";
+                    echo "<td class='col-1'>{$order_detail_id}</td>";
                     echo "<td class='col-1'>{$product_id}</td>";
                     echo "<td class='col-2'>{$name}</td>";
                     echo "<td class='col-1'>{$quantity}</td>";

@@ -154,8 +154,9 @@ if (!isset($_SESSION["username"])) {
                         <?php if (isset($username_err)) { ?><span class="text-danger"><?php echo $username_err; ?></span><?php } ?>
                     </td>
                 </tr>
-                <tr>
-                    <td>Product 1</td>
+
+                <tr class="rowproduct">
+                    <td>Product</td>
                     <td>
                         <?php
                         // select all products
@@ -179,24 +180,9 @@ if (!isset($_SESSION["username"])) {
                         <?php if (isset($quantity_err)) { ?><span class="text-danger"><?php echo $quantity_err; ?></span><?php } ?>
                     </td>
                 </tr>
-                <tr>
-                    <td>Product 2</td>
-                    <td>
-                        <select name='product_name[]' class="form-control">
-                            <option value=''>--Select product--</option>
-                            <?php foreach ($products as $product_names) : ?>
-                                <option value='<?php echo $product_names; ?>'><?php echo $product_names; ?></option>
-                            <?php endforeach; ?>
-                        </select>
-                        <?php if (isset($product_name_err)) { ?><span class="text-danger"><?php echo $product_name_err; ?></span><?php } ?>
-                    </td>
-                    <td class='col-2'>Quantity</td>
-                    <td>
-                        <input type='number' name='quantity[]' class='form-control'>
-                        <?php if (isset($quantity_err)) { ?><span class="text-danger"><?php echo $quantity_err; ?></span><?php } ?>
-                    </td>
-                </tr>
             </table>
+            <input type="button" value="Add More" class="add_one btn btn-warning" />
+            <input type="button" value="Delete" class="delete_one btn btn-warning" />
             <input type='submit' value='Create Order' class='btn btn-primary'>
         </form>
 
@@ -204,6 +190,24 @@ if (!isset($_SESSION["username"])) {
 
     </div>
     <!-- end .container -->
+
+    <script>
+        document.addEventListener('click', function(event) {
+            if (event.target.matches('.add_one')) {
+                var element = document.querySelector('.rowproduct');
+                var clone = element.cloneNode(true);
+                element.after(clone);
+            }
+            if (event.target.matches('.delete_one')) {
+                var total = document.querySelectorAll('.rowproduct').length;
+                if (total > 1) {
+                    var element = document.querySelector('.rowproduct');
+                    element.remove(element);
+                }
+            }
+        }, false);
+    </script>
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
 </body>
 
