@@ -87,11 +87,11 @@ if (!isset($_SESSION["username"])) {
                 echo "</tr>";
 
                 // retrieve our table contents
+                $total = 0; // initialize total
                 while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
                     // extract row
                     // this will make $row['firstname'] to just $firstname only
                     extract($row);
-                    // creating new table row per record
                     // creating new table row per record
                     echo "<tr>";
                     echo "<td class='col-1'>{$order_detail_id}</td>";
@@ -100,10 +100,11 @@ if (!isset($_SESSION["username"])) {
                     echo "<td class='col-1'>{$quantity}</td>";
                     echo "<td class='col-2' style='text-align: right'>" . 'RM' . number_format($price, 2) . "</td>";
                     echo "<td class='col-2' style='text-align: right'>" . ($promotion_price ? 'RM' . number_format($promotion_price, 2) : '') . "</td>";
+                    $total += ($promotion_price ? $promotion_price : $price) * $quantity; // add product price multiplied by quantity to total
                     echo "<td class='col-2' style='text-align: right'>" . 'RM' . number_format(($promotion_price ? $promotion_price : $price) * $quantity, 2) . "</td>"; // new column data
-
                 }
 
+                echo "<tr><td colspan='6' style='text-align:right'>Total:</td><td style='text-align:right'>" . 'RM' . number_format($total, 2) . "</td></tr>"; // display total
 
                 // end table
                 echo "</table>";
