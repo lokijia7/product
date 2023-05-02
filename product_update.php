@@ -75,10 +75,16 @@ if (!isset($_SESSION["username"])) {
    price=:price,promotion_price=:promotion_price,category_name=:category_name, manufacture_date=:manufacture_date, expiry_date=:expiry_date  WHERE product_id = :product_id";
                 // prepare query for excecution
                 $stmt = $con->prepare($query);
+
                 // posted values
                 $name = htmlspecialchars(strip_tags($_POST['name']));
                 $description = htmlspecialchars(strip_tags($_POST['description']));
                 $price = htmlspecialchars(strip_tags($_POST['price']));
+                if (isset($_POST['category_name'])) $category_name = $_POST['category_name'];
+                $promotion_price = htmlspecialchars(strip_tags($_POST['promotion_price']));
+                $manufacture_date = htmlspecialchars(strip_tags($_POST['manufacture_date']));
+                $expiry_date = htmlspecialchars(strip_tags($_POST['expiry_date']));
+
                 // bind the parameters
                 $stmt->bindParam(':name', $name);
                 $stmt->bindParam(':description', $description);
