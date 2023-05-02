@@ -105,7 +105,6 @@ if (!isset($_SESSION["username"])) {
                 // read one record
                 echo "<div class='button-group1'>";
                 echo "<a href='customer_read_one.php?id={$id}' class='btn btn-info btn-sm d-inline'>Read</a>&nbsp;";
-                echo "<a href='update.php?id={$id}' class='btn btn-primary btn-sm d-inline'>Edit</a>&nbsp;";
                 echo "<a href='#' onclick='delete_user({$id});'  class='btn btn-danger btn-sm d-inline'>Delete</a>";
                 echo "</div>";
                 echo "</td>";
