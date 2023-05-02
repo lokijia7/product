@@ -72,7 +72,7 @@ if (!isset($_SESSION["username"])) {
                 // it is better to label them and not use question marks
                 $query = "UPDATE products
                   SET name=:name, description=:description,
-   price=:price WHERE product_id = :product_id";
+   price=:price,promotion_price=:promotion_price,category_name=:category_name, manufacture_date=:manufacture_date, expiry_date=:expiry_date  WHERE product_id = :product_id";
                 // prepare query for excecution
                 $stmt = $con->prepare($query);
                 // posted values
@@ -83,7 +83,12 @@ if (!isset($_SESSION["username"])) {
                 $stmt->bindParam(':name', $name);
                 $stmt->bindParam(':description', $description);
                 $stmt->bindParam(':price', $price);
-                $stmt->bindParam(':id', $id);
+                $stmt->bindParam(':product_id', $product_id);
+                $stmt->bindParam(':category_name', $category_name);
+                $stmt->bindParam(':price', $price);
+                $stmt->bindParam(':promotion_price', $promotion_price);
+                $stmt->bindParam(':manufacture_date', $manufacture_date);
+                $stmt->bindParam(':expiry_date', $expiry_date);
                 // Execute the query
                 if ($stmt->execute()) {
                     echo "<div class='alert alert-success'>Record was updated.</div>";
@@ -110,34 +115,53 @@ if (!isset($_SESSION["username"])) {
                     <td><textarea name='description' class='form-control'><?php echo htmlspecialchars($description, ENT_QUOTES);  ?></textarea></td>
                 </tr>
                 <tr>
+                    <td>Category</td>
+                    <td>
+                        <?php
+                        // include database connection
+                        include 'config/database.php';
+
+                        // select all categories
+                        $query = "SELECT category_name FROM product_category";
+                        $stmt = $con->prepare($query);
+                        $stmt->execute();
+
+                        // fetch the category list
+                        $product_category = $stmt->fetchAll(PDO::FETCH_COLUMN);
+                        ?>
+                        <select name='category_name' class="form-control">
+                            <option value=''>--Select Category--</option>
+                            <?php foreach ($product_category as $category) { ?>
+                                <option value="<?php echo $category; ?>"><?php echo $category; ?></option>
+                            <?php } ?>
+                        </select>
+                    </td>
+                </tr>
+
+
+                <tr>
                     <td>Price</td>
-                    <td><input type='text' name='price' value="<?php echo htmlspecialchars($price, ENT_QUOTES);  ?>" class='form-control' /></td>
+                    <td><input type='number' name='price' class='form-control' value="<?php echo isset($price) ? htmlspecialchars($price) : ''; ?>" />
                 </tr>
                 <tr>
-                    <td>Promotion Price</td>
-
-                    <?php
-                    if (!empty($promotion_price)) {
-                        echo "<td>" . ($promotion_price ? 'RM' . number_format($promotion_price, 2) : '') . "</td>";
-                    } else {
-                        echo "";
-                    }
-                    ?>
-
+                <tr>
+                    <td>Promotion price</td>
+                    <td><input type='number' name='promotion_price' class='form-control' value="<?php echo isset($promotion_price) ? htmlspecialchars($promotion_price) : ''; ?>" /><?php if (isset($pro_err)) { ?><span class="text-danger"><?php echo $pro_err; ?></span><?php } ?></td>
                 </tr>
                 <tr>
-                    <td>Manufacture Date</td>
-                    <td><?php echo htmlspecialchars($manufacture_date, ENT_QUOTES);  ?></td>
+                <tr>
+                    <td>Manufacture date</td>
+                    <td><input type='date' name='manufacture_date' class='form-control' value="<?php echo isset($manufacture_date) ? htmlspecialchars($manufacture_date) : ''; ?>" />
                 </tr>
                 <tr>
-                    <td>Expiry Date</td>
-                    <td><?php echo htmlspecialchars($expiry_date, ENT_QUOTES);  ?></td>
+                    <td>Expiry date</td>
+                    <td><input type='date' name='expiry_date' class='form-control' value="<?php echo isset($expiry_date) ? htmlspecialchars($expiry_date) : ''; ?>" />
                 </tr>
                 <tr>
                     <td></td>
                     <td>
                         <input type='submit' value='Save Changes' class='btn btn-primary' />
-                        <a href='index.php' class='btn btn-danger'>Back to read products</a>
+                        <a href='product_read.php' class='btn btn-danger'>Back to read products</a>
                     </td>
                 </tr>
             </table>
