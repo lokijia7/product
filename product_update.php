@@ -25,9 +25,12 @@ if (!isset($_SESSION["username"])) {
             <h1>Update Product</h1>
         </div>
         <?php
+        ini_set('display_errors', 1);
+        error_reporting(E_ALL);
         // get passed parameter value, in this case, the record ID
         // isset() is a PHP function used to verify if a value is there or not
         $id = isset($_GET['product_id']) ? $_GET['product_id'] : die('ERROR: Record ID not found.');
+
 
         //include database connection
         include 'config/database.php';
@@ -64,6 +67,8 @@ if (!isset($_SESSION["username"])) {
         ?>
 
         <?php
+        ini_set('display_errors', 1);
+        error_reporting(E_ALL);
         // check if form was submitted
         if ($_POST) {
             try {
@@ -71,10 +76,11 @@ if (!isset($_SESSION["username"])) {
                 // in this case, it seemed like we have so many fields to pass and
                 // it is better to label them and not use question marks
                 $query = "UPDATE products
-                  SET name=:name, description=:description,
-   price=:price,promotion_price=:promotion_price,category_name=:category_name, manufacture_date=:manufacture_date, expiry_date=:expiry_date  WHERE product_id = :product_id";
+                  SET product_id=:product_id,name=:name, description=:description,
+   price=:price,promotion_price=:promotion_price,category_name=:category_name, manufacture_date=:manufacture_date, expiry_date=:expiry_date WHERE product_id = :product_id";
                 // prepare query for excecution
                 $stmt = $con->prepare($query);
+
 
                 // posted values
                 $name = htmlspecialchars(strip_tags($_POST['name']));
@@ -86,15 +92,16 @@ if (!isset($_SESSION["username"])) {
                 $expiry_date = htmlspecialchars(strip_tags($_POST['expiry_date']));
 
                 // bind the parameters
+                $stmt->bindParam(':product_id', $id);
                 $stmt->bindParam(':name', $name);
                 $stmt->bindParam(':description', $description);
                 $stmt->bindParam(':price', $price);
-                $stmt->bindParam(':product_id', $product_id);
                 $stmt->bindParam(':category_name', $category_name);
-                $stmt->bindParam(':price', $price);
                 $stmt->bindParam(':promotion_price', $promotion_price);
                 $stmt->bindParam(':manufacture_date', $manufacture_date);
                 $stmt->bindParam(':expiry_date', $expiry_date);
+
+
                 // Execute the query
                 if ($stmt->execute()) {
                     echo "<div class='alert alert-success'>Record was updated.</div>";
@@ -110,7 +117,7 @@ if (!isset($_SESSION["username"])) {
 
 
         <!--we have our html form here where new record information can be updated-->
-        <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"] . "?id={$id}"); ?>" method="post">
+        <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"] . "?product_id={$id}"); ?>" method="post">
             <table class='table table-hover table-responsive table-bordered'>
                 <tr>
                     <td>Name</td>
@@ -174,7 +181,6 @@ if (!isset($_SESSION["username"])) {
         </form>
 
     </div>
-    <!-- end .container -->
 </body>
 
 </html>
