@@ -69,6 +69,8 @@ if (!isset($_SESSION["username"])) {
         <?php
         ini_set('display_errors', 1);
         error_reporting(E_ALL);
+
+
         // check if form was submitted
         if ($_POST) {
             try {
@@ -76,30 +78,56 @@ if (!isset($_SESSION["username"])) {
                 // in this case, it seemed like we have so many fields to pass and
                 // it is better to label them and not use question marks
                 $query = "UPDATE customers
-                  SET id=:id,username=:username, pass=:pass,
-                  first_name=:first_name,last_name=:last_name,gender=:gender, date_of_birth=:date_of_birth, account_status=:account_status  WHERE id = :id";
-                // prepare query for excecution
+                SET username=:username, pass=:new_pass,
+                first_name=:first_name, last_name=:last_name, gender=:gender,
+                date_of_birth=:date_of_birth, account_status=:account_status
+                WHERE id = :id";
+
+                // prepare query for execution
                 $stmt = $con->prepare($query);
 
                 // posted values
                 $username = htmlspecialchars(strip_tags($_POST['username']));
-                $pass = $_POST['pass'];
-                $confirmed_password = $_POST['confirmed_password'];
+                $current_pass = isset($_POST['current_pass']) ? $_POST['current_pass'] : '';
+                $new_pass = $_POST['new_pass'];
+                $confirm_new_pass = $_POST['confirm_new_pass'];
                 $first_name = htmlspecialchars(strip_tags($_POST['first_name']));
                 $last_name = htmlspecialchars(strip_tags($_POST['last_name']));
                 if (isset($_POST['gender'])) $gender = $_POST['gender'];
                 $date_of_birth = htmlspecialchars(strip_tags($_POST['date_of_birth']));
                 if (isset($_POST['account_status'])) $account_status = $_POST['account_status'];
 
+                if (strlen($username) < 6) {
+                    $username_err = "Username must be at least 6 characters long";
+                }
+
+                // validate current password
+                if (md5($current_pass) !== $row['pass']) {
+                    $pass_err = "Current password is not correct.";
+                }
+
+                // validate new password
+                $uppercase = preg_match('@[A-Z]@', $new_pass);
+                $lowercase = preg_match('@[a-z]@', $new_pass);
+                $number = preg_match('@[0-9]@', $new_pass);
+                if (strlen($new_pass) < 8 || !$uppercase || !$lowercase || !$number) {
+                    $pass_err = "Password must be at least 8 characters long, contain at least one uppercase letter, one lowercase letter, and one number.";
+                }
+                if ($new_pass != $confirm_new_pass) {
+                    $confpass_err = "Passwords do not match.";
+                }
+
+
                 // bind the parameters
+                $stmt->bindParam(':id', $id);
                 $stmt->bindParam(':username', $username);
-                $stmt->bindParam(':pass', $pass);
+                $new_pass_hash = md5($new_pass);
+                $stmt->bindParam(':new_pass', $new_pass_hash);
                 $stmt->bindParam(':first_name', $first_name);
                 $stmt->bindParam(':last_name', $last_name);
                 $stmt->bindParam(':gender', $gender);
                 $stmt->bindParam(':date_of_birth', $date_of_birth);
                 $stmt->bindParam(':account_status', $account_status);
-
 
                 // Execute the query
                 if ($stmt->execute()) {
@@ -110,6 +138,7 @@ if (!isset($_SESSION["username"])) {
             }
             // show errors
             catch (PDOException $exception) {
+
                 die('ERROR: ' . $exception->getMessage());
             }
         } ?>
@@ -132,49 +161,64 @@ if (!isset($_SESSION["username"])) {
                     <td>First Name</td>
                     <td>
                         <input type='text' name='first_name' value="<?php echo isset($first_name) ? htmlspecialchars($first_name) : ''; ?>" class='form-control' />
-                        <?php if (isset($fname_err)) { ?><span class="text-danger"><?php echo $fname_err; ?></span><?php } ?>
+
                     </td>
                 </tr>
 
                 <tr>
                     <td>Last Name</td>
-                    <td><input type='varchar' name='last_name' value="<?php echo isset($last_name) ? htmlspecialchars($last_name) : ''; ?>" class='form-control' /> <?php if (isset($lname_err)) { ?><span class="text-danger"><?php echo $lname_err; ?></span><?php } ?></td>
+                    <td><input type='varchar' name='last_name' value="<?php echo isset($last_name) ? htmlspecialchars($last_name) : ''; ?>" class='form-control' />
                 </tr>
                 <tr>
-                    <td>Password</td>
+                    <td>Current Password</td>
                     <td>
-                        <input type='password' name='pass' value="<?php echo isset($pass) ? htmlspecialchars($pass) : ''; ?>" class='form-control' required />
-                        <small>**Password must be at least 8 character, contain numbers, uppercase and lowercase alphabets."</small>
+                        <input type='password' name='current_pass' value="<?php echo isset($current_pass) ? htmlspecialchars($pass) : ''; ?>" class='form-control' />
                         <?php if (isset($pass_err)) { ?><span class="text-danger">
                                 <br><?php echo $pass_err; ?></span><?php } ?>
                     </td>
                 </tr>
+                <tr>
+                    <td>New Password</td>
+                    <td>
+                        <input type='password' name='new_pass' value="<?php echo isset($new_pass) ? htmlspecialchars($new_pass) : ''; ?>" class='form-control' />
+                        <small>**Password must be at least 8 characters long, contain at least one uppercase letter, one lowercase letter, and one number.</small>
+                    </td>
+                </tr>
 
                 <tr>
-                    <td>Confirm Password</td>
-                    <td><input type='password' name='confirmed_password' value="<?php echo isset($confirmed_password) ? htmlspecialchars($confirmed_password) : ''; ?>" class='form-control' /><?php if (isset($confpass_err)) { ?><span class="text-danger"><?php echo $confpass_err; ?></span><?php } ?></td>
+                    <td>Confirm New Password</td>
+                    <td>
+                        <label for='confirm_new_pass'>Retype Password</label>
+                        <input type='password' name='confirm_new_pass' value='' class='form-control' />
+                        <?php if (isset($confpass_err)) { ?><span class="text-danger"><br><?php echo $confpass_err; ?></span><?php } ?>
+                    </td>
                 </tr>
+
 
                 <tr>
                     <td>Gender</td>
                     <td>
                         <input type='radio' name='gender' <?php if (isset($gender) && $gender == "male") echo "checked"; ?> value='male'>Male
                         <input type='radio' name='gender' <?php if (isset($gender) && $gender == "female") echo "checked"; ?> value='female'>Female
-                        <?php if (isset($gender_err)) { ?><span class="text-danger"><?php echo $gender_err; ?></span><?php } ?>
                     </td>
                 </tr>
                 <tr>
                     <td>Date Of Birth</td>
-                    <td><input type='date' name='date_of_birth' class='form-control' /><?php if (isset($dob_err)) { ?><span class="text-danger"><?php echo $dob_err; ?></span><?php } ?></td>
+                    <td><input type='date' name='date_of_birth' class='form-control' value="<?php echo isset($date_of_birth) ? htmlspecialchars($date_of_birth) : ''; ?>" />
                 </tr>
                 <tr>
                     <td>Account Status</td>
                     <td>
                         <input type='radio' name='account_status' <?php if (isset($account_status) && $account_status == "active") echo "checked"; ?> value='active'>Active
                         <input type='radio' name='account_status' <?php if (isset($account_status) && $account_status == "inactive") echo "checked"; ?> value='inactive'>Inactive
-                        <?php if (isset($status_err)) { ?><span class="text-danger"><?php echo $gender_err; ?></span><?php } ?>
+
                     </td>
                 </tr>
+                <td></td>
+                <td>
+                    <input type='submit' value='Save' class='btn btn-primary' />
+                    <a href='customer_read.php' class='btn btn-danger'>Back to read customers</a>
+                </td>
             </table>
         </form>
 
