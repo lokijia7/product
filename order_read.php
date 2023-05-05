@@ -53,7 +53,8 @@ if (!isset($_SESSION["username"])) {
         include 'config/database.php';
 
         // select all data
-        $query = "SELECT * FROM orders";
+        $query = "SELECT * FROM orders ORDER BY order_id DESC";
+
         if ($_POST) {
             $search = htmlspecialchars(strip_tags($_POST['search']));
             $query = "SELECT * FROM `orders` WHERE 

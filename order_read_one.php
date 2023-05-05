@@ -60,7 +60,6 @@ if (!isset($_SESSION["username"])) {
 
             // this is how to get number of rows returned
             $num = $stmt->rowCount();
-            $row = $stmt->fetch(PDO::FETCH_ASSOC);
 
 
             echo "<div class='container'>";

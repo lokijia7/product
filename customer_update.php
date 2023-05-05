@@ -131,6 +131,7 @@ if (!isset($_SESSION["username"])) {
 
                 // Execute the query
                 if ($stmt->execute()) {
+                    $pass_err = '';
                     echo "<div class='alert alert-success'>Record was updated.</div>";
                 } else {
                     echo "<div class='alert alert-danger'>Unable to update record. Please try again.</div>";
@@ -172,7 +173,7 @@ if (!isset($_SESSION["username"])) {
                 <tr>
                     <td>Current Password</td>
                     <td>
-                        <input type='password' name='current_pass' value="<?php echo isset($current_pass) ? htmlspecialchars($pass) : ''; ?>" class='form-control' />
+                        <input type='password' name='current_pass' value="<?php echo isset($current_pass) ? htmlspecialchars($current_pass) : ''; ?>" class='form-control' />
                         <?php if (isset($pass_err)) { ?><span class="text-danger">
                                 <br><?php echo $pass_err; ?></span><?php } ?>
                     </td>
