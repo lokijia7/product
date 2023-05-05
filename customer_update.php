@@ -97,32 +97,46 @@ if (!isset($_SESSION["username"])) {
                 $date_of_birth = htmlspecialchars(strip_tags($_POST['date_of_birth']));
                 if (isset($_POST['account_status'])) $account_status = $_POST['account_status'];
 
+                $flag = false;
+
                 if (strlen($username) < 6) {
                     $username_err = "Username must be at least 6 characters long";
+                    $flag = true;
                 }
 
                 // validate current password
                 if (md5($current_pass) !== $row['pass']) {
                     $pass_err = "Current password is not correct.";
+                    $flag = true;
                 }
 
-                // validate new password
-                $uppercase = preg_match('@[A-Z]@', $new_pass);
-                $lowercase = preg_match('@[a-z]@', $new_pass);
-                $number = preg_match('@[0-9]@', $new_pass);
-                if (strlen($new_pass) < 8 || !$uppercase || !$lowercase || !$number) {
-                    $pass_err = "Password must be at least 8 characters long, contain at least one uppercase letter, one lowercase letter, and one number.";
+                if (!empty($new_pass)) {
+                    // validate new password
+                    $uppercase = preg_match('@[A-Z]@', $new_pass);
+                    $lowercase = preg_match('@[a-z]@', $new_pass);
+                    $number = preg_match('@[0-9]@', $new_pass);
+                    if (strlen($new_pass) < 8) {
+                        $pass_err = "Password must be at least 8 characters long.";
+                        $flag = true;
+                    } else if (!$uppercase || !$lowercase || !$number) {
+                        // Password does not meet the requirements
+                        $pass_err = "Password must contain numbers, uppercase and lowercase alphabets.";
+                        $flag = true;
+                    }
                 }
-                if ($new_pass != $confirm_new_pass) {
-                    $confpass_err = "Passwords do not match.";
-                }
+
 
 
                 // bind the parameters
                 $stmt->bindParam(':id', $id);
                 $stmt->bindParam(':username', $username);
                 $new_pass_hash = md5($new_pass);
-                $stmt->bindParam(':new_pass', $new_pass_hash);
+                if (!empty($new_pass)) {
+                    $new_pass_hash = md5($new_pass);
+                    $stmt->bindParam(':new_pass', $new_pass_hash);
+                } else {
+                    $stmt->bindValue(':new_pass', $row['pass']);
+                }
                 $stmt->bindParam(':first_name', $first_name);
                 $stmt->bindParam(':last_name', $last_name);
                 $stmt->bindParam(':gender', $gender);
@@ -130,7 +144,7 @@ if (!isset($_SESSION["username"])) {
                 $stmt->bindParam(':account_status', $account_status);
 
                 // Execute the query
-                if ($stmt->execute()) {
+                if (!$flag && $stmt->execute()) {
                     $pass_err = '';
                     echo "<div class='alert alert-success'>Record was updated.</div>";
                 } else {
@@ -174,8 +188,6 @@ if (!isset($_SESSION["username"])) {
                     <td>Current Password</td>
                     <td>
                         <input type='password' name='current_pass' value="<?php echo isset($current_pass) ? htmlspecialchars($current_pass) : ''; ?>" class='form-control' />
-                        <?php if (isset($pass_err)) { ?><span class="text-danger">
-                                <br><?php echo $pass_err; ?></span><?php } ?>
                     </td>
                 </tr>
                 <tr>
@@ -183,6 +195,8 @@ if (!isset($_SESSION["username"])) {
                     <td>
                         <input type='password' name='new_pass' value="<?php echo isset($new_pass) ? htmlspecialchars($new_pass) : ''; ?>" class='form-control' />
                         <small>**Password must be at least 8 characters long, contain at least one uppercase letter, one lowercase letter, and one number.</small>
+                        <?php if (isset($pass_err)) { ?><span class="text-danger">
+                                <br><?php echo $pass_err; ?></span><?php } ?>
                     </td>
                 </tr>
 
