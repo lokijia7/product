@@ -104,14 +104,14 @@ if (!isset($_SESSION["username"])) {
                     $flag = true;
                 }
 
-                // validate current password
-                if (md5($current_pass) !== $row['pass']) {
+                // validate current password if it is not empty
+                if (!empty($current_pass) && md5($current_pass) !== $row['pass']) {
                     $pass_err = "Current password is not correct.";
                     $flag = true;
                 }
 
+                // validate new password if it is not empty
                 if (!empty($new_pass)) {
-                    // validate new password
                     $uppercase = preg_match('@[A-Z]@', $new_pass);
                     $lowercase = preg_match('@[a-z]@', $new_pass);
                     $number = preg_match('@[0-9]@', $new_pass);
@@ -122,21 +122,18 @@ if (!isset($_SESSION["username"])) {
                         // Password does not meet the requirements
                         $pass_err = "Password must contain numbers, uppercase and lowercase alphabets.";
                         $flag = true;
+                    } else if (empty($confirm_new_pass)) {
+                        $confpass_err = "Please fill out the confirmed password field.";
+                        $flag = true;
                     }
                 }
-
 
 
                 // bind the parameters
                 $stmt->bindParam(':id', $id);
                 $stmt->bindParam(':username', $username);
                 $new_pass_hash = md5($new_pass);
-                if (!empty($new_pass)) {
-                    $new_pass_hash = md5($new_pass);
-                    $stmt->bindParam(':new_pass', $new_pass_hash);
-                } else {
-                    $stmt->bindValue(':new_pass', $row['pass']);
-                }
+                $stmt->bindParam(':new_pass', $new_pass_hash);
                 $stmt->bindParam(':first_name', $first_name);
                 $stmt->bindParam(':last_name', $last_name);
                 $stmt->bindParam(':gender', $gender);
@@ -188,6 +185,8 @@ if (!isset($_SESSION["username"])) {
                     <td>Current Password</td>
                     <td>
                         <input type='password' name='current_pass' value="<?php echo isset($current_pass) ? htmlspecialchars($current_pass) : ''; ?>" class='form-control' />
+                        <?php if (isset($pass_err)) { ?><span class="text-danger">
+                                <br><?php echo $pass_err; ?></span><?php } ?>
                     </td>
                 </tr>
                 <tr>
