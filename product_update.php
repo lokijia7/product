@@ -69,27 +69,48 @@ if (!isset($_SESSION["username"])) {
         <?php
         ini_set('display_errors', 1);
         error_reporting(E_ALL);
+
         // check if form was submitted
         if ($_POST) {
             try {
-                // write update query
-                // in this case, it seemed like we have so many fields to pass and
-                // it is better to label them and not use question marks
-                $query = "UPDATE products
-                  SET product_id=:product_id,name=:name, description=:description,
-   price=:price,promotion_price=:promotion_price,category_name=:category_name, manufacture_date=:manufacture_date, expiry_date=:expiry_date WHERE product_id = :product_id";
-                // prepare query for excecution
-                $stmt = $con->prepare($query);
+                // include database connection
+                include 'config/database.php';
 
+                // get the record ID
+                $id = isset($_GET['product_id']) ? $_GET['product_id'] : die('ERROR: Record ID not found.');
 
-                // posted values
+                // get the posted values
                 $name = htmlspecialchars(strip_tags($_POST['name']));
                 $description = htmlspecialchars(strip_tags($_POST['description']));
                 $price = htmlspecialchars(strip_tags($_POST['price']));
-                if (isset($_POST['category_name'])) $category_name = $_POST['category_name'];
+                $category_name = isset($_POST['category_name']) ? $_POST['category_name'] : null;
                 $promotion_price = htmlspecialchars(strip_tags($_POST['promotion_price']));
                 $manufacture_date = htmlspecialchars(strip_tags($_POST['manufacture_date']));
                 $expiry_date = htmlspecialchars(strip_tags($_POST['expiry_date']));
+
+                // check if manufacture date and expiry date are empty
+                if (empty($manufacture_date) && empty($expiry_date)) {
+                    // update query without manufacture date and expiry date
+                    $query = "UPDATE products
+        SET name=:name, description=:description, price=:price, promotion_price=:promotion_price, category_name=:category_name
+        WHERE product_id=:product_id";
+                } else {
+                    // update query with manufacture date and/or expiry date
+                    $query = "UPDATE products
+        SET name=:name, description=:description, price=:price, promotion_price=:promotion_price, category_name=:category_name";
+
+                    if (!empty($manufacture_date)) {
+                        $query .= ", manufacture_date=:manufacture_date";
+                    }
+                    if (!empty($expiry_date)) {
+                        $query .= ", expiry_date=:expiry_date";
+                    }
+
+                    $query .= " WHERE product_id=:product_id";
+                }
+
+                // prepare query for execution
+                $stmt = $con->prepare($query);
 
                 // bind the parameters
                 $stmt->bindParam(':product_id', $id);
@@ -98,11 +119,15 @@ if (!isset($_SESSION["username"])) {
                 $stmt->bindParam(':price', $price);
                 $stmt->bindParam(':category_name', $category_name);
                 $stmt->bindParam(':promotion_price', $promotion_price);
-                $stmt->bindParam(':manufacture_date', $manufacture_date);
-                $stmt->bindParam(':expiry_date', $expiry_date);
 
+                if (!empty($manufacture_date)) {
+                    $stmt->bindParam(':manufacture_date', $manufacture_date);
+                }
+                if (!empty($expiry_date)) {
+                    $stmt->bindParam(':expiry_date', $expiry_date);
+                }
 
-                // Execute the query
+                // execute the query
                 if ($stmt->execute()) {
                     echo "<div class='alert alert-success'>Record was updated.</div>";
                 } else {
@@ -113,7 +138,9 @@ if (!isset($_SESSION["username"])) {
             catch (PDOException $exception) {
                 die('ERROR: ' . $exception->getMessage());
             }
-        } ?>
+        }
+        ?>
+
 
 
         <!--we have our html form here where new record information can be updated-->
