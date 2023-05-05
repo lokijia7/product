@@ -132,8 +132,15 @@ if (!isset($_SESSION["username"])) {
                 // bind the parameters
                 $stmt->bindParam(':id', $id);
                 $stmt->bindParam(':username', $username);
-                $new_pass_hash = md5($new_pass);
-                $stmt->bindParam(':new_pass', $new_pass_hash);
+                // check if new password was entered
+                if (!empty($new_pass)) {
+                    $new_pass_hash = md5($new_pass);
+                    $stmt->bindParam(':new_pass', $new_pass_hash);
+                } else {
+                    // do not update password field
+                    $stmt->bindParam(':new_pass', $row['pass']);
+                }
+
                 $stmt->bindParam(':first_name', $first_name);
                 $stmt->bindParam(':last_name', $last_name);
                 $stmt->bindParam(':gender', $gender);
