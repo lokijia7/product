@@ -64,10 +64,7 @@ if (!isset($_SESSION["username"])) {
                     $price_err = "Please fill out the Price field.";
                     $flag = true;
                 }
-                if (empty($manufacture_date)) {
-                    $manu_err = "Please fill out the Manufacture Date field.";
-                    $flag = true;
-                }
+
                 if (empty($category_name)) {
                     $category_err = "Please choose a category.";
                     $flag = true;
