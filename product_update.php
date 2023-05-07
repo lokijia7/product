@@ -83,7 +83,7 @@ if (!isset($_SESSION["username"])) {
                 $name = htmlspecialchars(strip_tags($_POST['name']));
                 $description = htmlspecialchars(strip_tags($_POST['description']));
                 $price = htmlspecialchars(strip_tags($_POST['price']));
-                $category_name = isset($_POST['category_name']) ? $_POST['category_name'] : null;
+                if (isset($_POST['category_name'])) $category_name = $_POST['category_name'];
                 $promotion_price = htmlspecialchars(strip_tags($_POST['promotion_price']));
                 $manufacture_date = htmlspecialchars(strip_tags($_POST['manufacture_date']));
                 $expiry_date = htmlspecialchars(strip_tags($_POST['expiry_date']));
