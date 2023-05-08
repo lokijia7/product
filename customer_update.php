@@ -149,7 +149,7 @@ if (!isset($_SESSION["username"])) {
 
                 // Execute the query
                 if (!$flag && $stmt->execute()) {
-                    $pass_err = '';
+
                     echo "<div class='alert alert-success'>Record was updated.</div>";
                 } else {
                     echo "<div class='alert alert-danger'>Unable to update record. Please try again.</div>";
