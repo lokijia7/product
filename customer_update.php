@@ -106,7 +106,7 @@ if (!isset($_SESSION["username"])) {
 
                 // validate current password if it is not empty
                 if (!empty($current_pass) && md5($current_pass) !== $row['pass']) {
-                    $pass_err = "Current password is not correct.";
+                    $curpass_err = "Current password is not correct.";
                     $flag = true;
                 }
 
@@ -192,8 +192,8 @@ if (!isset($_SESSION["username"])) {
                     <td>Current Password</td>
                     <td>
                         <input type='password' name='current_pass' value="<?php echo isset($current_pass) ? htmlspecialchars($current_pass) : ''; ?>" class='form-control' />
-                        <?php if (isset($pass_err)) { ?><span class="text-danger">
-                                <br><?php echo $pass_err; ?></span><?php } ?>
+                        <?php if (isset($curpass_err)) { ?><span class="text-danger">
+                                <br><?php echo $curpass_err; ?></span><?php } ?>
                     </td>
                 </tr>
                 <tr>
