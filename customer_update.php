@@ -88,7 +88,7 @@ if (!isset($_SESSION["username"])) {
 
                 // posted values
                 $username = htmlspecialchars(strip_tags($_POST['username']));
-                $current_pass = isset($_POST['current_pass']) ? $_POST['current_pass'] : '';
+                $current_pass = $_POST['current_pass'];
                 $new_pass = $_POST['new_pass'];
                 $confirm_new_pass = $_POST['confirm_new_pass'];
                 $first_name = htmlspecialchars(strip_tags($_POST['first_name']));
