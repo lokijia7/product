@@ -78,7 +78,7 @@ if (!isset($_SESSION["username"])) {
                 // in this case, it seemed like we have so many fields to pass and
                 // it is better to label them and not use question marks
                 $query = "UPDATE customers
-                SET username=:username, pass=:new_pass,
+                SET pass=:new_pass,
                 first_name=:first_name, last_name=:last_name, gender=:gender,
                 date_of_birth=:date_of_birth, account_status=:account_status
                 WHERE id = :id";
@@ -87,7 +87,6 @@ if (!isset($_SESSION["username"])) {
                 $stmt = $con->prepare($query);
 
                 // posted values
-                $username = htmlspecialchars(strip_tags($_POST['username']));
                 $current_pass = $_POST['current_pass'];
                 $new_pass = $_POST['new_pass'];
                 $confirm_new_pass = $_POST['confirm_new_pass'];
@@ -98,11 +97,6 @@ if (!isset($_SESSION["username"])) {
                 if (isset($_POST['account_status'])) $account_status = $_POST['account_status'];
 
                 $flag = false;
-
-                if (strlen($username) < 6) {
-                    $username_err = "Username must be at least 6 characters long";
-                    $flag = true;
-                }
 
                 // validate current password if it is not empty
                 if (!empty($current_pass) && md5($current_pass) !== $row['pass']) {
@@ -128,10 +122,19 @@ if (!isset($_SESSION["username"])) {
                     }
                 }
 
+                // validate first name and last name are not empty
+                if (empty($first_name)) {
+                    $first_name_err = "First name cannot be empty.";
+                    $flag = true;
+                }
+                if (empty($last_name)) {
+                    $last_name_err = "Last name cannot be empty.";
+                    $flag = true;
+                }
+
 
                 // bind the parameters
                 $stmt->bindParam(':id', $id);
-                $stmt->bindParam(':username', $username);
                 // check if new password was entered
                 if (!empty($new_pass)) {
                     $new_pass_hash = md5($new_pass);
@@ -167,19 +170,11 @@ if (!isset($_SESSION["username"])) {
         <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"] . "?id={$id}"); ?>" method="post">
             <table class='table table-hover table-responsive table-bordered'>
                 <tr>
-                    <td>Username</td>
-                    <td>
-                        <input type='name' name='username' value="<?php echo isset($username) ? htmlspecialchars($username) : ''; ?>" class='form-control' required />
-                        <small>**Username must be at least 6 characters long.</small>
-                        <?php if (isset($username_err)) { ?><span class="text-danger">
-                                <br><?php echo $username_err; ?></span><?php } ?>
-                    </td>
-                </tr>
-
-                <tr>
                     <td>First Name</td>
                     <td>
                         <input type='text' name='first_name' value="<?php echo isset($first_name) ? htmlspecialchars($first_name) : ''; ?>" class='form-control' />
+                        <?php if (isset($first_name_err)) { ?><span class="text-danger">
+                                <br><?php echo $first_name_err; ?></span><?php } ?>
 
                     </td>
                 </tr>
@@ -187,6 +182,8 @@ if (!isset($_SESSION["username"])) {
                 <tr>
                     <td>Last Name</td>
                     <td><input type='varchar' name='last_name' value="<?php echo isset($last_name) ? htmlspecialchars($last_name) : ''; ?>" class='form-control' />
+                        <?php if (isset($lasst_name_err)) { ?><span class="text-danger">
+                                <br><?php echo $last_name_err; ?></span><?php } ?>
                 </tr>
                 <tr>
                     <td>Current Password</td>
