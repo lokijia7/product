@@ -87,51 +87,72 @@ if (!isset($_SESSION["username"])) {
                 $promotion_price = htmlspecialchars(strip_tags($_POST['promotion_price']));
                 $manufacture_date = htmlspecialchars(strip_tags($_POST['manufacture_date']));
                 $expiry_date = htmlspecialchars(strip_tags($_POST['expiry_date']));
+                $flag = false;
 
-                // check if manufacture date and expiry date are empty
-                if (empty($manufacture_date) && empty($expiry_date)) {
-                    // update query without manufacture date and expiry date
-                    $query = "UPDATE products
-        SET name=:name, description=:description, price=:price, promotion_price=:promotion_price, category_name=:category_name
-        WHERE product_id=:product_id";
+                // check if product name is empty
+                if (empty($name)) {
+                    $name_err = "Product name cannot be empty.";
+                    $flag = true;
+                }
+                if (empty($category_name)) { // check if category name is empty
+                    $catname_err = "Category name cannot be empty.";
+                    $flag = true;
+                }
+                if (empty($description)) { // check if description is empty
+                    $description_err = "Description cannot be empty.";
+                    $flag = true;
+                }
+                if (empty($price)) { // check if price is empty
+                    $price_err = "Price cannot be empty.";
+                    $flag = true;
                 } else {
-                    // update query with manufacture date and/or expiry date
-                    $query = "UPDATE products
-        SET name=:name, description=:description, price=:price, promotion_price=:promotion_price, category_name=:category_name";
+                    // check if manufacture date and expiry date are empty
+                    if (empty($manufacture_date) && empty($expiry_date)) {
+                        // update query without manufacture date and expiry date
+                        $query = "UPDATE products
+SET name=:name, description=:description, price=:price, promotion_price=:promotion_price, category_name=:category_name
+WHERE product_id=:product_id";
+                    } else {
+                        // update query with manufacture date and/or expiry date
+                        $query = "UPDATE products
+SET name=:name, description=:description, price=:price, promotion_price=:promotion_price, category_name=:category_name";
+
+                        if (!empty($manufacture_date)) {
+                            $query .= ", manufacture_date=:manufacture_date";
+                        }
+                        if (!empty($expiry_date)) {
+                            $query .= ", expiry_date=:expiry_date";
+                        }
+
+                        $query .= " WHERE product_id=:product_id";
+                    }
+
+                    // prepare query for execution
+                    $stmt = $con->prepare($query);
+
+                    // bind the parameters
+                    $stmt->bindParam(':product_id', $id);
+                    $stmt->bindParam(':name', $name);
+                    $stmt->bindParam(':description', $description);
+                    $stmt->bindParam(':price', $price);
+                    $stmt->bindParam(':category_name', $category_name);
+                    $stmt->bindParam(':promotion_price', $promotion_price);
 
                     if (!empty($manufacture_date)) {
-                        $query .= ", manufacture_date=:manufacture_date";
+                        $stmt->bindParam(':manufacture_date', $manufacture_date);
                     }
                     if (!empty($expiry_date)) {
-                        $query .= ", expiry_date=:expiry_date";
+                        $stmt->bindParam(':expiry_date', $expiry_date);
                     }
 
-                    $query .= " WHERE product_id=:product_id";
-                }
-
-                // prepare query for execution
-                $stmt = $con->prepare($query);
-
-                // bind the parameters
-                $stmt->bindParam(':product_id', $id);
-                $stmt->bindParam(':name', $name);
-                $stmt->bindParam(':description', $description);
-                $stmt->bindParam(':price', $price);
-                $stmt->bindParam(':category_name', $category_name);
-                $stmt->bindParam(':promotion_price', $promotion_price);
-
-                if (!empty($manufacture_date)) {
-                    $stmt->bindParam(':manufacture_date', $manufacture_date);
-                }
-                if (!empty($expiry_date)) {
-                    $stmt->bindParam(':expiry_date', $expiry_date);
-                }
-
-                // execute the query
-                if ($stmt->execute()) {
-                    echo "<div class='alert alert-success'>Record was updated.</div>";
-                } else {
-                    echo "<div class='alert alert-danger'>Unable to update record. Please try again.</div>";
+                    if (!$flag) {
+                        // execute the query
+                        if ($stmt->execute()) {
+                            echo "<div class='alert alert-success'>Record was updated.</div>";
+                        } else {
+                            echo "<div class='alert alert-danger'>Unable to update record. Please try again.</div>";
+                        }
+                    }
                 }
             }
             // show errors
@@ -148,11 +169,13 @@ if (!isset($_SESSION["username"])) {
             <table class='table table-hover table-responsive table-bordered'>
                 <tr>
                     <td>Name</td>
-                    <td><input type='text' name='name' value="<?php echo htmlspecialchars($name, ENT_QUOTES);  ?>" class='form-control' /></td>
+                    <td><input type='text' name='name' class="form-control" value="<?php echo isset($name) ? htmlspecialchars($name) : ''; ?>" />
+                        <?php if (isset($name_err)) { ?><span class="text-danger"><?php echo $name_err; ?></span><?php } ?></td>
                 </tr>
                 <tr>
                     <td>Description</td>
-                    <td><textarea name='description' class='form-control'><?php echo htmlspecialchars($description, ENT_QUOTES);  ?></textarea></td>
+                    <td> <textarea class="form-control" name="description"><?php echo htmlspecialchars($description, ENT_QUOTES); ?></textarea>
+                        <?php if (isset($description_err)) { ?><span class="text-danger"><?php echo $description_err; ?></span><?php } ?></td>
                 </tr>
                 <tr>
                     <td>Category</td>
@@ -172,16 +195,20 @@ if (!isset($_SESSION["username"])) {
                         <select name='category_name' class="form-control">
                             <option value=''>--Select Category--</option>
                             <?php foreach ($product_category as $category) { ?>
-                                <option value="<?php echo $category; ?>"><?php echo $category; ?></option>
+                                <option value="<?php echo $category; ?>" <?php if (isset($category_name) && $category_name == $category) echo "selected"; ?>><?php echo $category; ?></option>
                             <?php } ?>
                         </select>
+                        <?php if (isset($catname_err)) { ?><span class="text-danger"><?php echo $catname_err; ?></span><?php } ?>
                     </td>
                 </tr>
+
 
 
                 <tr>
                     <td>Price</td>
                     <td><input type='number' name='price' class='form-control' value="<?php echo isset($price) ? htmlspecialchars($price) : ''; ?>" />
+                        <?php if (isset($price_err)) { ?><span class="text-danger"><?php echo $price_err; ?></span><?php } ?></td>
+
                 </tr>
                 <tr>
                 <tr>

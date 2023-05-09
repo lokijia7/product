@@ -119,18 +119,40 @@ if (!isset($_SESSION["username"])) {
                     } else if (empty($confirm_new_pass)) {
                         $confpass_err = "Please fill out the confirmed password field.";
                         $flag = true;
+                    } else if ($new_pass === $current_pass) {
+                        $newpass_err = "New password must be different from current password.";
+                        $flag = true;
+                    }
+                }
+
+
+                // validate new password and confirm new password if current password is filled
+                if (!empty($current_pass)) {
+                    if (empty($new_pass)) {
+                        $newpass_err = "Please fill out the new password field.";
+                        $flag = true;
+                    } else if (empty($confirm_new_pass)) {
+                        $confpass_err = "Please fill out the confirmed password field.";
+                        $flag = true;
+                    } else if ($new_pass !== $confirm_new_pass) {
+                        $confpass_err = "New password and confirmed password do not match.";
+                        $flag = true;
                     }
                 }
 
                 // validate first name and last name are not empty
-                if (empty($first_name)) {
+                if (empty($first_name) && empty($last_name)) {
+                    $first_name_err = "First name cannot be empty.";
+                    $last_name_err = "Last name cannot be empty.";
+                    $flag = true;
+                } else if (empty($first_name)) {
                     $first_name_err = "First name cannot be empty.";
                     $flag = true;
-                }
-                if (empty($last_name)) {
+                } else if (empty($last_name)) {
                     $last_name_err = "Last name cannot be empty.";
                     $flag = true;
                 }
+
 
 
                 // bind the parameters
@@ -154,6 +176,8 @@ if (!isset($_SESSION["username"])) {
                 if (!$flag && $stmt->execute()) {
 
                     echo "<div class='alert alert-success'>Record was updated.</div>";
+                    $current_pass = "";
+                    $new_pass = "";
                 } else {
                     echo "<div class='alert alert-danger'>Unable to update record. Please try again.</div>";
                 }
@@ -182,7 +206,7 @@ if (!isset($_SESSION["username"])) {
                 <tr>
                     <td>Last Name</td>
                     <td><input type='varchar' name='last_name' value="<?php echo isset($last_name) ? htmlspecialchars($last_name) : ''; ?>" class='form-control' />
-                        <?php if (isset($lasst_name_err)) { ?><span class="text-danger">
+                        <?php if (isset($last_name_err)) { ?><span class="text-danger">
                                 <br><?php echo $last_name_err; ?></span><?php } ?>
                 </tr>
                 <tr>
@@ -198,8 +222,8 @@ if (!isset($_SESSION["username"])) {
                     <td>
                         <input type='password' name='new_pass' value="<?php echo isset($new_pass) ? htmlspecialchars($new_pass) : ''; ?>" class='form-control' />
                         <small>**Password must be at least 8 characters long, contain at least one uppercase letter, one lowercase letter, and one number.</small>
-                        <?php if (isset($pass_err)) { ?><span class="text-danger">
-                                <br><?php echo $pass_err; ?></span><?php } ?>
+                        <?php if (isset($newpass_err)) { ?><span class="text-danger">
+                                <br><?php echo $newpass_err; ?></span><?php } ?>
                     </td>
                 </tr>
 
