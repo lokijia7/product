@@ -75,7 +75,8 @@ if (!isset($_SESSION["username"])) {
             echo "<tr>";
             echo "<th class='col-1'>Category ID</th>";
             echo "<th class='col-2'>Category Name</th>";
-            echo "<th class='col-5'>Description</th>";
+            echo "<th class='col-4'>Description</th>";
+            echo "<th class='col-1'>Created</th>";
             echo "<th class='col-4'>Action</th>";
             echo "</tr>";
 
@@ -88,7 +89,8 @@ if (!isset($_SESSION["username"])) {
                 echo "<tr>";
                 echo "<td class='col-1'>{$category_id}</td>";
                 echo "<td class='col-2'>{$category_name}</td>";
-                echo "<td class='col-5'>{$category_description}</td>";
+                echo "<td class='col-4'>{$category_description}</td>";
+                echo "<td class='col-1'>{$created}</td>";
                 echo "<td class='col-4'>";
 
                 // read one record
