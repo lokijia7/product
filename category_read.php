@@ -50,6 +50,15 @@ if (!isset($_SESSION["username"])) {
         // include database connection
         include 'config/database.php';
 
+        // delete message prompt will be here
+        $action = isset($_GET['action']) ? $_GET['action'] : "";
+
+        // if it was redirected from delete.php
+        if ($action == 'deleted') {
+            echo "<div class='alert alert-success'>Record was deleted.</div>";
+        }
+
+
         // select all data
 
         $query = "SELECT * FROM product_category";
@@ -117,6 +126,19 @@ if (!isset($_SESSION["username"])) {
     </div> <!-- end .container -->
 
     <!-- confirm delete record will be here -->
+    <script type='text/javascript'>
+        // confirm record deletion
+        function delete_user(category_id) {
+
+            var answer = confirm('Are you sure?');
+            if (answer) {
+                // if user clicked ok,
+                // pass the id to delete.php and execute the delete query
+                window.location = 'category_delete.php?category_id=' + category_id;
+            }
+        }
+    </script>
+
 
 </body>
 
