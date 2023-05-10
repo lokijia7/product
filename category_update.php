@@ -27,13 +27,13 @@ if (!isset($_SESSION["username"])) {
         <?php
         ini_set('display_errors', 1);
         error_reporting(E_ALL);
-        // get passed parameter value, in this case, the record ID
-        // isset() is a PHP function used to verify if a value is there or not
-        $id = isset($_GET['category_id']) ? $_GET['category_id'] : die('ERROR: Record ID not found.');
-
 
         //include database connection
         include 'config/database.php';
+
+        // get passed parameter value, in this case, the record ID
+        // isset() is a PHP function used to verify if a value is there or not
+        $id = isset($_GET['category_id']) ? $_GET['category_id'] : die('ERROR: Record ID not found.');
 
         // read current record's data
         try {
@@ -126,12 +126,12 @@ SET category_name=:category_name, category_description=:category_description";
             <table class='table table-hover table-responsive table-bordered'>
                 <tr>
                     <td>Category Name</td>
-                    <td><input type='text' name='name' class="form-control" value="<?php echo isset($name) ? htmlspecialchars($name) : ''; ?>" />
+                    <td><input type='text' name='category_name' class="form-control" value="<?php echo isset($category_name) ? htmlspecialchars($category_name) : ''; ?>" />
                         <?php if (isset($catname_err)) { ?><span class="text-danger"><?php echo $catname_err; ?></span><?php } ?></td>
                 </tr>
                 <tr>
                     <td>Description</td>
-                    <td> <textarea class="form-control" name="description"><?php echo htmlspecialchars($description, ENT_QUOTES); ?></textarea>
+                    <td> <textarea class="form-control" name="category_description"><?php echo htmlspecialchars($category_description, ENT_QUOTES); ?></textarea>
                         <?php if (isset($description_err)) { ?><span class="text-danger"><?php echo $description_err; ?></span><?php } ?></td>
                 </tr>
                 <tr>

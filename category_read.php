@@ -96,7 +96,7 @@ if (!isset($_SESSION["username"])) {
                 // read one record
                 echo "<div class='button-group1'>";
                 echo "<a href='category_read_one.php?category_id={$category_id}' class='btn btn-info btn-sm d-inline'>Read</a>&nbsp;";
-                echo "<a href='category_update.php?id={$category_id}' class='btn btn-primary btn-sm d-inline'>Edit</a>&nbsp;";
+                echo "<a href='category_update.php?category_id={$category_id}' class='btn btn-primary btn-sm d-inline'>Edit</a>&nbsp;";
                 echo "<a href='#' onclick='delete_user({$id});'  class='btn btn-danger btn-sm d-inline'>Delete</a>";
                 echo "</div>";
                 echo "</td>";
