@@ -65,69 +65,67 @@ if (!isset($_SESSION["username"])) {
         ini_set('display_errors', 1);
         error_reporting(E_ALL);
 
+
         // check if form was submitted
         if ($_POST) {
             try {
-                // include database connection
-                include 'config/database.php';
+                // write update query
+                // in this case, it seemed like we have so many fields to pass and
+                // it is better to label them and not use question marks
+                $query = "UPDATE product_category
+                SET category_name=:category_name,
+                category_description=:category_description
+                WHERE category_id = :category_id";
 
-                // get the record ID
-                $id = isset($_GET['category_id']) ? $_GET['category_id'] : die('ERROR: Record ID not found.');
 
-                // get the posted values
+                // prepare query for execution
+                $stmt = $con->prepare($query);
+
+                // posted values
                 $category_name = htmlspecialchars(strip_tags($_POST['category_name']));
                 $category_description = htmlspecialchars(strip_tags($_POST['category_description']));
 
                 $flag = false;
 
-                // check if product name is empty
-                if (empty($category_name)) { // check if category name is empty
-                    $catname_err = "Category name cannot be empty.";
-                    $flag = true;
-                }
-                if (empty($category_description)) { // check if description is empty
-                    $description_err = "Description cannot be empty.";
-                    $flag = true;
-                } else {
-                    // update query with manufacture date and/or expiry date
-                    $query = "UPDATE product_category
-SET category_name=:category_name, category_description=:category_description";
-                }
 
-                // prepare query for execution
-                $stmt = $con->prepare($query);
+                // Check if any field is empty
+                if (empty($category_name)) {
+                    $cname_err = "Please fill out the category name field.";
+                    $flag = true;
+                }
+                if (empty($category_description)) {
+                    $description_err = "Please fill out the category name field.";
+                    $flag = true;
+                }
 
                 // bind the parameters
                 $stmt->bindParam(':category_id', $id);
-                $stmt->bindParam(':category_description', $category_description);
                 $stmt->bindParam(':category_name', $category_name);
+                $stmt->bindParam(':category_description', $category_description);
 
-                if (!$flag) {
-                    // execute the query
-                    if ($stmt->execute()) {
-                        echo "<div class='alert alert-success'>Record was updated.</div>";
-                    } else {
-                        echo "<div class='alert alert-danger'>Unable to update record. Please try again.</div>";
-                    }
+                // Execute the query
+                if (!$flag && $stmt->execute()) {
+                    echo "<div class='alert alert-success'>Record was updated.</div>";
+                } else {
+                    echo "<div class='alert alert-danger'>Unable to update record. Please try again.</div>";
                 }
             }
-
             // show errors
             catch (PDOException $exception) {
+
                 die('ERROR: ' . $exception->getMessage());
             }
-        }
-        ?>
+        } ?>
 
 
 
         <!--we have our html form here where new record information can be updated-->
-        <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"] . "?product_id={$id}"); ?>" method="post">
+        <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"] . "?category_id={$id}"); ?>" method="post">
             <table class='table table-hover table-responsive table-bordered'>
                 <tr>
                     <td>Category Name</td>
                     <td><input type='text' name='category_name' class="form-control" value="<?php echo isset($category_name) ? htmlspecialchars($category_name) : ''; ?>" />
-                        <?php if (isset($catname_err)) { ?><span class="text-danger"><?php echo $catname_err; ?></span><?php } ?></td>
+                        <?php if (isset($cname_err)) { ?><span class="text-danger"><?php echo $cname_err; ?></span><?php } ?></td>
                 </tr>
                 <tr>
                     <td>Description</td>

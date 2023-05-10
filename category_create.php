@@ -54,6 +54,10 @@ if (!isset($_SESSION["username"])) {
                 $cname_err = "Please fill out the category name field.";
                 $flag = true;
             }
+            if (empty($category_description)) {
+                $description_err = "Please fill out the category name field.";
+                $flag = true;
+            }
 
             if ($flag == false) {
 
@@ -101,7 +105,7 @@ if (!isset($_SESSION["username"])) {
                 <tr>
                     <td>Description</td>
                     <td><textarea name='category_description' class="form-control" value="<?php echo isset($category_description) ? htmlspecialchars($category_description) : ''; ?>"></textarea>
-                        <?php if (isset($cdescription_err)) { ?><span class="text-danger"><?php echo $cdescription_err; ?></span><?php } ?></td>
+                        <?php if (isset($description_err)) { ?><span class="text-danger"><?php echo $description_err; ?></span><?php } ?></td>
                 </tr>
 
                 <td></td>
