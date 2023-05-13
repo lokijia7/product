@@ -31,7 +31,7 @@ if ($row) {
     echo "<p>The customer with the latest order is: " . htmlspecialchars($row['customer_name'])
         . " with an order ID of " . htmlspecialchars($row['latest_order_id'])
         . " on " . htmlspecialchars($row['transaction_date'])
-        . " with a purchase amount of RM " . htmlspecialchars($row['purchase_amount']) . "</p>";
+        . " with a purchase amount of RM" . htmlspecialchars($row['purchase_amount']) . "</p>";
 } else {
     echo "<div class='alert alert-danger'>No records found.</div>";
 }
