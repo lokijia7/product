@@ -40,6 +40,18 @@ if (!isset($_SESSION["username"])) {
                     <li><?php include 'producttotal.php' ?></li>
                 </ul>
             </div>
+            <div class="box total_orders">
+                <h2>Total Orders</h2>
+                <ul class="no-marker">
+                    <li><?php include 'totalorder.php' ?></li>
+                </ul>
+            </div>
+            <div class="box latest_orders">
+                <h2>latest Order</h2>
+                <ul class="no-marker">
+                    <li><?php include 'latestorder.php' ?></li>
+                </ul>
+            </div>
             <div class="box best-sellers">
                 <h2>Best Selling Product</h2>
                 <ul class="no-marker">
