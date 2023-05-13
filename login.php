@@ -100,7 +100,6 @@
                                 <?php if (isset($error_msg_p)) { ?><span class="text-danger"><?php echo $error_msg_p; ?></span><?php } ?>
                             </div>
                             <div class="form-group">
-                                <label for="remember-me" class="text-info"><span>Remember me</span> <span><input id="remember-me" name="remember-me" type="checkbox"></span></label><br>
                                 <input type="submit" name="login" class="btn btn-info btn-md" value="login">
                             </div>
                             <div id="register-link" class="text-right">
