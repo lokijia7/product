@@ -102,14 +102,12 @@
                             <div class="form-group">
                                 <input type="submit" name="login" class="btn btn-info btn-md" value="login">
                             </div>
-                            <div id="register-link" class="text-right">
-                                <a href="#" class="text-info">Register here</a>
-                            </div>
-                        </form>
                     </div>
+                    </form>
                 </div>
             </div>
         </div>
+    </div>
     </div>
 </body>
 
