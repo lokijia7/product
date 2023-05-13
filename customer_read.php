@@ -89,7 +89,7 @@ if (!isset($_SESSION["username"])) {
             echo "<th class='col-1'>First Name</th>";
             echo "<th class='col-1'>Last Name</th>";
             echo "<th class='col-1'>Account Status</th>";
-            echo "<th class='col-2'>Register Date</th>";
+            echo "<th class='col-2'>Register Date & Time</th>";
             echo "<th class='col-4'>Action</th>";
             echo "</tr>";
 
@@ -105,7 +105,7 @@ if (!isset($_SESSION["username"])) {
                 echo "<td class='col-1'>{$first_name}</td>";
                 echo "<td class='col-1'>{$last_name}</td>";
                 echo "<td class='col-1'>{$account_status}</td>";
-                echo "<td class='col-2'>" . date("Y-m-d", strtotime($registration_datetime)) . "</td>";
+                echo "<td class='col-2'>{$registration_datetime}</td>";
                 echo "<td class='col-4'>";
 
                 // read one record
