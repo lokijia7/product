@@ -91,7 +91,12 @@ if (!isset($_SESSION["username"])) {
                     $confpass_err = "Passwords do not match.";
                     $flag = true;
                 }
-                $pass = md5($pass);
+
+                if (!empty($pass)) {
+                    // Generate an MD5 hash for the password
+                    $pass = md5($pass);
+                }
+
 
 
 
@@ -166,7 +171,7 @@ if (!isset($_SESSION["username"])) {
                 <tr>
                     <td>Username</td>
                     <td>
-                        <input type='name' name='username' value="<?php echo isset($username) ? htmlspecialchars($username) : ''; ?>" class='form-control' required />
+                        <input type='name' name='username' value="<?php echo isset($username) ? htmlspecialchars($username) : ''; ?>" class='form-control' />
                         <small>**Username must be at least 6 characters long.</small>
                         <?php if (isset($username_err)) { ?><span class="text-danger">
                                 <br><?php echo $username_err; ?></span><?php } ?>
@@ -188,7 +193,7 @@ if (!isset($_SESSION["username"])) {
                 <tr>
                     <td>Password</td>
                     <td>
-                        <input type='password' name='pass' value="<?php echo isset($pass) ? htmlspecialchars($pass) : ''; ?>" class='form-control' required />
+                        <input type='password' name='pass' value="<?php echo isset($pass) ? htmlspecialchars($pass) : ''; ?>" class='form-control' />
                         <small>**Password must be at least 8 character, contain numbers, uppercase and lowercase alphabets."</small>
                         <?php if (isset($pass_err)) { ?><span class="text-danger">
                                 <br><?php echo $pass_err; ?></span><?php } ?>
