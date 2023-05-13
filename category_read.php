@@ -85,8 +85,8 @@ if (!isset($_SESSION["username"])) {
             echo "<th class='col-1'>Category ID</th>";
             echo "<th class='col-2'>Category Name</th>";
             echo "<th class='col-4'>Description</th>";
-            echo "<th class='col-1'>Created</th>";
-            echo "<th class='col-4'>Action</th>";
+            echo "<th class='col-2'>Created</th>";
+            echo "<th class='col-3'>Action</th>";
             echo "</tr>";
 
             // retrieve our table contents
@@ -99,8 +99,8 @@ if (!isset($_SESSION["username"])) {
                 echo "<td class='col-1'>{$category_id}</td>";
                 echo "<td class='col-2'>{$category_name}</td>";
                 echo "<td class='col-4'>{$category_description}</td>";
-                echo "<td class='col-1'>{$created}</td>";
-                echo "<td class='col-4'>";
+                echo "<td class='col-2'>{$created}</td>";
+                echo "<td class='col-3'>";
 
                 // read one record
                 echo "<div class='button-group1'>";
