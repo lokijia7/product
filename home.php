@@ -47,7 +47,7 @@ if (!isset($_SESSION["username"])) {
                 </ul>
             </div>
             <div class="box latest_orders">
-                <h2>latest Order</h2>
+                <h2>Latest Order</h2>
                 <ul class="no-marker">
                     <li><?php include 'latestorder.php' ?></li>
                 </ul>
