@@ -90,8 +90,8 @@ if (!isset($_SESSION["username"])) {
             echo "<th class='col-3'>Description</th>";
             echo "<th class='col-1'>Price</th>";
             echo "<th class='col-1'>Promotion Price</th>";
-            echo "<th class='col-1'>Created Date & Time</th>";
-            echo "<th class='col-4'>Action</th>";
+            echo "<th class='col-2'>Created Date & Time</th>";
+            echo "<th class='col-3'>Action</th>";
             echo "</tr>";
 
             // retrieve our table contents
@@ -106,8 +106,8 @@ if (!isset($_SESSION["username"])) {
                 echo "<td class='col-3'>{$description}</td>";
                 echo "<td class='col-1' style='text-align: right'>" . 'RM' . number_format($price, 2) . "</td>";
                 echo "<td class='col-1' style='text-align: right'>" . ($promotion_price ? 'RM' . number_format($promotion_price, 2) : '') . "</td>";
-                echo "<td class='col-1'>{$created}</td>";
-                echo "<td class='col-4'>";
+                echo "<td class='col-2'>{$created}</td>";
+                echo "<td class='col-3'>";
                 // read one record
                 echo "<div class='button-group1'>";
                 echo "<a href='product_read_one.php?product_id={$product_id}' class='btn btn-info btn-sm d-inline'>Read</a>&nbsp;";
