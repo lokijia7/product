@@ -99,7 +99,7 @@ if (!isset($_SESSION["username"])) {
             <table class='table table-hover table-responsive table-bordered'>
                 <tr>
                     <td>Category Name</td>
-                    <td><input type='text' name='category_name' class="form-control" required value="<?php echo isset($category_name) ? htmlspecialchars($category_name) : ''; ?>" />
+                    <td><input type='text' name='category_name' class="form-control" value="<?php echo isset($category_name) ? htmlspecialchars($category_name) : ''; ?>" />
                         <?php if (isset($cname_err)) { ?><span class="text-danger"><?php echo $cname_err; ?></span><?php } ?></td>
                 </tr>
                 <tr>
