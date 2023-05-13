@@ -28,6 +28,18 @@ if (!isset($_SESSION["username"])) {
 
     <main class="container">
         <div class="grid-container">
+            <div class="box total_customers">
+                <h2>Total Customers</h2>
+                <ul class="no-marker">
+                    <li><?php include 'customertotal.php' ?></li>
+                </ul>
+            </div>
+            <div class="box total_products">
+                <h2>Total Products</h2>
+                <ul class="no-marker">
+                    <li><?php include 'producttotal.php' ?></li>
+                </ul>
+            </div>
             <div class="box best-sellers">
                 <h2>Best Selling Product</h2>
                 <ul class="no-marker">
