@@ -28,25 +28,25 @@ if (!isset($_SESSION["username"])) {
 
     <main class="container">
         <div class="grid-container">
-            <div class="box total_customers">
+            <div class="box total-customers">
                 <h2>Total Customers</h2>
                 <ul class="no-marker">
                     <li><?php include 'customertotal.php' ?></li>
                 </ul>
             </div>
-            <div class="box total_products">
+            <div class="box total-products">
                 <h2>Total Products</h2>
                 <ul class="no-marker">
                     <li><?php include 'producttotal.php' ?></li>
                 </ul>
             </div>
-            <div class="box total_orders">
+            <div class="box total-orders">
                 <h2>Total Orders</h2>
                 <ul class="no-marker">
                     <li><?php include 'totalorder.php' ?></li>
                 </ul>
             </div>
-            <div class="box latest_orders">
+            <div class="box latest-orders">
                 <h2>Latest Order</h2>
                 <ul class="no-marker">
                     <li><?php include 'latestorder.php' ?></li>

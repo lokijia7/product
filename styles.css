@@ -37,6 +37,32 @@
     background-size: cover;
 }
 
+.total-customers {
+    background-color: #f3c2c2;
+    background-position: center;
+    background-size: cover;
+}
+
+.total-products {
+    background-color: #fffdb7;
+    background-position: center;
+    background-size: cover;
+}
+
+.total-orders {
+    background-color: #c9dcfe;
+    background-position: center;
+    background-size: cover;
+}
+
+.latest-orders {
+    background-color: #d9fec9;
+    background-position: center;
+    background-size: cover;
+}
+
+
+
 /* Set background color and padding for nav bar */
 #mainNav {
     font-family: Futura, sans-serif;
