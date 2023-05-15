@@ -51,42 +51,36 @@ if (!isset($_SESSION["username"])) {
 
                 $name = trim($_POST['name']);
 
-                $flag = false;
-
-
 
                 // Check if any field is empty
                 if (empty($name)) {
                     $name_err = "Please fill out the Name field.";
-                    $flag = true;
                 }
                 if (empty($price)) {
                     $price_err = "Please fill out the Price field.";
-                    $flag = true;
                 }
                 if (empty($manufacture_date)) {
                     $manu_err = "Please fill out the Manufacture Date field.";
-                    $flag = true;
                 }
                 if (empty($category_name)) {
                     $category_err = "Please choose a category.";
-                    $flag = true;
                 }
 
-                // check if promotion price is less than original price
+                // check if user fill up promotion price & must cheaper than original price 
                 if (!empty($promotion_price)) {
                     if ($promotion_price >= $price) {
-                        $promo_err = "Promotion price must be cheaper than original price.";
-                        $flag = true;
+                        $promo_err = "Promotion price must be cheaper than original price";
                     }
                 }
+
+
                 // check if expiry date is later than manufacture date
                 if (!empty($expiry_date)) {
-                    if ($expiry_date <= $manufacture_date) {
-                        $exp_err = "Expiry date must be later than manufacture date.";
-                        $flag = true;
+                    if (strtotime($expiry_date) <= strtotime($manufacture_date)) {
+                        $exp_err = "Expired date should be later than manufacture date";
                     }
                 }
+
                 // Set default values for non-required fields
                 if (empty($promotion_price)) {
                     $promotion_price = 0;
@@ -99,8 +93,8 @@ if (!isset($_SESSION["username"])) {
 
 
 
-
-                if ($flag == false) {
+                // check if there are any errors
+                if (!isset($name_err) &&  !isset($price_err) && !isset($promo_err) && !isset($exp_err) && !isset($category_err)) {
 
                     // insert query
                     $query = "INSERT INTO products SET name=:name, description=:description,category_name=:category_name, price=:price, promotion_price=:promotion_price, manufacture_date=:manufacture_date,expiry_date=:expiry_date,created=:created";
@@ -194,7 +188,7 @@ if (!isset($_SESSION["username"])) {
                 <tr>
                 <tr>
                     <td>Promotion price</td>
-                    <td><input type='number' name='promotion_price' class='form-control' value="<?php echo isset($promotion_price) ? htmlspecialchars($promotion_price) : ''; ?>" /><?php if (isset($pro_err)) { ?><span class="text-danger"><?php echo $pro_err; ?></span><?php } ?></td>
+                    <td><input type='number' name='promotion_price' class='form-control' value="<?php echo isset($promotion_price) ? htmlspecialchars($promotion_price) : ''; ?>" /><?php if (isset($promo_err)) { ?><span class="text-danger"><?php echo $promo_err; ?></span><?php } ?></td>
                 </tr>
                 <tr>
                 <tr>
@@ -205,7 +199,7 @@ if (!isset($_SESSION["username"])) {
                 <tr>
                     <td>Expiry date</td>
                     <td><input type='date' name='expiry_date' class='form-control' value="<?php echo isset($expiry_date) ? htmlspecialchars($expiry_date) : ''; ?>" />
-                        <?php if (isset($exp_err)) { ?><span class="text-danger"><?php echo $manu_err; ?></span><?php } ?></td>
+                        <?php if (isset($exp_err)) { ?><span class="text-danger"><?php echo $exp_err; ?></span><?php } ?></td>
                 </tr>
 
 
