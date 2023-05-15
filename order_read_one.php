@@ -56,21 +56,21 @@ if (!isset($_SESSION["username"])) {
             // this is the first question mark
             $stmt->bindParam(1, $id);
 
+
+            // execute query
             $stmt->execute();
 
-            // this is how to get number of rows returned
-            $num = $stmt->rowCount();
+            // check if more than 0 record found
+            if ($stmt->rowCount() > 0) {
 
+                echo "<div class='container'>";
+                echo "<div class='page-header'>";
 
-            echo "<div class='container'>";
-            echo "<div class='page-header'>";
-            echo "<h1>" . $row['username'] . "</h1>";
-            echo "</div>";
+                // Fetch the first row to get the username
+                $row = $stmt->fetch(PDO::FETCH_ASSOC);
+                echo "<p>Customer: " . $row['username'] . "</p>";
 
-
-
-            //check if more than 0 record found
-            if ($num > 0) {
+                echo "</div>";
 
                 echo "<table class='table table-hover table-responsive table-bordered'>"; //start table
 
@@ -87,7 +87,7 @@ if (!isset($_SESSION["username"])) {
 
                 // retrieve our table contents
                 $total = 0; // initialize total
-                while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                do {
                     // extract row
                     // this will make $row['firstname'] to just $firstname only
                     extract($row);
@@ -101,7 +101,7 @@ if (!isset($_SESSION["username"])) {
                     echo "<td class='col-2' style='text-align: right'>" . ($promotion_price ? 'RM' . number_format($promotion_price, 2) : '') . "</td>";
                     $total += ($promotion_price ? $promotion_price : $price) * $quantity; // add product price multiplied by quantity to total
                     echo "<td class='col-2' style='text-align: right'>" . 'RM' . number_format(($promotion_price ? $promotion_price : $price) * $quantity, 2) . "</td>"; // new column data
-                }
+                } while ($row = $stmt->fetch(PDO::FETCH_ASSOC));
 
                 echo "<tr><td colspan='6' style='text-align:right'>Total:</td><td style='text-align:right'>" . 'RM' . number_format($total, 2) . "</td></tr>"; // display total
 
@@ -112,6 +112,8 @@ if (!isset($_SESSION["username"])) {
             else {
                 echo "<div class='alert alert-danger'>No records found.</div>";
             }
+
+
 
             ?>
 
