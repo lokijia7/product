@@ -85,7 +85,7 @@ if (!isset($_SESSION["username"])) {
             echo "<th class='col-1'>Category ID</th>";
             echo "<th class='col-2'>Category Name</th>";
             echo "<th class='col-4'>Description</th>";
-            echo "<th class='col-2'>Created</th>";
+            echo "<th class='col-2'>Created Date & Time</th>";
             echo "<th class='col-3'>Action</th>";
             echo "</tr>";
 
