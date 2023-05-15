@@ -92,8 +92,8 @@ if (!isset($_SESSION["username"])) {
             // read one record
             echo "<div class='button-group1'>";
             echo "<a href='product_read_one.php?product_id={$product_id}' class='btn btn-info btn-sm d-inline'>Read</a>&nbsp;";
-            echo "<a href='update.php?id={$id}' class='btn btn-primary btn-sm d-inline'>Edit</a>&nbsp;";
-            echo "<a href='#' onclick='delete_user({$id});'  class='btn btn-danger btn-sm d-inline'>Delete</a>";
+            echo "<a href='product_update.php?product_id={$product_id}' class='btn btn-primary btn-sm d-inline'>Edit</a>&nbsp;";
+            echo "<a href='#' onclick='delete_user({$product_id});'  class='btn btn-danger btn-sm d-inline'>Delete</a>";
             echo "</div>";
             echo "</td>";
             echo "</tr>";
@@ -111,6 +111,19 @@ if (!isset($_SESSION["username"])) {
     </div> <!-- end .container -->
 
     <!-- confirm delete record will be here -->
+    <script type='text/javascript'>
+        // confirm record deletion
+        function delete_user(product_id) {
+
+            var answer = confirm('Are you sure?');
+            if (answer) {
+                // if user clicked ok,
+                // pass the id to delete.php and execute the delete query
+                window.location = 'product_delete.php?product_id=' + product_id;
+            }
+        }
+    </script>
+
 
 </body>
 
