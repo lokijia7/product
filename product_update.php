@@ -105,6 +105,13 @@ if (!isset($_SESSION["username"])) {
                 if (empty($price)) { // check if price is empty
                     $price_err = "Price cannot be empty.";
                     $flag = true;
+                }
+
+                // check if user fill up promotion price & must cheaper than original price 
+
+                if ($promotion_price >= $price) {
+                    $promo_err = "Promotion price must be cheaper than original price";
+                    $flag = true;
                 } else {
                     // check if manufacture date and expiry date are empty
                     if (empty($manufacture_date) && empty($expiry_date)) {
@@ -213,7 +220,7 @@ SET name=:name, description=:description, price=:price, promotion_price=:promoti
                 <tr>
                 <tr>
                     <td>Promotion price</td>
-                    <td><input type='number' name='promotion_price' class='form-control' value="<?php echo isset($promotion_price) ? htmlspecialchars($promotion_price) : ''; ?>" /><?php if (isset($pro_err)) { ?><span class="text-danger"><?php echo $pro_err; ?></span><?php } ?></td>
+                    <td><input type='number' name='promotion_price' class='form-control' value="<?php echo isset($promotion_price) ? htmlspecialchars($promotion_price) : ''; ?>" /><?php if (isset($promo_err)) { ?><span class="text-danger"><?php echo $promo_err; ?></span><?php } ?></td>
                 </tr>
                 <tr>
                 <tr>
