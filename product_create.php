@@ -117,13 +117,8 @@ if (!isset($_SESSION["username"])) {
                     // Execute the query
                     if ($stmt->execute()) {
                         echo "<div class='alert alert-success'>Record was saved.</div>";
-                        // Clear form fields
-                        $name = "";
-                        $description = "";
-                        $price = "";
-                        $promotion_price = "";
-                        $manufacture_date = "";
-                        $expiry_date = "";
+                        echo "<script>window.location.href = 'product_read.php';</script>";
+                        exit();
                     } else {
                         echo "<div class='alert alert-danger'>Unable to save record.</div>";
                     }
