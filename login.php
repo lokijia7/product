@@ -53,7 +53,7 @@
                         $_SESSION['username'] = $username;
 
                         // redirect the user to the home page
-                        header('Location: home.php');
+                        header('Location: index.php');
                         exit;
                     } else {
                         // show an error message if the user account is inactive
