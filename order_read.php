@@ -37,14 +37,6 @@ if (!isset($_SESSION["username"])) {
                 <div class="col-md-6">
                     <?php echo "<a href='order_create.php' class='btn btn-primary m-b-1em'>Create New Order</a>"; ?>
                 </div>
-                <div class="col-md-6 d-flex justify-content-end">
-                    <form class="d-flex" role="search" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
-                        <input class="form-control me-2 pastel-color" name="search" type="search" placeholder="Search" aria-label="Search">
-                        <button class="btn btn-outline-success btn-btn-sm" type="submit">Search</button>
-                    </form>
-                </div>
-
-            </div>
         </nav>
 
 
@@ -54,13 +46,6 @@ if (!isset($_SESSION["username"])) {
 
         // select all data
         $query = "SELECT * FROM orders ORDER BY order_id DESC";
-
-        if ($_POST) {
-            $search = htmlspecialchars(strip_tags($_POST['search']));
-            $query = "SELECT * FROM `orders` WHERE 
-            order_id = $search OR 
-            username LIKE '%" . $search . "%'";
-        }
 
 
         $stmt = $con->prepare($query);
