@@ -106,6 +106,13 @@ if (!isset($_SESSION["username"])) {
                     $price_err = "Price cannot be empty.";
                     $flag = true;
                 }
+                // check if expiry date is later than manufacture date
+                if (!empty($expiry_date)) {
+                    if (strtotime($expiry_date) <= strtotime($manufacture_date)) {
+                        $exp_err = "Expired date should be later than manufacture date";
+                        $flag = true;
+                    }
+                }
 
                 // check if user fill up promotion price & must cheaper than original price 
 
@@ -230,6 +237,7 @@ SET name=:name, description=:description, price=:price, promotion_price=:promoti
                 <tr>
                     <td>Expiry date</td>
                     <td><input type='date' name='expiry_date' class='form-control' value="<?php echo isset($expiry_date) ? htmlspecialchars($expiry_date) : ''; ?>" />
+                        <?php if (isset($exp_err)) { ?><span class="text-danger"><?php echo $exp_err; ?></span><?php } ?></td>
                 </tr>
                 <tr>
                     <td></td>
