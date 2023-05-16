@@ -57,15 +57,15 @@
                         exit;
                     } else {
                         // show an error message if the user account is inactive
-                        echo "<div class='alert alert-danger'>Your account is inactive. Please contact the administrator.</div>";
+                        $error_msg_ue = 'Your account is inactive. Please contact the administrator.';
                     }
                 } else {
                     // show an error message if the password is incorrect
-                    echo "<div class='alert alert-danger'>Incorrect password.</div>";
+                    $error_msg_p = 'Incorrect password.';
                 }
             } else {
                 // show an error message if the username/email is invalid
-                echo "<div class='alert alert-danger'>Invalid username/email.</div>";
+                $error_msg_ue = 'Invalid username/email.';
             }
         } else {
             // show an error message if the username/email or password is empty
