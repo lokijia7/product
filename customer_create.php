@@ -90,9 +90,7 @@ if (!isset($_SESSION["username"])) {
                 if ($pass != $confirmed_password) {
                     $confpass_err = "Passwords do not match.";
                     $flag = true;
-                }
-
-                if (!empty($pass)) {
+                } else {
                     // Generate an MD5 hash for the password
                     $pass = md5($pass);
                 }
