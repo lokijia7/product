@@ -65,6 +65,9 @@ if (!isset($_SESSION["username"])) {
                 if (empty($category_name)) {
                     $category_err = "Please choose a category.";
                 }
+                if (empty($description)) { // check if description is empty
+                    $description_err = "Description cannot be empty.";
+                }
 
                 // check if user fill up promotion price & must cheaper than original price 
                 if (!empty($promotion_price)) {
@@ -94,7 +97,7 @@ if (!isset($_SESSION["username"])) {
 
 
                 // check if there are any errors
-                if (!isset($name_err) &&  !isset($price_err) && !isset($promo_err) && !isset($exp_err) && !isset($category_err)) {
+                if (!isset($name_err) &&  !isset($price_err) && !isset($promo_err) && !isset($exp_err) && !isset($category_err) && !isset($description_err)) {
 
                     // insert query
                     $query = "INSERT INTO products SET name=:name, description=:description,category_name=:category_name, price=:price, promotion_price=:promotion_price, manufacture_date=:manufacture_date,expiry_date=:expiry_date,created=:created";
