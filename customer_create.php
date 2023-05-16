@@ -95,17 +95,6 @@ if (!isset($_SESSION["username"])) {
                     $pass = md5($pass);
                 }
 
-                // Check if the date of birth is later than the current date
-                $currentDate = date('Y-m-d');
-                if ($date_of_birth > $currentDate) {
-                    $dob_err = "Date of birth cannot be later than the current date.";
-                    $flag = true;
-                }
-
-
-
-
-
                 if (empty($first_name)) {
                     $fname_err = "Please fill out the first name field.";
                     $flag = true;
@@ -124,6 +113,12 @@ if (!isset($_SESSION["username"])) {
                 }
                 if (empty($account_status)) {
                     $status_err = "Please fill out the account status field.";
+                    $flag = true;
+                }
+                // Check if the date of birth is later than the current date
+                $currentDate = date('Y-m-d');
+                if ($date_of_birth > $currentDate) {
+                    $dob_err = "Date of birth cannot be later than the current date.";
                     $flag = true;
                 }
 
