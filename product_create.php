@@ -44,8 +44,8 @@ if (!isset($_SESSION["username"])) {
                 $name = htmlspecialchars(strip_tags($_POST['name']));
                 $description = htmlspecialchars(strip_tags($_POST['description']));
                 if (isset($_POST['category_name'])) $category_name = $_POST['category_name'];
-                $price = htmlspecialchars(strip_tags($_POST['price']));
-                $promotion_price = htmlspecialchars(strip_tags($_POST['promotion_price']));
+                $price = floatval(htmlspecialchars(strip_tags($_POST['price']))); // Convert to float
+                $promotion_price = floatval(htmlspecialchars(strip_tags($_POST['promotion_price'])));;
                 $manufacture_date = htmlspecialchars(strip_tags($_POST['manufacture_date']));
                 $expiry_date = htmlspecialchars(strip_tags($_POST['expiry_date']));
 
@@ -185,13 +185,13 @@ if (!isset($_SESSION["username"])) {
 
                 <tr>
                     <td>Price</td>
-                    <td><input type='number' name='price' class='form-control' value="<?php echo isset($price) ? htmlspecialchars($price) : ''; ?>" />
-                        <?php if (isset($price_err)) { ?><span class="text-danger"><?php echo $price_err; ?></span><?php } ?></td>
+                    <td><input type='number' step='0.01' name='price' value='<?php echo htmlspecialchars($price); ?>' class='form-control' /></td>
+                    <?php if (isset($price_err)) { ?><span class="text-danger"><?php echo $price_err; ?></span><?php } ?></td>
                 </tr>
                 <tr>
                 <tr>
                     <td>Promotion price</td>
-                    <td><input type='number' name='promotion_price' class='form-control' value="<?php echo isset($promotion_price) ? htmlspecialchars($promotion_price) : ''; ?>" /><?php if (isset($promo_err)) { ?><span class="text-danger"><?php echo $promo_err; ?></span><?php } ?></td>
+                    <td><input type='number' step='0.01' name='promotion_price' value='<?php echo htmlspecialchars($promotion_price); ?>' class='form-control' /></td><?php if (isset($promo_err)) { ?><span class="text-danger"><?php echo $promo_err; ?></span><?php } ?></td>
                 </tr>
                 <tr>
                 <tr>
