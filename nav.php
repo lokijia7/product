@@ -22,9 +22,9 @@ $currentPage = basename($_SERVER['PHP_SELF']);
             </button>
             <div class="collapse navbar-collapse" id="navbarResponsive">
                 <ul class="navbar-nav ms-auto py-4 py-lg-0">
-                    <li class="nav-item <?php if ($currentPage == 'home.php') {
+                    <li class="nav-item <?php if ($currentPage == 'index.php') {
                                             echo 'active';
-                                        } ?>"><a class="nav-link px-lg-3 py-3 py-lg-4" href="home.php">Home</a></li>
+                                        } ?>"><a class="nav-link px-lg-3 py-3 py-lg-4" href="index.php">Home</a></li>
                     <li class="nav-item <?php if ($currentPage == 'product_create.php' || $currentPage == 'product_read.php' || $currentPage == 'product_read_one.php') {
                                             echo 'active';
                                         } ?> dropdown">
