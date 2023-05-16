@@ -95,6 +95,14 @@ if (!isset($_SESSION["username"])) {
                     $pass = md5($pass);
                 }
 
+                // Check if the date of birth is later than the current date
+                $currentDate = date('Y-m-d');
+                if ($date_of_birth > $currentDate) {
+                    $dob_err = "Date of birth cannot be later than the current date.";
+                    $flag = true;
+                }
+
+
 
 
 
@@ -213,8 +221,12 @@ if (!isset($_SESSION["username"])) {
                 </tr>
                 <tr>
                     <td>Date Of Birth</td>
-                    <td><input type='date' name='date_of_birth' class='form-control' /><?php if (isset($dob_err)) { ?><span class="text-danger"><?php echo $dob_err; ?></span><?php } ?></td>
+                    <td>
+                        <input type='date' name='date_of_birth' class='form-control' value="<?php echo isset($date_of_birth) ? htmlspecialchars($date_of_birth) : ''; ?>" />
+                        <?php if (isset($dob_err)) { ?><span class="text-danger"><?php echo $dob_err; ?></span><?php } ?>
+                    </td>
                 </tr>
+
                 <tr>
                     <td>Account Status</td>
                     <td>
