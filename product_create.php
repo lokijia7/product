@@ -185,13 +185,14 @@ if (!isset($_SESSION["username"])) {
 
                 <tr>
                     <td>Price</td>
-                    <td><input type='number' step='0.01' name='price' value='<?php echo htmlspecialchars($price); ?>' class='form-control' /></td>
-                    <?php if (isset($price_err)) { ?><span class="text-danger"><?php echo $price_err; ?></span><?php } ?></td>
+                    <td><input type='number' step='0.01' name='price' value='<?php echo htmlspecialchars($price); ?>' class='form-control' />
+                        <?php if (isset($price_err)) { ?><span class="text-danger"><?php echo $price_err; ?></span><?php } ?></td>
                 </tr>
                 <tr>
                 <tr>
                     <td>Promotion price</td>
-                    <td><input type='number' step='0.01' name='promotion_price' value='<?php echo htmlspecialchars($promotion_price); ?>' class='form-control' /></td><?php if (isset($promo_err)) { ?><span class="text-danger"><?php echo $promo_err; ?></span><?php } ?></td>
+                    <td><input type='number' step='0.01' name='promotion_price' value='<?php echo htmlspecialchars($promotion_price); ?>' class='form-control' />
+                        <?php if (isset($promo_err)) { ?><span class="text-danger"><?php echo $promo_err; ?></span><?php } ?></td>
                 </tr>
                 <tr>
                 <tr>
