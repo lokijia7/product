@@ -111,6 +111,8 @@ if (!isset($_SESSION["username"])) {
 
                         if ($success) {
                             echo "<div class='alert alert-success'>Record was saved.</div>";
+                            echo "<script>window.location.href = 'order_read.php';</script>";
+                            exit();
                         } else {
                             echo "<div class='alert alert-danger'>Unable to save record.</div>";
                         }
